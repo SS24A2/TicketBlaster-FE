@@ -1,0 +1,281 @@
+body {
+    font-family: "Lato", sans-serif;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+header {
+    background-color: #000000;
+    height: 70px;
+}
+
+.navigation {
+    display: flex;
+    max-width: 1200px;
+    gap: 20px;
+    /* the gaps between navigation elements should be adjusted */
+    justify-content: space-between;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    height: 100%;
+}
+
+.logo-img img {
+    width: 151px;
+}
+
+.cart-img {
+    width: 22px;
+    height: 17px;
+}
+
+.user-img {
+    width: 22px;
+    height: 22px;
+}
+
+.navigation a {
+    text-decoration: none;
+}
+
+.navigation input {
+    width: 295px;
+    height: 42px;
+    color: #393939;
+    border-radius: 21px;
+    border: none;
+    padding-left: 23px;
+    font-weight: 700;
+    line-height: 19px;
+    font-size: 16px;
+    letter-spacing: -0.88px;
+}
+
+.navigation button:nth-child(5) {
+    background: #FF48AB;
+    width: 102px;
+    height: 42px;
+    border-radius: 20px;
+    border: none;
+}
+
+.navigation button:nth-child(5) a {
+    color: #000000;
+    font-weight: 900;
+    text-align: center;
+    font-size: 16px;
+    line-height: 19px;
+    letter-spacing: -0.88px;
+    display: inline-block;
+}
+
+.navigation button:nth-child(6) {
+    width: 156px;
+    height: 42px;
+    border: 1px solid #EE47A0;
+    border-radius: 20px;
+    background-color: #000000;
+}
+
+.navigation button:nth-child(6) a {
+    text-align: center;
+    font-size: 16px;
+    line-height: 19px;
+    letter-spacing: -0.88px;
+    color: #FFFFFF;
+    font-weight: 900;
+    display: inline-block;
+}
+
+.navigation span:nth-child(2) a,
+.navigation span:nth-child(3) a {
+    text-align: left;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 17px;
+    letter-spacing: -0.77px;
+    color: #D3D3D3;
+    display: inline-block;
+}
+
+footer {
+    background-color: #000000;
+    height: 75px;
+}
+
+.footer-wrapper {
+    display: flex;
+    max-width: 1200px;
+    gap: 20px;
+    /* the gaps between navigation elements should be adjusted */
+    justify-content: space-between;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    height: 100%;
+}
+
+.footer-wrapper span {
+    text-align: left;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 17px;
+    letter-spacing: -0.77px;
+    color: #D3D3D3;
+    display: inline-block;
+}
+
+.login-section,
+.register-section,
+.forgot-password-section,
+.reset-password-section {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 50px;
+    padding-bottom: 402px;
+}
+
+.login-section h1,
+.register-section h1,
+.forgot-password-section h1,
+.reset-password-section h1 {
+    letter-spacing: -2.42px;
+    color: #000000;
+    font-size: 44px;
+    font-weight: 700;
+    line-height: 52px;
+    margin: 0;
+    margin-bottom: 64px;
+}
+
+.login-section .form-container,
+.register-section .form-container,
+.forgot-password-section .form-container,
+.reset-password-section .form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.login-email,
+.login-password,
+.register-section .form-container>div,
+.forgot-password-section .form-container>div,
+.reset-password-section .form-container>div {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.login-section label,
+.register-section label,
+.forgot-password-section label,
+.reset-password-section label {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 22px;
+    letter-spacing: -0.99px;
+    color: #393939;
+    display: inline-block;
+}
+
+.login-section input,
+.register-section input,
+.forgot-password-section input,
+.reset-password-section input {
+    width: 357px;
+    height: 42px;
+    background: #FFFFFF;
+    border: 1px solid #000000;
+    border-radius: 21px;
+    display: inline-block;
+    padding: 0;
+}
+
+.login-password {
+    margin-bottom: 33px;
+}
+
+.pink-button {
+    width: 128px;
+    height: 42px;
+    background: #FF48AB;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 16px;
+    line-height: 19px;
+    font-weight: 700;
+    letter-spacing: -0.88px;
+    color: #FFFFFF;
+    border: none;
+    margin-left: 104px;
+    margin-bottom: 41px;
+    display: inline-block;
+}
+
+.login-forgot-password a {
+    font-size: 18px;
+    line-height: 22px;
+    font-weight: 400;
+    letter-spacing: -0.99px;
+    color: #393939;
+    display: inline-block;
+}
+
+.white-button {
+    width: 357px;
+    height: 42px;
+    background: #FFFFFF;
+    border: 2px solid #EF46AB;
+    border-radius: 20px;
+}
+
+.white-button a {
+    text-align: center;
+    font-size: 16px;
+    line-height: 19px;
+    font-weight: 700;
+    letter-spacing: -0.88px;
+    color: #000000;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.register-section {
+    padding-bottom: 227px;
+}
+
+.register-section .pink-button {
+    width: 357px;
+    margin-left: 0;
+    margin-top: 8px;
+}
+
+.forgot-password-section {
+    padding-bottom: 498px;
+}
+
+.forgot-password-section .pink-button {
+    width: 357px;
+    margin-left: 0;
+    margin-top: 35px;
+    margin-bottom: 35px;
+}
+
+.forgot-password-section .form-container>div {
+    margin-bottom: 0;
+}
+
+.reset-password-section .pink-button {
+    width: 357px;
+    margin-left: 0;
+    margin-top: 50px;
+    margin-bottom: 35px;
+}
+
+.reset-password-section .form-container>div:nth-child(2) {
+    margin-bottom: 0;
+}
