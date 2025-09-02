@@ -64,14 +64,14 @@ const router = createBrowserRouter([
                 element: <ProtectedRoute />,
                 children: [
                     {
-                        path: '/account/options',
+                        path: '/account/profile',
                         children: [
                             { index: true, element: <TicketsHistory /> },
                             { path: 'tickets', element: <TicketsHistory /> },
-                            { path: 'user-details', element: <UserDetails /> },
+                            { path: 'info', element: <UserDetails /> },
                             { path: 'events', element: <EventsAdmin /> },
                             { path: 'events/create', element: <NewEvent /> },
-                            { path: 'users-details', element: <UsersAdmin /> },
+                            { path: 'users', element: <UsersAdmin /> },
                             { path: 'cart', element: <Cart /> },
                             {
                                 path: 'cart/checkout',
