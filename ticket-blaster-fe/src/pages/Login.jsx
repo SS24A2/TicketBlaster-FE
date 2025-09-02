@@ -3,36 +3,40 @@ import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { decodeToken } from 'react-jwt'
 
+import errorHandling from './errorHandling'
+
 export default function Login() {
-    // const [error, setError] = useState('')
+    const [error, setError] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    // const navigate = useNavigate()
+    const navigate = useNavigate()
 
     const handleSubmit = async (e) => {
-        //     e.preventDefault()
-        //     try {
-        //         const res = await axios.post(
-        //             'http://localhost:10000/api/v1/login',
-        //             { email, password },
-        //             { headers: { 'Content-Type': 'application/json' } }
-        //         )
-        //         // { success: true, token: "nasiot token" }
-        //         if (res.data.token) {
-        //             localStorage.setItem('token', res.data.token)
-        //             const decoded = decodeToken(res.data.token)
-        //             if (decoded.role === 'admin') {
-        //                 navigate('/users')
-        //             } else {
-        //                 navigate('/')
-        //             }
-        //         } else {
-        //             setError(res.data.error || 'Login error!')
-        //         }
-        //     } catch (err) {
-        //         console.log(err)
-        //         setError('Server erorr!')
-        //     }
+        e.preventDefault()
+        try {
+            const res = await axios.post(
+                'http://localhost:10002/api/v1/auth/login',
+                { email, password },
+                { headers: { 'Content-Type': 'application/json' } }
+            )
+            if (res.data.token) {
+                localStorage.setItem('token', res.data.token)
+                const decoded = decodeToken(res.data.token)
+                if (decoded.role === 'admin') {
+                    navigate('/concerts')
+                } else {
+                    navigate('/')
+                }
+            } else {
+                //in case a token is not send in the response ?
+                setError(res.data.error || 'Login error!')
+            }
+        } catch (err) {
+            //NIV; Network; Incorrect email or passsword;
+            console.log('err', err)
+            let errorMessage = errorHandling(err)
+            setError(`${errorMessage} Try again`)
+        }
     }
 
     return (
@@ -59,9 +63,6 @@ export default function Login() {
                     />
                 </div>
 
-                {/* {error && (
-                    <div style={{ color: 'red' }}>{error}</div>
-                )} */}
                 <div>
                     <span className="login-forgot-password">
                         <Link to="/account/password/forgot">
@@ -77,6 +78,8 @@ export default function Login() {
                     <Link to="/account/register">Don’t have an account?</Link>
                 </button>
             </form>
+
+            {error && <div style={{ color: 'red' }}>{error}</div>}
         </section>
     )
 }

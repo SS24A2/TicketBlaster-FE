@@ -14,8 +14,7 @@ export default function Root() {
         navigate('/') // TBC
     }
 
-    const isLoggedIn = false
-    // const isLoggedIn = !!localStorage.getItem('token') // TBC
+    const isLoggedIn = !!localStorage.getItem('token') // TBC
 
     return (
         <div>

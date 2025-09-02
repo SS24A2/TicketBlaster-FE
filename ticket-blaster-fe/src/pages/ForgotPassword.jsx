@@ -2,36 +2,28 @@ import axios from 'axios'
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 
+import errorHandling from './errorHandling'
+
 export default function ForgotPassword() {
-    // const [error, setError] = useState('')
+    const [error, setError] = useState('')
 
     const [email, setEmail] = useState('')
-    // const navigate = useNavigate()
+    const navigate = useNavigate()
 
     const handleSubmit = async (e) => {
-        //     e.preventDefault()
-        //     try {
-        //         const res = await axios.post(
-        //             'http://localhost:10000/api/v1/login',
-        //             { email, password },
-        //             { headers: { 'Content-Type': 'application/json' } }
-        //         )
-        //         // { success: true, token: "nasiot token" }
-        //         if (res.data.token) {
-        //             localStorage.setItem('token', res.data.token)
-        //             const decoded = decodeToken(res.data.token)
-        //             if (decoded.role === 'admin') {
-        //                 navigate('/users')
-        //             } else {
-        //                 navigate('/')
-        //             }
-        //         } else {
-        //             setError(res.data.error || 'Login error!')
-        //         }
-        //     } catch (err) {
-        //         console.log(err)
-        //         setError('Server erorr!')
-        //     }
+        e.preventDefault()
+        try {
+            const res = await axios.post(
+                'http://localhost:10002/api/v1/auth/forgotPassword',
+                { email },
+                { headers: { 'Content-Type': 'application/json' } }
+            )
+            console.log(res)
+        } catch (err) {
+            console.log('err', err)
+            let errorMessage = errorHandling(err)
+            setError(`${errorMessage} Try again`)
+        }
     }
 
     return (
@@ -56,6 +48,8 @@ export default function ForgotPassword() {
                     <Link to="/account/login">Back to login</Link>
                 </button>
             </form>
+
+            {error && <div style={{ color: 'red' }}>{error}</div>}
         </section>
     )
 }
