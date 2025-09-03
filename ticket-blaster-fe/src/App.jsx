@@ -21,6 +21,8 @@ import TicketsHistory from './pages/TicketsHistory'
 import UserDetails from './pages/UserDetails'
 import UsersAdmin from './pages/UsersAdmin'
 
+import AuthContext from './context/AuthContext'
+
 // TBC!
 const router = createBrowserRouter([
     {
@@ -87,5 +89,27 @@ const router = createBrowserRouter([
 ])
 
 export default function App() {
-    return <RouterProvider router={router} />
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [currentUser, setCurrentUser] = useState(null)
+
+    const logout = () => {
+        setIsLoggedIn(false)
+    }
+    const login = () => {
+        setIsLoggedIn(true)
+    }
+
+    return (
+        <AuthContext.Provider
+            value={{
+                isLoggedIn: isLoggedIn,
+                logout: logout,
+                login: login, //
+                currentUser: currentUser, //
+                setCurrentUser: setCurrentUser, //
+            }}
+        >
+            <RouterProvider router={router} />
+        </AuthContext.Provider>
+    )
 }

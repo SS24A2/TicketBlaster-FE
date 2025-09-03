@@ -22,6 +22,7 @@ export default function ResetPassword() {
                 { headers: { 'Content-Type': 'application/json' } }
             )
             console.log(res)
+            navigate('/account/login')
         } catch (err) {
             console.log('err', err)
             let errorMessage = errorHandling(err)

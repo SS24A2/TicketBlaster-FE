@@ -1,4 +1,4 @@
-import { Link, Outlet } from 'react-router-dom'
+import { Link, Outlet, useNavigate } from 'react-router-dom'
 
 import './styles/homepage.css'
 
@@ -7,6 +7,13 @@ import userImage from './assets/pink-person.svg'
 import logoImage from './assets/logo.svg'
 
 export default function Root() {
+    const navigate = useNavigate()
+
+    const handleLogout = () => {
+        localStorage.removeItem('token')
+        navigate('/') // TBC
+    }
+
     const isLoggedIn = !!localStorage.getItem('token') // TBC
 
     return (
@@ -53,6 +60,8 @@ export default function Root() {
                                     className="user-img"
                                 />
                             </Link>
+
+                            {/* <button onClick={handleLogout}>Logout</button> */}
                         </>
                     )}
                 </nav>
