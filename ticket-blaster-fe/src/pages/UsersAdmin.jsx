@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import SecondaryNav from '../components/SecondaryNav'
 import Api from '../Api'
 
+import generalAvatar from '../assets/general-avatar.png'
+
 export default function UsersAdmin() {
     const [usersList, setUsersList] = useState([])
     const [images, setImages] = useState(null)
@@ -64,10 +66,14 @@ export default function UsersAdmin() {
                         >
                             <div>
                                 <img
-                                    src={`${
-                                        import.meta.env
-                                            .VITE_REACT_APP_BACKEND_API
-                                    }/${images[user._id]}`}
+                                    src={
+                                        images[user._id]
+                                            ? `${
+                                                  import.meta.env
+                                                      .VITE_REACT_APP_BACKEND_API
+                                              }/${images[user._id]}`
+                                            : generalAvatar
+                                    }
                                     alt="avatar"
                                     className="users-avatar"
                                 />
