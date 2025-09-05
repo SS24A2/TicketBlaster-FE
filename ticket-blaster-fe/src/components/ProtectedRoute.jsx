@@ -37,13 +37,11 @@ export default function ProtectedRoute({ allowedRoles }) {
         // }
         if (!currentUser) {
             navigate('/account/login')
-        }
-        if (
+        } else if (
             (allowedRoles && !allowedRoles.includes(currentUser.role)) ||
             currentUser.status === 'deleted'
         ) {
             navigate('/unauthorized')
-
             //navigate to permission denied component and then to homepage
         }
     })

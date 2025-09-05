@@ -405,3 +405,7 @@ footer {
 .profile-page .user-info p:nth-child(2) {
    color: #A7A7A7;
 }
+
+.file-input-user {
+   display: none;
+}
