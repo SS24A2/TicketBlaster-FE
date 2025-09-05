@@ -311,12 +311,14 @@ footer {
     margin-right: auto;
     padding-top: 50px;
     /* padding-bottom: 402px; */
+    height: 90vh;
 }
 
 .profile-page .title-nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 38px;
 }
 
 .profile-page h2 {
@@ -325,6 +327,7 @@ footer {
     line-height: 52px;
     letter-spacing: -2.42px;
     color: #000000;
+    margin: 0;
 }
 
 .profile-page div:first-child .pink-button {
@@ -338,4 +341,67 @@ footer {
     height: 100%;
     text-decoration: none;
     color: #FFFFFF;
+}
+
+.profile-page .users-avatar {
+    width: 72px;
+    height: 72px;
+}
+
+.profile-page .list-user {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    border-bottom: 2px solid lightgray;
+}
+
+.profile-page .list-user>div:first-child {
+    display: flex;
+    gap: 29px;
+    align-items: center;
+}
+
+.profile-page .list-user button:first-child {
+    margin-right: 19px;
+    width: 128px;
+    height: 42px;
+    background: #FFFFFF;
+    border: 2px solid #000000;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 16px;
+    line-height: 19px;
+    letter-spacing: -0.88px;
+    color: #000000;
+}
+
+.profile-page .list-user button:nth-child(2) {
+    width: 128px;
+    height: 42px;
+    text-align: center;
+    font-size: 16px;
+    line-height: 19px;
+    letter-spacing: -0.88px;
+    color: #FFFFFF;
+    background: #000000;
+    border-radius: 20px;
+}
+
+.profile-page .user-info p {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 22px;
+    letter-spacing: -0.99px;
+    margin: 0;
+    padding: 0;
+}
+
+.profile-page .user-info p:first-child {
+   color: #393939;
+}
+
+.profile-page .user-info p:nth-child(2) {
+   color: #A7A7A7;
 }
