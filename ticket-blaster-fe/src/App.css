@@ -173,7 +173,9 @@ footer {
 .login-section label,
 .register-section label,
 .forgot-password-section label,
-.reset-password-section label {
+.reset-password-section label,
+.user-details label, 
+.password-inputs label {
     font-size: 18px;
     font-weight: 700;
     line-height: 22px;
@@ -185,7 +187,9 @@ footer {
 .login-section input,
 .register-section input,
 .forgot-password-section input,
-.reset-password-section input {
+.reset-password-section input,
+.user-details input, 
+.password-inputs input {
     width: 357px;
     height: 42px;
     background: #FFFFFF;
@@ -193,6 +197,7 @@ footer {
     border-radius: 21px;
     display: inline-block;
     padding: 0;
+    padding-left: 20px;
 }
 
 .login-password {
@@ -310,8 +315,9 @@ footer {
     margin-left: auto;
     margin-right: auto;
     padding-top: 50px;
-    /* padding-bottom: 402px; */
-    height: 90vh;
+    padding-bottom: 200px;
+    /*TBC*/
+    min-height: 90vh;
 }
 
 .profile-page .title-nav {
@@ -399,13 +405,113 @@ footer {
 }
 
 .profile-page .user-info p:first-child {
-   color: #393939;
+    color: #393939;
 }
 
 .profile-page .user-info p:nth-child(2) {
-   color: #A7A7A7;
+    color: #A7A7A7;
 }
 
 .file-input-user {
-   display: none;
+    display: none;
 }
+
+.profile-page .user-avatar {
+    width: 96px;
+    height: 96px;
+}
+
+.profile-page .upload-avatar-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+    width: 128px;
+}
+
+.profile-page .upload-avatar-wrapper label {
+    width: 128px;
+    height: 42px;
+    background: #FFFFFF;
+    border: 1px solid #000000;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    line-height: 19px;
+    letter-spacing: -0.88px;
+    color: #FF48AB;
+}
+
+.profile-first-form {
+    display: flex;
+    gap: 39px;
+    margin-bottom: 46px;
+    margin-top: 64px;
+}
+
+.profile-first-form .user-details div {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.profile-page form button {
+    width: 128px;
+    height: 42px;
+    background: #000000;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 16px;
+    line-height: 19px;
+    letter-spacing: -0.88px;
+    color: #FFFFFF;
+}
+
+.profile-page .user-details {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.password-change-state {
+    margin-top: 85px;
+    display: flex;
+    max-width: 520px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.password-change-state h3 {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+    letter-spacing: -1.32px;
+    color: #000000;
+    margin: 0;
+}
+
+
+.password-change-state button {
+    width: 229px;
+    margin: 0;
+}
+
+.password-inputs {
+    display: flex;
+    gap: 25px; 
+    margin-top: 29px;
+    margin-bottom: 36px;
+}
+
+.password-inputs div {
+    display: flex;
+    flex-direction: column;
+    gap:12px
+ }
+
+ .password-inputs input {
+    width: 228px;
+    margin:0
+ }

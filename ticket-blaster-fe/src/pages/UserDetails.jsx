@@ -6,7 +6,7 @@ import generalAvatar from '../assets/general-avatar.png'
 import Api from '../Api'
 import AuthContext from '../context/AuthContext'
 
-let formData = new FormData()
+let formData = null
 
 export default function UserDetails() {
     const navigate = useNavigate()
@@ -22,6 +22,8 @@ export default function UserDetails() {
     const [isPasswordFormShown, setIsPasswordFormShown] = useState(false)
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
+
+    const [inputError, setInputError] = useState(null)
 
     async function getUser() {
         try {
@@ -59,6 +61,13 @@ export default function UserDetails() {
                 handleLogout()
                 navigate('/account/login')
             }
+            if (
+                fullname === user.fullname &&
+                email === user.email &&
+                !uploadedImg
+            ) {
+                setInputError('No changes were made')
+            }
         } catch (err) {
             console.log(err)
         }
@@ -67,6 +76,9 @@ export default function UserDetails() {
     async function handlePasswordChange(e) {
         e.preventDefault()
         try {
+            if (password !== confirmPassword) {
+                return setInputError('Passwords do not match')
+            }
             const res = await Api().put(`/api/v1/users/password`, {
                 password,
                 confirmPassword,
@@ -81,7 +93,10 @@ export default function UserDetails() {
 
     function changeAvatar(e) {
         const [imageSelected] = e.target.files
-        if (imageSelected) formData.append('image', imageSelected)
+        if (imageSelected) {
+            formData = new FormData()
+            formData.append('image', imageSelected)
+        }
         let src = URL.createObjectURL(imageSelected)
         setUploadedImg(src)
     }
@@ -98,10 +113,9 @@ export default function UserDetails() {
             </div>
             <div>
                 <form onSubmit={handleDetailsChange}>
-                    <div>
-                        <div>
+                    <div className="profile-first-form">
+                        <div className="upload-avatar-wrapper">
                             <img
-                                style={{ width: 50 }}
                                 src={
                                     uploadedImg
                                         ? uploadedImg
@@ -113,6 +127,7 @@ export default function UserDetails() {
                                         : generalAvatar
                                 }
                                 alt="user-avatar"
+                                className="user-avatar"
                             />
 
                             <label htmlFor="avatar">Upload Avatar</label>
@@ -123,7 +138,7 @@ export default function UserDetails() {
                                 className="file-input-user"
                             />
                         </div>
-                        <div>
+                        <div className="user-details">
                             <div>
                                 <label>Full Name</label>
                                 <input
@@ -147,11 +162,11 @@ export default function UserDetails() {
                             </div>
                         </div>
                     </div>
-
+                    {inputError && <p>{inputError}</p>}
                     <button type="submit">Submit</button>
                 </form>
 
-                <div>
+                <div className="password-change-state">
                     <h3>Password</h3>
                     <button
                         onClick={() => setIsPasswordFormShown(true)}
@@ -162,7 +177,7 @@ export default function UserDetails() {
                 </div>
                 {isPasswordFormShown && (
                     <form onSubmit={handlePasswordChange}>
-                        <div>
+                        <div className="password-inputs">
                             <div>
                                 <label>Password</label>
                                 <input
