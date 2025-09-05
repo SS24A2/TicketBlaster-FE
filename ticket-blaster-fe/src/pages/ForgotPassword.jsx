@@ -1,7 +1,7 @@
-import axios from 'axios'
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 
+import Api from '../Api'
 import errorHandling from './errorHandling'
 
 export default function ForgotPassword() {
@@ -13,11 +13,9 @@ export default function ForgotPassword() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            const res = await axios.post(
-                'http://localhost:10002/api/v1/auth/forgotPassword',
-                { email },
-                { headers: { 'Content-Type': 'application/json' } }
-            )
+            const res = await Api().post('/api/v1/auth/forgotPassword', {
+                email,
+            })
             console.log(res)
         } catch (err) {
             console.log('err', err)

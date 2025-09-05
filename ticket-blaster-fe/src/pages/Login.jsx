@@ -1,32 +1,29 @@
-import axios from 'axios'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { decodeToken } from 'react-jwt'
 
+import Api from '../Api'
+import AuthContext from '../context/AuthContext'
 import errorHandling from './errorHandling'
 
 export default function Login() {
     const [error, setError] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+
     const navigate = useNavigate()
+
+    const { handleLogin } = useContext(AuthContext)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            const res = await axios.post(
-                'http://localhost:10002/api/v1/auth/login',
-                { email, password },
-                { headers: { 'Content-Type': 'application/json' } }
-            )
+            const res = await Api().post('/api/v1/auth/login', {
+                email,
+                password,
+            })
             if (res.data.token) {
-                localStorage.setItem('token', res.data.token)
-                const decoded = decodeToken(res.data.token)
-                if (decoded.role === 'admin') {
-                    navigate('/concerts')
-                } else {
-                    navigate('/')
-                }
+                handleLogin(res.data.token)
+                navigate('/account/profile')
             } else {
                 //in case a token is not send in the response ?
                 setError(res.data.error || 'Login error!')

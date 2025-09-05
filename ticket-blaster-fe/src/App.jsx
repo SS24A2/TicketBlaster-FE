@@ -1,5 +1,6 @@
 import './App.css'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider, Link } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 
 import Root from './Root'
 import ProtectedRoute from './components/ProtectedRoute'
@@ -22,6 +23,7 @@ import UserDetails from './pages/UserDetails'
 import UsersAdmin from './pages/UsersAdmin'
 
 import AuthContext from './context/AuthContext'
+import { decodeToken, isExpired } from 'react-jwt'
 
 // TBC!
 const router = createBrowserRouter([
@@ -70,10 +72,7 @@ const router = createBrowserRouter([
                         children: [
                             { index: true, element: <TicketsHistory /> },
                             { path: 'tickets', element: <TicketsHistory /> },
-                            { path: 'info', element: <UserDetails /> },
-                            { path: 'events', element: <EventsAdmin /> },
-                            { path: 'events/create', element: <NewEvent /> },
-                            { path: 'users', element: <UsersAdmin /> },
+                            { path: 'details', element: <UserDetails /> },
                             { path: 'cart', element: <Cart /> },
                             {
                                 path: 'cart/checkout',
@@ -84,29 +83,58 @@ const router = createBrowserRouter([
                     },
                 ],
             },
+            {
+                element: <ProtectedRoute allowedRoles={['admin']} />,
+                children: [
+                    {
+                        path: '/account/profile',
+                        children: [
+                            { path: 'events', element: <EventsAdmin /> },
+                            { path: 'events/new', element: <NewEvent /> },
+                            { path: 'users', element: <UsersAdmin /> },
+                        ],
+                    },
+                ],
+            },
+            {
+                path: '/unauthorized',
+                element: (
+                    <div>
+                        Permission denied
+                        <Link to="/">Go back</Link>
+                    </div>
+                ),
+            },
         ],
     },
 ])
 
 export default function App() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
-    const [currentUser, setCurrentUser] = useState(null)
+    const token = localStorage.getItem('token') || null
+    const userInitial = token && !isExpired(token) ? decodeToken(token) : null
+    console.log('TOKEN CHECKED')
+    const [currentUser, setCurrentUser] = useState(userInitial)
 
-    const logout = () => {
-        setIsLoggedIn(false)
+    const handleLogout = () => {
+        localStorage.setItem('token', null)
+        setCurrentUser(null)
     }
-    const login = () => {
-        setIsLoggedIn(true)
+    const handleLogin = (token) => {
+        localStorage.setItem('token', token)
+        const user = decodeToken(token)
+        setCurrentUser(user)
     }
+
+    useEffect(() => {
+        console.log('App component initial render')
+    }, [])
 
     return (
         <AuthContext.Provider
             value={{
-                isLoggedIn: isLoggedIn,
-                logout: logout,
-                login: login, //
-                currentUser: currentUser, //
-                setCurrentUser: setCurrentUser, //
+                currentUser,
+                handleLogout,
+                handleLogin,
             }}
         >
             <RouterProvider router={router} />

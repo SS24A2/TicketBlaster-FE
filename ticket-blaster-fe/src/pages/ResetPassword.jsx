@@ -1,7 +1,7 @@
-import axios from 'axios'
 import { useState, useEffect } from 'react'
 import { useNavigate, Link, useParams } from 'react-router-dom'
 
+import Api from '../Api'
 import errorHandling from './errorHandling'
 
 export default function ResetPassword() {
@@ -16,10 +16,9 @@ export default function ResetPassword() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            const res = await axios.put(
-                `http://localhost:10002/api/v1/auth/resetPassword/${id}/${token}`,
-                { password, confirmPassword },
-                { headers: { 'Content-Type': 'application/json' } }
+            const res = await Api().put(
+                `/api/v1/auth/resetPassword/${id}/${token}`,
+                { password, confirmPassword }
             )
             console.log(res)
             navigate('/account/login')

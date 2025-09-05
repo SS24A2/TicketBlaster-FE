@@ -1,7 +1,7 @@
-import axios from 'axios'
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 
+import Api from '../Api'
 import errorHandling from './errorHandling'
 
 export default function Register() {
@@ -15,11 +15,12 @@ export default function Register() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            const res = await axios.post(
-                'http://localhost:10002/api/v1/auth/register',
-                { fullname, email, password, confirmPassword },
-                { headers: { 'Content-Type': 'application/json' } }
-            )
+            const res = await Api().post('/api/v1/auth/register', {
+                fullname,
+                email,
+                password,
+                confirmPassword,
+            })
 
             console.log('res', res)
             navigate('/account/login')

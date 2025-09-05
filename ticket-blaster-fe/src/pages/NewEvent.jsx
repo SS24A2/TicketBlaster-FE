@@ -1,3 +1,3 @@
 export default function NewEvent() {
-    return <></>
+    return <>NEW EVENT</>
 }

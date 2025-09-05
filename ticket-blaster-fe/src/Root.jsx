@@ -1,4 +1,5 @@
 import { Link, Outlet } from 'react-router-dom'
+import { useContext } from 'react'
 
 import './styles/homepage.css'
 
@@ -6,8 +7,10 @@ import cartImage from './assets/pink-shopping-cart.svg'
 import userImage from './assets/pink-person.svg'
 import logoImage from './assets/logo.svg'
 
+import AuthContext from './context/AuthContext'
+
 export default function Root() {
-    const isLoggedIn = !!localStorage.getItem('token') // TBC
+    const { currentUser } = useContext(AuthContext)
 
     return (
         <div>
@@ -24,7 +27,7 @@ export default function Root() {
                     </span>
                     <input type="text" placeholder="Search" name="search" />
 
-                    {!isLoggedIn && (
+                    {!currentUser && (
                         <>
                             <button>
                                 <Link to="/account/login">Log in</Link>
@@ -37,7 +40,7 @@ export default function Root() {
                         </>
                     )}
 
-                    {isLoggedIn && (
+                    {currentUser && (
                         <>
                             <Link to="/account/cart">
                                 <img
