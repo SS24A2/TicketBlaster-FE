@@ -116,7 +116,7 @@ export default function App() {
     const [currentUser, setCurrentUser] = useState(userInitial)
 
     const handleLogout = () => {
-        localStorage.setItem('token', null)
+        localStorage.removeItem('token')
         setCurrentUser(null)
     }
     const handleLogin = (token) => {

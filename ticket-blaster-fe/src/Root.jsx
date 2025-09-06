@@ -49,7 +49,7 @@ export default function Root() {
                                     className="cart-img"
                                 />
                             </Link>
-                            <Link to="/account/tickets">
+                            <Link to="/account/profile">
                                 <img
                                     src={userImage}
                                     alt="user"
