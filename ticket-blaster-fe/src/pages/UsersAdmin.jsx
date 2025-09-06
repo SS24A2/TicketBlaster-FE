@@ -1,14 +1,23 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 import SecondaryNav from '../components/SecondaryNav'
 import Api from '../Api'
 
 import generalAvatar from '../assets/general-avatar.png'
+import ModalUsers from '../components/ModalUsers'
+
+import AuthContext from '../context/AuthContext'
 
 export default function UsersAdmin() {
     const [usersList, setUsersList] = useState([])
     const [images, setImages] = useState(null)
 
     //IU and auth for changed user ??
+
+    const [modal, setModal] = useState(null)
+
+    const { currentUser, handleLogout } = useContext(AuthContext)
+    const navigate = useNavigate()
 
     async function getUsers() {
         try {
@@ -31,7 +40,13 @@ export default function UsersAdmin() {
                 role: currentRole === 'admin' ? 'user' : 'admin',
             })
             console.log(res)
-            getUsers()
+            if (id === currentUser.id) {
+                //ako admin ja smeni svojata uloga vo user, treba da bide odlogiran i pak da se logira kako obicen user
+                handleLogout()
+                navigate('/account/login')
+            } else {
+                getUsers()
+            }
         } catch (err) {
             console.log(err)
         }
@@ -41,10 +56,28 @@ export default function UsersAdmin() {
         try {
             const res = await Api().put(`/api/v1/users/status/${id}`)
             console.log(res)
-            getUsers()
+            if (id === currentUser.id) {
+                //ako admin go izbrishe svojot profil, treba da bide odlogiran i vraten na homepage kako user bez account
+                handleLogout()
+                navigate('/')
+            } else {
+                getUsers()
+            }
         } catch (err) {
             console.log(err)
         }
+    }
+
+    function cancelModal() {
+        setModal(null)
+    }
+
+    function confirmModal(modal) {
+        modal.type === 'delete'
+            ? deleteUser(modal.id)
+            : changeUserRole(modal.id, modal.role)
+
+        setModal(null)
     }
 
     return (
@@ -87,7 +120,14 @@ export default function UsersAdmin() {
                                 <div>
                                     <button
                                         onClick={() =>
-                                            changeUserRole(user._id, user.role)
+                                            setModal({
+                                                type:
+                                                    user.role === 'user'
+                                                        ? 'makeAdmin'
+                                                        : 'makeUser',
+                                                id: user._id,
+                                                role: user.role,
+                                            })
                                         }
                                         style={{
                                             color:
@@ -106,11 +146,23 @@ export default function UsersAdmin() {
                                             : 'Admin'}
                                     </button>
                                     <button
-                                        onClick={() => deleteUser(user._id)}
+                                        onClick={() =>
+                                            setModal({
+                                                type: 'delete',
+                                                id: user._id,
+                                            })
+                                        }
                                     >
                                         Delete User
                                     </button>
                                 </div>
+                            )}
+                            {modal && (
+                                <ModalUsers
+                                    modal={modal}
+                                    cancelModal={cancelModal}
+                                    confirmModal={confirmModal}
+                                />
                             )}
                         </div>
                     ))}
