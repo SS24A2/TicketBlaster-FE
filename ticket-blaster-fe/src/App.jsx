@@ -37,12 +37,12 @@ const router = createBrowserRouter([
                 children: [
                     { index: true, element: <Homepage /> },
                     { path: 'concerts', element: <Events type="concerts" /> },
-                    { path: 'concerts/:id', element: <Event /> },
+                    { path: 'event/:id', element: <Event /> },
                     {
-                        path: 'comedy',
-                        element: <Events type="comedy" />,
+                        path: 'comedies',
+                        element: <Events type="comedies" />,
                     },
-                    { path: 'comedy/:id', element: <Event /> },
+                    { path: 'event/:id', element: <Event /> },
                 ],
             },
 
