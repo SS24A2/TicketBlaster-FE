@@ -1,5 +1,5 @@
-import { Link, Outlet } from 'react-router-dom'
-import { useContext } from 'react'
+import { Link, Outlet, useNavigate } from 'react-router-dom'
+import { useContext, useState } from 'react'
 
 import './styles/homepage.css'
 
@@ -12,6 +12,9 @@ import AuthContext from './context/AuthContext'
 export default function Root() {
     const { currentUser } = useContext(AuthContext)
 
+    const [searchInput, setSearchInput] = useState('')
+
+    const navigate = useNavigate()
     return (
         <div>
             <header>
@@ -25,7 +28,19 @@ export default function Root() {
                     <span>
                         <Link to="/comedies">Stand-up Comedy</Link>
                     </span>
-                    <input type="text" placeholder="Search" name="search" />
+                    <input
+                        type="text"
+                        placeholder="Search"
+                        name="search"
+                        value={searchInput}
+                        onChange={(e) => setSearchInput(e.target.value)}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter' && searchInput) {
+                                navigate(`/events/search/${searchInput.trim()}`)
+                                setSearchInput('')
+                            }
+                        }}
+                    />
 
                     {!currentUser && (
                         <>

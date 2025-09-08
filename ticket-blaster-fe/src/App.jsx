@@ -24,6 +24,7 @@ import UsersAdmin from './pages/UsersAdmin'
 
 import AuthContext from './context/AuthContext'
 import { decodeToken, isExpired } from 'react-jwt'
+import Search from './pages/Search'
 
 // TBC!
 const router = createBrowserRouter([
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
                         element: <Events type="comedies" />,
                     },
                     { path: 'event/:id', element: <Event /> },
+                    {
+                        path: `events/search/:searchTerm`,
+                        element: <Search />,
+                    },
                 ],
             },
 
