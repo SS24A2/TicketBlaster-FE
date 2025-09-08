@@ -1,12 +1,11 @@
 import { Link } from 'react-router-dom'
-import generalAvatar from '../assets/general-avatar.png'
 import convertDate from '../convertDate'
 
-export default function EventCard({ event }) {
+export default function EventCard({ event, imageSrc }) {
     return (
         <div className="event-card">
             <div className="event-image">
-                <img src={generalAvatar} alt="event" />
+                <img src={imageSrc} alt="event" />
             </div>
             <div className="event-info">
                 <h4>{event.name}</h4>
