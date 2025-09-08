@@ -2,9 +2,11 @@ import { useState, useEffect } from 'react'
 import EventCard from '../components/EventCard'
 
 import Api from '../Api'
+import noImageIcon from '../assets/Image-not-found.png'
 
 export default function Events({ type }) {
     const [events, setEvents] = useState([])
+    const [images, setImages] = useState(null)
     const [numOfRenderedEvents, setNumOfRenderedEvents] = useState(10)
 
     async function eventsInitialFetch() {
@@ -15,7 +17,8 @@ export default function Events({ type }) {
                 `/api/v1/events?category=${category}&page=1&pageSize=20`
             )
             console.log(response)
-            setEvents(response.data)
+            setEvents(response.data.events)
+            setImages(response.data.images)
         } catch (err) {
             console.log(err)
         }
@@ -40,7 +43,8 @@ export default function Events({ type }) {
                 }&pageSize=10`
             )
             console.log(response)
-            setEvents([...events, ...response.data])
+            setEvents([...events, ...response.data.events])
+            setImages({ ...images, ...response.data.images })
         } catch (err) {
             console.log(err)
         }
@@ -51,6 +55,7 @@ export default function Events({ type }) {
         return () => {
             setNumOfRenderedEvents(10)
             setEvents([])
+            setImages(null)
         }
     }, [type])
 
@@ -67,7 +72,18 @@ export default function Events({ type }) {
             <div className="all-events">
                 {events.map((event, index) =>
                     index < numOfRenderedEvents ? (
-                        <EventCard key={event._id} event={event} />
+                        <EventCard
+                            key={event._id}
+                            event={event}
+                            imageSrc={
+                                images[event._id]
+                                    ? `${
+                                          import.meta.env
+                                              .VITE_REACT_APP_BACKEND_API
+                                      }/${images[event._id]}`
+                                    : noImageIcon
+                            }
+                        />
                     ) : null
                 )}
             </div>

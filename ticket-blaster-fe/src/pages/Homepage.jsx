@@ -3,13 +3,17 @@ import { Link } from 'react-router-dom'
 import EventCard from '../components/EventCard'
 import Api from '../Api'
 
-import generalAvatar from '../assets/general-avatar.png'
 import convertDate from '../convertDate'
+import noImageIcon from '../assets/Image-not-found.png'
 
 export default function Homepage() {
     const [mainEvent, setMainEvent] = useState(null)
     const [concerts, setConcerts] = useState([])
     const [comedies, setComedies] = useState([])
+
+    const [mainImg, setMainImg] = useState(null)
+    const [concertsImages, setConcertsImages] = useState(null)
+    const [comediesImages, setComediesImages] = useState(null)
 
     async function fetchHomepageEvents() {
         try {
@@ -17,24 +21,27 @@ export default function Homepage() {
                 `/api/v1/events?page=1&pageSize=1`
             )
             console.log(responseMainEvent)
-            setMainEvent(responseMainEvent.data[0])
+            setMainEvent(responseMainEvent.data.events[0])
+            setMainImg(responseMainEvent.data.images)
 
             let excludedId = ''
-            if (responseMainEvent.data[0]._id) {
-                excludedId = responseMainEvent.data[0]._id
+            if (responseMainEvent.data.events[0]._id) {
+                excludedId = responseMainEvent.data.events[0]._id
             }
 
             const responseConcerts = await Api().get(
                 `/api/v1/events?category=Musical%20Concert&excludedId=${excludedId}&page=1&pageSize=5`
             )
             console.log('res2', responseConcerts)
-            setConcerts(responseConcerts.data)
+            setConcerts(responseConcerts.data.events)
+            setConcertsImages(responseConcerts.data.images)
 
             const responseComedies = await Api().get(
                 `/api/v1/events?category=Stand-up%20Comedy&excludedId=${excludedId}&page=1&pageSize=5`
             )
             console.log('res3', responseComedies)
-            setComedies(responseComedies.data)
+            setComedies(responseComedies.data.events)
+            setComediesImages(responseComedies.data.images)
         } catch (err) {
             console.log(err)
         }
@@ -51,7 +58,11 @@ export default function Homepage() {
             <div className="main-event">
                 <img
                     src={
-                        'https://images.pexels.com/photos/949587/pexels-photo-949587.jpeg'
+                        mainImg[mainEvent._id]
+                            ? `${import.meta.env.VITE_REACT_APP_BACKEND_API}/${
+                                  mainImg[mainEvent._id]
+                              }`
+                            : noImageIcon
                     }
                     alt="main-img"
                 />
@@ -73,7 +84,18 @@ export default function Homepage() {
                     <h3>Musical Concerts</h3>
                     <div>
                         {concerts.map((concert) => (
-                            <EventCard key={concert._id} event={concert} />
+                            <EventCard
+                                key={concert._id}
+                                event={concert}
+                                imageSrc={
+                                    concertsImages[concert._id]
+                                        ? `${
+                                              import.meta.env
+                                                  .VITE_REACT_APP_BACKEND_API
+                                          }/${concertsImages[concert._id]}`
+                                        : noImageIcon
+                                }
+                            />
                         ))}
                     </div>
                     <button>
@@ -84,7 +106,18 @@ export default function Homepage() {
                     <h3>Stand-up Comedy</h3>
                     <div>
                         {comedies.map((comedy) => (
-                            <EventCard key={comedy._id} event={comedy} />
+                            <EventCard
+                                key={comedy._id}
+                                event={comedy}
+                                imageSrc={
+                                    comediesImages[comedy._id]
+                                        ? `${
+                                              import.meta.env
+                                                  .VITE_REACT_APP_BACKEND_API
+                                          }/${comediesImages[comedy._id]}`
+                                        : noImageIcon
+                                }
+                            />
                         ))}
                     </div>
                     <button>
