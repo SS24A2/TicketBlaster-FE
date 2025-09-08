@@ -23,7 +23,7 @@ export default function Root() {
                         <Link to="/concerts">Musical Concerts</Link>
                     </span>
                     <span>
-                        <Link to="/comedy">Stand-up Comedy</Link>
+                        <Link to="/comedies">Stand-up Comedy</Link>
                     </span>
                     <input type="text" placeholder="Search" name="search" />
 
