@@ -599,6 +599,7 @@ footer {
     height: 100%;
     /*TBC */
     border-radius: 20px;
+    object-fit: cover;
 }
 
 .event-card .event-info h4 {
@@ -790,4 +791,31 @@ footer {
 .events-page>button {
     width: 1200px;
     height: 43px;
+    background: #FFFFFF;
+    border: 1px solid #000000;
+    border-radius: 20px;
+    text-align: center;
+    font-weight: 900;
+    font-size: 19px;
+    line-height: 23px;
+    letter-spacing: -1.04px;
+    color: #000000;
+    margin-top: 91px;
+}
+
+.events-page h1 {
+    font-weight: 700;
+    font-size: 44px;
+    line-height: 52px;
+    letter-spacing: -2.42px;
+    color: #000000;
+    margin: 0;
+    margin-bottom: 38px;
+}
+
+.events-page {
+    max-width: 1200px;
+    margin: auto;
+    padding-top: 50px;
+    padding-bottom: 91px;
 }
