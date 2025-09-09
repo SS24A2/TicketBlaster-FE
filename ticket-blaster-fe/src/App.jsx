@@ -95,7 +95,14 @@ const router = createBrowserRouter([
                         path: '/account/profile',
                         children: [
                             { path: 'events', element: <EventsAdmin /> },
-                            { path: 'events/new', element: <NewEvent /> },
+                            {
+                                path: 'events/new',
+                                element: <NewEvent type="create" />,
+                            },
+                            {
+                                path: 'events/update/:id',
+                                element: <NewEvent type="update" />,
+                            },
                             { path: 'users', element: <UsersAdmin /> },
                         ],
                     },

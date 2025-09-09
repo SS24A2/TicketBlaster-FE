@@ -412,7 +412,8 @@ footer {
     color: #A7A7A7;
 }
 
-.file-input-user {
+.file-input-user,
+.upload-input {
     display: none;
 }
 
