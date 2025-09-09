@@ -31,7 +31,7 @@ export default function Search() {
 
     return (
         <section className="search-results">
-            <h1>Search Results for:{searchTerm}</h1>
+            <h1>Search Results for: {searchTerm}</h1>
             <div className="search-result-inner">
                 {eventsResults.map((event) => (
                     <EventCard

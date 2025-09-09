@@ -758,6 +758,7 @@ footer {
     border-radius: 30px;
     position: relative;
     z-index: 0;
+    object-fit: cover;
 }
 
 .main-event-inner {
