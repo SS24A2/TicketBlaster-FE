@@ -4,7 +4,7 @@ import SecondaryNav from '../components/SecondaryNav'
 import Api from '../Api'
 
 import generalAvatar from '../assets/general-avatar.png'
-import ModalUsers from '../components/ModalUsers'
+import ModalUsersEvents from '../components/ModalUsersEvents'
 
 import AuthContext from '../context/AuthContext'
 
@@ -73,7 +73,7 @@ export default function UsersAdmin() {
     }
 
     function confirmModal(modal) {
-        modal.type === 'delete'
+        modal.type === 'deleteUser'
             ? deleteUser(modal.id)
             : changeUserRole(modal.id, modal.role)
 
@@ -148,7 +148,7 @@ export default function UsersAdmin() {
                                     <button
                                         onClick={() =>
                                             setModal({
-                                                type: 'delete',
+                                                type: 'deleteUser',
                                                 id: user._id,
                                             })
                                         }
@@ -158,7 +158,7 @@ export default function UsersAdmin() {
                                 </div>
                             )}
                             {modal && (
-                                <ModalUsers
+                                <ModalUsersEvents
                                     modal={modal}
                                     cancelModal={cancelModal}
                                     confirmModal={confirmModal}
