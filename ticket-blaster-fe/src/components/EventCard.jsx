@@ -1,7 +1,6 @@
-import { Link } from 'react-router-dom'
 import convertDate from '../convertDate'
 
-export default function EventCard({ event, imageSrc }) {
+export default function EventCard({ event, imageSrc, ButtonComponent }) {
     return (
         <div className="event-card">
             <div className="event-image">
@@ -13,9 +12,7 @@ export default function EventCard({ event, imageSrc }) {
                 <p>{event.details.substring(0, 150)}...</p>
                 <div>
                     <span>{event.location}</span>
-                    <button className="get-tickets-btn">
-                        <Link to={`/event/${event._id}`}>Get tickets</Link>
-                    </button>
+                    {ButtonComponent}
                 </div>
             </div>
         </div>

@@ -11,6 +11,14 @@ import convertDate from '../convertDate'
 let formData = null
 const pageSize = 10
 
+function Button({ removeEvent }) {
+    return (
+        <button className="remove-btn" type="button" onClick={removeEvent}>
+            Remove
+        </button>
+    )
+}
+
 export default function NewEvent({ type }) {
     const navigate = useNavigate()
 
@@ -394,14 +402,14 @@ export default function NewEvent({ type }) {
                                               }/${eventsImages[ev._id]}`
                                             : noImageIcon
                                     }
+                                    ButtonComponent={
+                                        <Button
+                                            removeEvent={() =>
+                                                removeEvent(ev._id)
+                                            }
+                                        />
+                                    }
                                 />
-                                <button
-                                    className="remove-btn"
-                                    type="button"
-                                    onClick={() => removeEvent(ev._id)}
-                                >
-                                    Remove
-                                </button>
                             </div>
                         ))}
                 </div>

@@ -5,6 +5,7 @@ import Api from '../Api'
 
 import EventCard from '../components/EventCard'
 import noImageIcon from '../assets/Image-not-found.png'
+import ButtonGetTickets from '../components/ButtonGetTickets'
 
 export default function Search() {
     const [eventsResults, setEventsResults] = useState([])
@@ -35,14 +36,17 @@ export default function Search() {
             <div className="search-result-inner">
                 {eventsResults.map((event) => (
                     <EventCard
-                        event={event}
                         key={event._id}
+                        event={event}
                         imageSrc={
                             imagesResults[event._id]
                                 ? `${
                                       import.meta.env.VITE_REACT_APP_BACKEND_API
                                   }/${imagesResults[event._id]}`
                                 : noImageIcon
+                        }
+                        ButtonComponent={
+                            <ButtonGetTickets eventId={event._id} />
                         }
                     />
                 ))}

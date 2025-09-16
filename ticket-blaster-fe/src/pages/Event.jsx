@@ -6,6 +6,7 @@ import Api from '../Api'
 import AuthContext from '../context/AuthContext'
 import EventCard from '../components/EventCard'
 import noImageIcon from '../assets/Image-not-found.png'
+import ButtonGetTickets from '../components/ButtonGetTickets'
 
 export default function Event() {
     const navigate = useNavigate()
@@ -123,8 +124,8 @@ export default function Event() {
                     <div>
                         {relatedEvents.map((relE) => (
                             <EventCard
-                                event={relE}
                                 key={relE._id}
+                                event={relE}
                                 imageSrc={
                                     eventsImages[relE._id]
                                         ? `${
@@ -132,6 +133,9 @@ export default function Event() {
                                                   .VITE_REACT_APP_BACKEND_API
                                           }/${eventsImages[relE._id]}`
                                         : noImageIcon
+                                }
+                                ButtonComponent={
+                                    <ButtonGetTickets eventId={relE._id} />
                                 }
                             />
                         ))}

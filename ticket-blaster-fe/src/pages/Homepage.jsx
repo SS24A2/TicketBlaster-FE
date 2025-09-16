@@ -5,6 +5,7 @@ import Api from '../Api'
 
 import convertDate from '../convertDate'
 import noImageIcon from '../assets/Image-not-found.png'
+import ButtonGetTickets from '../components/ButtonGetTickets'
 
 export default function Homepage() {
     const [mainEvent, setMainEvent] = useState(null)
@@ -95,6 +96,9 @@ export default function Homepage() {
                                           }/${concertsImages[concert._id]}`
                                         : noImageIcon
                                 }
+                                ButtonComponent={
+                                    <ButtonGetTickets eventId={concert._id} />
+                                }
                             />
                         ))}
                     </div>
@@ -116,6 +120,9 @@ export default function Homepage() {
                                                   .VITE_REACT_APP_BACKEND_API
                                           }/${comediesImages[comedy._id]}`
                                         : noImageIcon
+                                }
+                                ButtonComponent={
+                                    <ButtonGetTickets eventId={comedy._id} />
                                 }
                             />
                         ))}

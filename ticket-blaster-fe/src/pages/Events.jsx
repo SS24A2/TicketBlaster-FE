@@ -3,6 +3,7 @@ import EventCard from '../components/EventCard'
 
 import Api from '../Api'
 import noImageIcon from '../assets/Image-not-found.png'
+import ButtonGetTickets from '../components/ButtonGetTickets'
 
 export default function Events({ type }) {
     const [events, setEvents] = useState([])
@@ -82,6 +83,9 @@ export default function Events({ type }) {
                                               .VITE_REACT_APP_BACKEND_API
                                       }/${images[event._id]}`
                                     : noImageIcon
+                            }
+                            ButtonComponent={
+                                <ButtonGetTickets eventId={event._id} />
                             }
                         />
                     ) : null
