@@ -517,7 +517,7 @@ footer {
     margin: 0
 }
 
-.modal-users {
+.modal-users-events {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -529,11 +529,11 @@ footer {
     border-radius: 30px;
 }
 
-.modal-users-wrapper {
+.modal-users-events-wrapper {
     padding: 27px 40px 39px 45px;
 }
 
-.modal-users h4 {
+.modal-users-events h4 {
     font-weight: 700;
     font-size: 35px;
     line-height: 42px;
@@ -543,7 +543,7 @@ footer {
     margin-bottom: 28px;
 }
 
-.modal-users p {
+.modal-users-events p {
     font-size: 16px;
     line-height: 19px;
     letter-spacing: -0.88px;
@@ -552,7 +552,7 @@ footer {
     margin-bottom: 81px;
 }
 
-.modal-users-buttons button:first-child {
+.modal-users-events-buttons button:first-child {
     width: 128px;
     height: 42px;
     background: #FFFFFF;
@@ -565,7 +565,7 @@ footer {
     color: #000000;
 }
 
-.modal-users-confirm-button {
+.modal-users-events-confirm-button {
     width: 184px !important;
     height: 42px;
     background: #000000;
@@ -577,7 +577,7 @@ footer {
     color: #FFFFFF;
 }
 
-.modal-users-buttons {
+.modal-users-events-buttons {
     display: flex;
     justify-content: end;
 }
@@ -1290,4 +1290,8 @@ footer {
     line-height: 17px;
     letter-spacing: -0.77px;
     color: #FFFFFF;
+}
+
+.delete-btn {
+    color: white;
 }
