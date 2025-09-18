@@ -1,4 +1,4 @@
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { useState, useEffect, useContext } from 'react'
 
 import convertDate from '../convertDate'
@@ -9,7 +9,6 @@ import noImageIcon from '../assets/Image-not-found.png'
 import ButtonGetTickets from '../components/ButtonGetTickets'
 
 export default function Event() {
-    const navigate = useNavigate()
     const { currentUser } = useContext(AuthContext)
 
     const [eventById, setEventById] = useState(null)
@@ -19,25 +18,6 @@ export default function Event() {
     const [numOfTickets, setNumOfTickets] = useState(1)
 
     let { id } = useParams()
-
-    async function fetchEvent(eventId) {
-        try {
-            const response = await Api().get(`/api/v1/events/${eventId}`)
-            console.log(response)
-            setEventById(response.data.event)
-            setEventsImages(response.data.images)
-            if (
-                response.data.event.relatedEvents?.length > 0 &&
-                response.data.event.relatedEvents[0]?._id
-            ) {
-                setRelatedEvents(response.data.event.relatedEvents)
-            } else {
-                setRelatedEvents([])
-            }
-        } catch (err) {
-            console.log(err)
-        }
-    }
 
     async function addToCart(numTickets, eventID) {
         if (!currentUser) {
@@ -49,6 +29,24 @@ export default function Event() {
     }
 
     useEffect(() => {
+        async function fetchEvent() {
+            try {
+                const response = await Api().get(`/api/v1/events/${id}`)
+                console.log(response)
+                setEventById(response.data.event)
+                setEventsImages(response.data.images)
+                if (
+                    response.data.event.relatedEvents?.length > 0 &&
+                    response.data.event.relatedEvents[0]?._id
+                ) {
+                    setRelatedEvents(response.data.event.relatedEvents)
+                } else {
+                    setRelatedEvents([])
+                }
+            } catch (err) {
+                console.log(err)
+            }
+        }
         fetchEvent(id)
     }, [id])
 

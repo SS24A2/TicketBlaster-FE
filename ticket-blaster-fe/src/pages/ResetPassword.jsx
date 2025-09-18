@@ -29,27 +29,27 @@ export default function ResetPassword() {
         }
     }
 
-    const checkResetPasswordLink = async () => {
-        try {
-            const res = await axios.get(
-                `http://localhost:10002/api/v1/auth/resetPassword/${id}/${token}`
-            )
-            console.log(res)
-            if (res.data === 'Token is valid') {
-                //TBC
-                setComponentStatus('ok')
-            }
-        } catch (err) {
-            console.log('err', err)
-            let errorMessage = errorHandling(err) //TBC
-            setError(`${errorMessage} Try again`) //TBC
-            setComponentStatus('error')
-        }
-    }
-
     useEffect(() => {
+        const checkResetPasswordLink = async () => {
+            try {
+                const res = await Api().get(
+                    `http://localhost:10002/api/v1/auth/resetPassword/${id}/${token}`
+                )
+                console.log(res)
+                if (res.data === 'Token is valid') {
+                    //TBC
+                    setComponentStatus('ok')
+                }
+            } catch (err) {
+                console.log('err', err)
+                let errorMessage = errorHandling(err) //TBC
+                setError(`${errorMessage} Try again`) //TBC
+                setComponentStatus('error')
+            }
+        }
+
         checkResetPasswordLink()
-    }, [])
+    }, [id, token])
 
     if (componentStatus === 'loading') return <div>LOADING</div>
     if (componentStatus === 'error')

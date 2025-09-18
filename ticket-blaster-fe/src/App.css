@@ -1295,3 +1295,17 @@ footer {
 .delete-btn {
     color: white;
 }
+
+.events-wrapper {
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+}
+
+.profile-page {
+    overflow-y: scroll;
+}
+
+.profile-page a {
+    color: black
+}

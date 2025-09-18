@@ -13,20 +13,19 @@ export default function Search() {
 
     const { searchTerm } = useParams()
 
-    async function fetchSearchResults() {
-        try {
-            const response = await Api().get(
-                `/api/v1/events?search=${searchTerm}&page=1&pageSize=20`
-            )
-            console.log('res', response)
-            setEventsResults(response.data.events)
-            setImagesResults(response.data.images)
-        } catch (err) {
-            console.log(err)
-        }
-    }
-
     useEffect(() => {
+        async function fetchSearchResults() {
+            try {
+                const response = await Api().get(
+                    `/api/v1/events?search=${searchTerm}&page=1&pageSize=20`
+                )
+                console.log('res', response)
+                setEventsResults(response.data.events)
+                setImagesResults(response.data.images)
+            } catch (err) {
+                console.log(err)
+            }
+        }
         fetchSearchResults()
     }, [searchTerm])
 

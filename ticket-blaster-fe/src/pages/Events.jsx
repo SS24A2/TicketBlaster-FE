@@ -10,21 +10,6 @@ export default function Events({ type }) {
     const [images, setImages] = useState(null)
     const [numOfRenderedEvents, setNumOfRenderedEvents] = useState(10)
 
-    async function eventsInitialFetch() {
-        try {
-            const category =
-                type === 'concerts' ? 'Musical%20Concert' : 'Stand-up%20Comedy'
-            const response = await Api().get(
-                `/api/v1/events?category=${category}&page=1&pageSize=20`
-            )
-            console.log(response)
-            setEvents(response.data.events)
-            setImages(response.data.images)
-        } catch (err) {
-            console.log(err)
-        }
-    }
-
     async function fetchNewEvents() {
         try {
             if (events.length < numOfRenderedEvents + 10) {
@@ -52,6 +37,22 @@ export default function Events({ type }) {
     }
 
     useEffect(() => {
+        async function eventsInitialFetch() {
+            try {
+                const category =
+                    type === 'concerts'
+                        ? 'Musical%20Concert'
+                        : 'Stand-up%20Comedy'
+                const response = await Api().get(
+                    `/api/v1/events?category=${category}&page=1&pageSize=20`
+                )
+                console.log(response)
+                setEvents(response.data.events)
+                setImages(response.data.images)
+            } catch (err) {
+                console.log(err)
+            }
+        }
         eventsInitialFetch()
         return () => {
             setNumOfRenderedEvents(10)

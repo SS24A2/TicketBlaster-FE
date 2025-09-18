@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import Api from '../Api'
 import errorHandling from './errorHandling'
@@ -8,7 +8,6 @@ export default function ForgotPassword() {
     const [error, setError] = useState('')
 
     const [email, setEmail] = useState('')
-    const navigate = useNavigate()
 
     const handleSubmit = async (e) => {
         e.preventDefault()

@@ -47,40 +47,6 @@ export default function NewEvent({ type }) {
     const [selectSize, setSelectSize] = useState(0)
     const selectRef = useRef(null)
 
-    async function getEventToUpdate(eventId) {
-        try {
-            const response = await Api().get(`/api/v1/events/${eventId}`)
-            console.log(response)
-            setEventById(response.data.event)
-            setEventsImages(response.data.images)
-            setFormState({
-                ...response.data.event,
-                date: response.data.event.date.substring(0, 10),
-            })
-        } catch (err) {
-            console.log(err)
-        }
-    }
-
-    async function getInitialEvents() {
-        try {
-            const response = await Api().get(
-                `/api/v1/events?page=1&pageSize=${pageSize}`
-            )
-            console.log('initial list ev', response)
-            if (response.data.events) {
-                if (response.data.events.length === pageSize) {
-                    setNextPage(2)
-                }
-                if (response.data.events.length > 0) {
-                    setAllEvents(response.data.events)
-                }
-            }
-        } catch (err) {
-            console.log(err)
-        }
-    }
-
     async function getMoreEvents() {
         try {
             if (!nextPage) return
@@ -134,9 +100,45 @@ export default function NewEvent({ type }) {
     }
 
     useEffect(() => {
+        async function getInitialEvents() {
+            try {
+                const response = await Api().get(
+                    `/api/v1/events?page=1&pageSize=${pageSize}`
+                )
+                console.log('initial list ev', response)
+                if (response.data.events) {
+                    if (response.data.events.length === pageSize) {
+                        setNextPage(2)
+                    }
+                    if (response.data.events.length > 0) {
+                        setAllEvents(response.data.events)
+                    }
+                }
+            } catch (err) {
+                console.log(err)
+            }
+        }
         getInitialEvents()
-        if (type === 'update') getEventToUpdate(id)
     }, [])
+
+    useEffect(() => {
+        async function getEventToUpdate() {
+            try {
+                const response = await Api().get(`/api/v1/events/${id}`)
+                console.log(response)
+                setEventById(response.data.event)
+                setEventsImages(response.data.images)
+                setFormState({
+                    ...response.data.event,
+                    date: response.data.event.date.substring(0, 10),
+                })
+            } catch (err) {
+                console.log(err)
+            }
+        }
+
+        if (id) getEventToUpdate(id) // if type=create id value is undefined
+    }, [id])
 
     async function handleSubmit() {
         try {
