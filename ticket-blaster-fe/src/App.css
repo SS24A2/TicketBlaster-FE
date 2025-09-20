@@ -518,7 +518,7 @@ footer {
 }
 
 .modal-users-events {
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -1308,4 +1308,33 @@ footer {
 
 .profile-page a {
     color: black
+}
+
+.event-info h4 a {
+    color: black !important
+}
+
+.delete-event-message {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: #FF48AB;
+    color: white;
+    width: 100%;
+    text-align: center;
+    line-height: 24px;
+    font-size: 18px;
+}
+
+.delete-event-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #858484ff;
+    color: white;
+    width: 100%;
+    text-align: center;
+    line-height: 24px;
+    font-size: 18px;
+
 }
