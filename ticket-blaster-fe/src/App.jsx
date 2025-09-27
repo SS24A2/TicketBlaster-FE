@@ -23,6 +23,7 @@ import UserDetails from './pages/UserDetails'
 import UsersAdmin from './pages/UsersAdmin'
 
 import AuthContext from './context/AuthContext'
+import EcommerceContext from './context/EcommerceContext'
 import { decodeToken, isExpired } from 'react-jwt'
 import Search from './pages/Search'
 
@@ -122,6 +123,7 @@ const router = createBrowserRouter([
 ])
 
 export default function App() {
+    //AuthContext
     const token = localStorage.getItem('token') || null
     const userInitial = token && !isExpired(token) ? decodeToken(token) : null
     console.log('TOKEN CHECKED')
@@ -141,6 +143,32 @@ export default function App() {
         console.log('App component initial render')
     }, [])
 
+    //EcommerceContext
+    const cartStateInitial = JSON.parse(localStorage.getItem('cart')) || null // cart={key:value} key=eventId value=num of tickets
+    const [cartState, setCartState] = useState(cartStateInitial)
+
+    useEffect(() => {
+        localStorage.setItem('cart', JSON.stringify(cartState))
+    }, [cartState])
+
+    const addToCart = (eventId, numTickets) => {
+        cartState[eventId]
+            ? (cartState[eventId] = numTickets + cartState[eventId])
+            : (cartState[eventId] = numTickets)
+        setCartState({ ...cartState })
+    }
+
+    //remove = remove all tickets for that event
+    const removeFromCart = (eventId) => {
+        const newState = {}
+        for (let event in cartState) {
+            if (event !== eventId) {
+                newState[event] = cartState[event]
+            }
+        }
+        setCartState({ ...newState })
+    }
+
     return (
         <AuthContext.Provider
             value={{
@@ -149,7 +177,11 @@ export default function App() {
                 handleLogin,
             }}
         >
-            <RouterProvider router={router} />
+            <EcommerceContext.Provider
+                value={{ cartState, addToCart, removeFromCart }}
+            >
+                <RouterProvider router={router} />
+            </EcommerceContext.Provider>
         </AuthContext.Provider>
     )
 }
