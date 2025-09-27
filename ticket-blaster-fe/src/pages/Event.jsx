@@ -1,31 +1,66 @@
-import { Link, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useState, useEffect, useContext } from 'react'
 
 import convertDate from '../convertDate'
 import Api from '../Api'
 import AuthContext from '../context/AuthContext'
+import EcommerceContext from '../context/EcommerceContext'
 import EventCard from '../components/EventCard'
 import noImageIcon from '../assets/Image-not-found.png'
 import ButtonGetTickets from '../components/ButtonGetTickets'
 
 export default function Event() {
+    const navigate = useNavigate()
     const { currentUser } = useContext(AuthContext)
+    const { addToCart, cartState } = useContext(EcommerceContext)
 
     const [eventById, setEventById] = useState(null)
     const [relatedEvents, setRelatedEvents] = useState([])
     const [eventsImages, setEventsImages] = useState(null)
 
     const [numOfTickets, setNumOfTickets] = useState(1)
+    const [cartError, setCartError] = useState('')
 
     let { id } = useParams()
 
-    async function addToCart(numTickets, eventID) {
-        if (!currentUser) {
-            console.log('user is not logged in to buy tickets')
-            return
+    async function handleAddToCart() {
+        try {
+            if (!currentUser)
+                return setCartError(
+                    'Log in or create an account to buy tickets.'
+                )
+
+            const response = await Api().get(`api/v1/ecommerce/${id}`)
+            // response.data - tickets not sold or reserved in DB; cartState[id] - tickets already selected by the user
+            const numAvailableTickets = cartState[id]
+                ? response.data - parseInt(cartState[id])
+                : response.data
+            if (numOfTickets > numAvailableTickets) {
+                if (cartState[id]) {
+                    numAvailableTickets === 0
+                        ? setCartError(
+                              `You already have ${cartState[id]} tickets in your cart. No more tickets are available at the moment! Check again later!`
+                          )
+                        : setCartError(
+                              `You already have ${cartState[id]} tickets in your cart. Only ${numAvailableTickets} more tickets are available at the moment!`
+                          )
+                } else {
+                    numAvailableTickets === 0
+                        ? setCartError(
+                              `No tickets available at the moment! Check again later!`
+                          )
+                        : setCartError(
+                              `Only ${numAvailableTickets} tickets are available at the moment!`
+                          )
+                }
+                return
+            }
+            setCartError('')
+            addToCart(id, numOfTickets)
+            navigate('/account/profile/cart')
+        } catch (err) {
+            console.log(err)
         }
-        // add to cart logic
-        console.log('addTocart Data', numTickets, eventID)
     }
 
     useEffect(() => {
@@ -83,34 +118,26 @@ export default function Event() {
                             <span>${eventById.price}.00 USD</span>
                         </div>
                         <div className="tickets-cart">
-                            <input
-                                type="number"
-                                min="1"
-                                name="tickets"
-                                value={numOfTickets}
-                                onChange={(e) =>
-                                    setNumOfTickets(e.target.value)
+                            <span
+                                onClick={() => {
+                                    if (numOfTickets > 1)
+                                        setNumOfTickets(numOfTickets - 1)
+                                }}
+                            >
+                                -
+                            </span>
+                            <span style={{ margin: 20 }}>{numOfTickets}</span>
+                            <span
+                                onClick={() =>
+                                    setNumOfTickets(numOfTickets + 1)
                                 }
-                            />
-                            <button onClick={() => addToCart(numOfTickets, id)}>
-                                {currentUser ? (
-                                    <Link to="/account/profile/cart">
-                                        Add to cart
-                                    </Link>
-                                ) : (
-                                    <span
-                                        onClick={
-                                            () =>
-                                                alert(
-                                                    'Login in or register to buy cards'
-                                                )
-                                            //switch to modal
-                                        }
-                                    >
-                                        Add to cart
-                                    </span>
-                                )}
+                            >
+                                +
+                            </span>
+                            <button onClick={handleAddToCart}>
+                                Add to cart
                             </button>
+                            {cartError && <p>{cartError}</p>}
                         </div>
                     </div>
                 </div>

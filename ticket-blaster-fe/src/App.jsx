@@ -144,7 +144,7 @@ export default function App() {
     }, [])
 
     //EcommerceContext
-    const cartStateInitial = JSON.parse(localStorage.getItem('cart')) || null // cart={key:value} key=eventId value=num of tickets
+    const cartStateInitial = JSON.parse(localStorage.getItem('cart')) || {} // cart={key:value} key=eventId value=num of tickets
     const [cartState, setCartState] = useState(cartStateInitial)
 
     useEffect(() => {
@@ -153,8 +153,10 @@ export default function App() {
 
     const addToCart = (eventId, numTickets) => {
         cartState[eventId]
-            ? (cartState[eventId] = numTickets + cartState[eventId])
-            : (cartState[eventId] = numTickets)
+            ? (cartState[eventId] =
+                  parseInt(numTickets) + parseInt(cartState[eventId]))
+            : (cartState[eventId] = parseInt(numTickets))
+
         setCartState({ ...cartState })
     }
 
