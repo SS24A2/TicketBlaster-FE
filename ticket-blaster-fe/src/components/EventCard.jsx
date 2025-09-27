@@ -5,6 +5,7 @@ export default function EventCard({
     imageSrc,
     ButtonComponent,
     UpdateLink,
+    hideDetails,
 }) {
     return (
         <div className="event-card">
@@ -14,7 +15,9 @@ export default function EventCard({
             <div className="event-info">
                 {!UpdateLink ? <h4>{event.name}</h4> : UpdateLink}
                 <h5>{convertDate(event.date)}</h5>
-                <p>{event.details.substring(0, 150)}...</p>
+                <p style={{ display: hideDetails ? 'none' : 'block' }}>
+                    {event.details.substring(0, 150)}...
+                </p>
                 <div>
                     <span>{event.location}</span>
                     {ButtonComponent}
