@@ -1,5 +1,6 @@
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 import { useContext, useState } from 'react'
+import EcommerceContext from './context/EcommerceContext'
 
 import './styles/homepage.css'
 
@@ -13,6 +14,7 @@ export default function Root() {
     const { currentUser } = useContext(AuthContext)
 
     const [searchInput, setSearchInput] = useState('')
+    const { cartState } = useContext(EcommerceContext)
 
     const navigate = useNavigate()
     return (
@@ -57,7 +59,15 @@ export default function Root() {
 
                     {currentUser && (
                         <>
-                            <Link to="/account/cart">
+                            <Link
+                                to="/account/profile/cart"
+                                style={{ position: 'relative' }}
+                            >
+                                <span className="cart-state-num">
+                                    {Object.keys(cartState).length > 0
+                                        ? Object.keys(cartState).length
+                                        : ''}
+                                </span>
                                 <img
                                     src={cartImage}
                                     alt="cart"
