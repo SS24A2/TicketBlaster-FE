@@ -63,10 +63,16 @@ export default function Root() {
                                 to="/account/profile/cart"
                                 style={{ position: 'relative' }}
                             >
-                                <span className="cart-state-num">
-                                    {Object.keys(cartState).length > 0
-                                        ? Object.keys(cartState).length
-                                        : ''}
+                                <span
+                                    className="cart-state-num"
+                                    style={{
+                                        display:
+                                            Object.keys(cartState).length > 0
+                                                ? 'flex'
+                                                : 'none',
+                                    }}
+                                >
+                                    {Object.keys(cartState).length}
                                 </span>
                                 <img
                                     src={cartImage}
