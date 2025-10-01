@@ -23,20 +23,22 @@ function setModalParameters(currentModalType) {
 
 export default function ModalUsersEvents({ modal, cancelModal, confirmModal }) {
     return (
-        <div className="modal-users-events">
-            <div className="modal-users-events-wrapper">
-                <h4>Are you sure?</h4>
-                <p>{setModalParameters(modal.type).text}</p>
-                <div className="modal-users-events-buttons">
-                    <button onClick={cancelModal}>Cancel</button>
-                    <button
-                        className="modal-users-events-confirm-button"
-                        onClick={() => {
-                            confirmModal(modal)
-                        }}
-                    >
-                        {setModalParameters(modal.type).action}
-                    </button>
+        <div className="modal-users-events-background">
+            <div className="modal-users-events">
+                <div className="modal-users-events-wrapper">
+                    <h4>Are you sure?</h4>
+                    <p>{setModalParameters(modal.type).text}</p>
+                    <div className="modal-users-events-buttons">
+                        <button onClick={cancelModal}>Cancel</button>
+                        <button
+                            className="modal-users-events-confirm-button"
+                            onClick={() => {
+                                confirmModal(modal)
+                            }}
+                        >
+                            {setModalParameters(modal.type).action}
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
