@@ -138,7 +138,9 @@ export default function Cart() {
                     Check Out
                 </button>
             </div>
-            {checkoutError && <p>{checkoutError}</p>}
+            {checkoutError && Object.keys(cartState).length > 0 && (
+                <p>{checkoutError}</p>
+            )}
         </div>
     )
 }

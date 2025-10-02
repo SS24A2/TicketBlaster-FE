@@ -1355,7 +1355,6 @@ footer {
     color: #FFFFFF;
 }
 
-.checkout-modal-background,
 .modal-users-events-background {
     position: fixed;
     top: 0;
@@ -1363,15 +1362,4 @@ footer {
     width: 100vw;
     height: 100vh;
     background-color: rgba(178, 177, 177, 0.278);
-}
-
-.checkout-modal {
-    position: fixed;
-    top: 50vh;
-    left: 50vw;
-    transform: translate(-50%, -50%);
-    height: 200px;
-    width: 400px;
-    background-color: #e165a5;
-    border-radius: 20px;
 }

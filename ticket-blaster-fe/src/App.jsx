@@ -132,6 +132,7 @@ export default function App() {
     const handleLogout = () => {
         localStorage.removeItem('token')
         setCurrentUser(null)
+        emptyCart()
     }
     const handleLogin = (token) => {
         localStorage.setItem('token', token)
@@ -171,6 +172,10 @@ export default function App() {
         setCartState({ ...newState })
     }
 
+    const emptyCart = () => {
+        setCartState({})
+    }
+
     return (
         <AuthContext.Provider
             value={{
@@ -180,7 +185,7 @@ export default function App() {
             }}
         >
             <EcommerceContext.Provider
-                value={{ cartState, addToCart, removeFromCart }}
+                value={{ cartState, addToCart, removeFromCart, emptyCart }}
             >
                 <RouterProvider router={router} />
             </EcommerceContext.Provider>
