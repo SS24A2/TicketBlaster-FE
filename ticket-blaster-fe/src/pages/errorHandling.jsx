@@ -9,7 +9,7 @@ export default function errorHandling(err) {
     } else {
         errorMessage = err.response?.data || err.message
         if (errorMessage === 'MailgunAPIError')
-            errorMessage = 'Confirmation email cannot be send'
+            errorMessage = 'Confirmation email cannot be send!'
     }
     return errorMessage
 }
