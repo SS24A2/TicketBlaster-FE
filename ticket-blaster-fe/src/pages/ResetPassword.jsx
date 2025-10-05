@@ -33,7 +33,7 @@ export default function ResetPassword() {
         const checkResetPasswordLink = async () => {
             try {
                 const res = await Api().get(
-                    `http://localhost:10002/api/v1/auth/resetPassword/${id}/${token}`
+                    `/api/v1/auth/resetPassword/${id}/${token}`
                 )
                 console.log(res)
                 if (res.data === 'Token is valid') {
