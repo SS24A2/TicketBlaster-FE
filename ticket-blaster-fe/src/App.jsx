@@ -114,7 +114,9 @@ const router = createBrowserRouter([
                 element: (
                     <div>
                         Permission denied
-                        <Link to="/">Go back</Link>
+                        <Link to="/" viewTransition>
+                            Go back
+                        </Link>
                     </div>
                 ),
             },

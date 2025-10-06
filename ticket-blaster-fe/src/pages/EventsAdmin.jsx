@@ -21,7 +21,9 @@ function Button({ openModal }) {
 function LinkToUpdateEvent({ id, children }) {
     return (
         <h4>
-            <Link to={`/account/profile/events/update/${id}`}>{children}</Link>
+            <Link to={`/account/profile/events/update/${id}`} viewTransition>
+                {children}
+            </Link>
         </h4>
     )
 }
@@ -183,7 +185,7 @@ export default function EventsAdmin() {
                 <div className="title-nav">
                     <h2>Events</h2>
                     <button className="pink-button">
-                        <Link to="/account/profile/events/new">
+                        <Link to="/account/profile/events/new" viewTransition>
                             Create Event
                         </Link>
                     </button>

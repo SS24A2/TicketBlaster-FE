@@ -76,7 +76,9 @@ export default function Homepage() {
                     </span>
 
                     <button>
-                        <Link to={`/event/${mainEvent._id}`}>Get tickets</Link>
+                        <Link to={`/event/${mainEvent._id}`} viewTransition>
+                            Get tickets
+                        </Link>
                     </button>
                 </div>
             </div>
@@ -103,7 +105,9 @@ export default function Homepage() {
                         ))}
                     </div>
                     <button>
-                        <Link to="/concerts">See All Musical Concerts</Link>
+                        <Link to="/concerts" viewTransition>
+                            See All Musical Concerts
+                        </Link>
                     </button>
                 </div>
                 <div className="homepage-comedies">
@@ -128,7 +132,7 @@ export default function Homepage() {
                         ))}
                     </div>
                     <button>
-                        <Link to="/comedies">
+                        <Link to="/comedies" viewTransition>
                             See All Stand-up Comedy Shows
                         </Link>
                     </button>

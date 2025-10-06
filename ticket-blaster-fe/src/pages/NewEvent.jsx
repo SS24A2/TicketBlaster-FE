@@ -164,7 +164,7 @@ export default function NewEvent({ type }) {
                     console.log('res2', res2)
                 }
 
-                navigate('/account/profile/events')
+                navigate('/account/profile/events', { viewTransition: true })
             } else if (type === 'update') {
                 const res = await Api().put(`/api/v1/events/${id}`, {
                     name: formState.name,
@@ -185,7 +185,7 @@ export default function NewEvent({ type }) {
                     )
                     console.log('res2', res2)
                 }
-                navigate('/account/profile/events')
+                navigate('/account/profile/events', { viewTransition: true })
             }
         } catch (err) {
             console.log(err)

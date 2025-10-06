@@ -23,7 +23,7 @@ export default function Login() {
             })
             if (res.data.token) {
                 handleLogin(res.data.token)
-                navigate('/account/profile')
+                navigate('/account/profile', { viewTransition: true })
             } else {
                 //in case a token is not send in the response ?
                 setError(res.data.error || 'Login error!')
@@ -62,7 +62,7 @@ export default function Login() {
 
                 <div>
                     <span className="login-forgot-password">
-                        <Link to="/account/password/forgot">
+                        <Link to="/account/password/forgot" viewTransition>
                             Forgot Password?
                         </Link>
                     </span>
@@ -72,7 +72,9 @@ export default function Login() {
                 </div>
 
                 <button type="button" className="white-button">
-                    <Link to="/account/register">Don’t have an account?</Link>
+                    <Link to="/account/register" viewTransition>
+                        Don’t have an account?
+                    </Link>
                 </button>
             </form>
 

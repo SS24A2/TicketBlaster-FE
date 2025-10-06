@@ -23,7 +23,7 @@ export default function Register() {
             })
 
             console.log('res', res)
-            navigate('/account/login')
+            navigate('/account/login', { viewTransition: true })
         } catch (err) {
             console.log('err', err)
             let errorMessage = errorHandling(err)
@@ -78,7 +78,9 @@ export default function Register() {
                 </button>
 
                 <button type="button" className="white-button">
-                    <Link to="/account/login">Already have an account?</Link>
+                    <Link to="/account/login" viewTransition>
+                        Already have an account?
+                    </Link>
                 </button>
             </form>
             {error && <div style={{ color: 'red' }}>{error}</div>}

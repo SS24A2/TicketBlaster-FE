@@ -21,7 +21,7 @@ export default function ResetPassword() {
                 { password, confirmPassword }
             )
             console.log(res)
-            navigate('/account/login')
+            navigate('/account/login', { viewTransition: true })
         } catch (err) {
             console.log('err', err)
             let errorMessage = errorHandling(err)
@@ -83,7 +83,9 @@ export default function ResetPassword() {
                     </button>
 
                     <button type="button" className="white-button">
-                        <Link to="/account/login">Back to login</Link>
+                        <Link to="/account/login" viewTransition>
+                            Back to login
+                        </Link>
                     </button>
                 </form>
 

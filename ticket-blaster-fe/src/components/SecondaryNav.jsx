@@ -15,19 +15,27 @@ export default function SecondaryNav({ pageSelected }) {
             {currentUser.role === 'admin' && (
                 <>
                     <span className={textStyle(pageSelected, 'events')}>
-                        <Link to="/account/profile/events">Events</Link>
+                        <Link to="/account/profile/events" viewTransition>
+                            Events
+                        </Link>
                     </span>
                     <span className={textStyle(pageSelected, 'users')}>
-                        <Link to="/account/profile/users">Users</Link>
+                        <Link to="/account/profile/users" viewTransition>
+                            Users
+                        </Link>
                     </span>
                 </>
             )}
             <>
                 <span className={textStyle(pageSelected, 'tickets')}>
-                    <Link to="/account/profile/tickets">Tickets History</Link>
+                    <Link to="/account/profile/tickets" viewTransition>
+                        Tickets History
+                    </Link>
                 </span>
                 <span className={textStyle(pageSelected, 'details')}>
-                    <Link to="/account/profile/details">User Details</Link>
+                    <Link to="/account/profile/details" viewTransition>
+                        User Details
+                    </Link>
                 </span>
                 <span onClick={handleLogout}>Log Out</span>
             </>

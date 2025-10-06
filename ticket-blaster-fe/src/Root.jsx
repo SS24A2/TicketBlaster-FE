@@ -21,14 +21,18 @@ export default function Root() {
         <div>
             <header>
                 <nav className="navigation">
-                    <Link to="/">
+                    <Link to="/" viewTransition>
                         <img src={logoImage} alt="logo" className="logo-img" />
                     </Link>
                     <span>
-                        <Link to="/concerts">Musical Concerts</Link>
+                        <Link to="/concerts" viewTransition>
+                            Musical Concerts
+                        </Link>
                     </span>
                     <span>
-                        <Link to="/comedies">Stand-up Comedy</Link>
+                        <Link to="/comedies" viewTransition>
+                            Stand-up Comedy
+                        </Link>
                     </span>
                     <input
                         type="text"
@@ -38,7 +42,10 @@ export default function Root() {
                         onChange={(e) => setSearchInput(e.target.value)}
                         onKeyDown={(e) => {
                             if (e.key === 'Enter' && searchInput) {
-                                navigate(`/events/search/${searchInput.trim()}`)
+                                navigate(
+                                    `/events/search/${searchInput.trim()}`,
+                                    { viewTransition: true }
+                                )
                                 setSearchInput('')
                             }
                         }}
@@ -47,10 +54,12 @@ export default function Root() {
                     {!currentUser && (
                         <>
                             <button>
-                                <Link to="/account/login">Log in</Link>
+                                <Link to="/account/login" viewTransition>
+                                    Log in
+                                </Link>
                             </button>
                             <button>
-                                <Link to="/account/register">
+                                <Link to="/account/register" viewTransition>
                                     Create Account
                                 </Link>
                             </button>
@@ -62,6 +71,7 @@ export default function Root() {
                             <Link
                                 to="/account/profile/cart"
                                 style={{ position: 'relative' }}
+                                viewTransition
                             >
                                 <span
                                     className="cart-state-num"
@@ -80,7 +90,7 @@ export default function Root() {
                                     className="cart-img"
                                 />
                             </Link>
-                            <Link to="/account/profile">
+                            <Link to="/account/profile" viewTransition>
                                 <img
                                     src={userImage}
                                     alt="user"

@@ -54,7 +54,9 @@ export default function ForgotPassword() {
                 </button>
 
                 <button type="button" className="white-button">
-                    <Link to="/account/login">Back to login</Link>
+                    <Link to="/account/login" viewTransition>
+                        Back to login
+                    </Link>
                 </button>
             </form>
             {message && <div>{message}</div>}

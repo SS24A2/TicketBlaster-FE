@@ -43,7 +43,7 @@ export default function UsersAdmin() {
             if (id === currentUser.id) {
                 //ako admin ja smeni svojata uloga vo user, treba da bide odlogiran i pak da se logira kako obicen user
                 handleLogout()
-                navigate('/account/login')
+                navigate('/account/login', { viewTransition: true })
             } else {
                 getUsers()
             }
@@ -59,7 +59,7 @@ export default function UsersAdmin() {
             if (id === currentUser.id) {
                 //ako admin go izbrishe svojot profil, treba da bide odlogiran i vraten na homepage kako user bez account
                 handleLogout()
-                navigate('/')
+                navigate('/', { viewTransition: true })
             } else {
                 getUsers()
             }

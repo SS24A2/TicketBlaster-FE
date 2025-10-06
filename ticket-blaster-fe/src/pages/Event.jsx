@@ -57,7 +57,7 @@ export default function Event() {
             }
             setCartError('')
             addToCart(id, numOfTickets)
-            navigate('/account/profile/cart')
+            navigate('/account/profile/cart', { viewTransition: true })
         } catch (err) {
             console.log(err)
         }

@@ -59,7 +59,7 @@ export default function UserDetails() {
                 })
                 console.log('res1', res)
                 handleLogout()
-                navigate('/account/login')
+                navigate('/account/login', { viewTransition: true })
             }
             if (
                 fullname === user.fullname &&
@@ -85,7 +85,7 @@ export default function UserDetails() {
             })
             console.log(res)
             handleLogout()
-            navigate('/account/login')
+            navigate('/account/login', { viewTransition: true })
         } catch (err) {
             console.log(err)
         }
