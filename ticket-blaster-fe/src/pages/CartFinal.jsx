@@ -59,7 +59,7 @@ export default function CartFinal() {
 
                 if (
                     !response.data?.events ||
-                    !response.data?.events.length > 0 ||
+                    !(response.data?.events.length > 0) ||
                     !response.data?.images
                 ) {
                     setLoadingEvents(false)
