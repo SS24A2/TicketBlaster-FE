@@ -32,17 +32,24 @@ export default function Event() {
 
             const response = await Api().get(`api/v1/ecommerce/${id}`)
             // response.data - tickets not sold or reserved in DB; cartState[id] - tickets already selected by the user
-            const numAvailableTickets = cartState[id]
-                ? response.data - parseInt(cartState[id])
-                : response.data
+            const numAvailableTickets =
+                cartState[id] && response.data > 0
+                    ? response.data - parseInt(cartState[id])
+                    : response.data
             if (numOfTickets > numAvailableTickets) {
                 if (cartState[id]) {
                     numAvailableTickets === 0
                         ? setCartError(
-                              `You already have ${cartState[id]} tickets in your cart. No more tickets are available at the moment! Check again later!`
+                              `You already have ${cartState[id]} ${
+                                  cartState[id] > 1 ? 'tickets' : 'ticket'
+                              } in your cart. No more tickets available at the moment! Check again later!`
                           )
                         : setCartError(
-                              `You already have ${cartState[id]} tickets in your cart. Only ${numAvailableTickets} more tickets are available at the moment!`
+                              `You already have ${cartState[id]} ${
+                                  cartState[id] > 1 ? 'tickets' : 'ticket'
+                              } in your cart. Only ${numAvailableTickets} more ${
+                                  numAvailableTickets > 1 ? 'tickets' : 'ticket'
+                              } available at the moment!`
                           )
                 } else {
                     numAvailableTickets === 0
@@ -50,7 +57,9 @@ export default function Event() {
                               `No tickets available at the moment! Check again later!`
                           )
                         : setCartError(
-                              `Only ${numAvailableTickets} tickets are available at the moment!`
+                              `Only ${numAvailableTickets} ${
+                                  numAvailableTickets > 1 ? 'tickets' : 'ticket'
+                              } available at the moment!`
                           )
                 }
                 return

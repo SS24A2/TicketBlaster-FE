@@ -4,6 +4,10 @@ body {
     box-sizing: border-box;
 }
 
+main {
+    min-height: 100vh;
+}
+
 header {
     background-color: #000000;
     height: 70px;

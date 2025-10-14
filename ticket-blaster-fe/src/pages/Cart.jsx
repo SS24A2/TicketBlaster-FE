@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
-import { Link, useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 import EcommerceContext from '../context/EcommerceContext'
 import EventCard from '../components/EventCard'
@@ -24,40 +24,82 @@ export default function Cart() {
     const location = useLocation()
     const isBackFromCheckout = location?.state?.isBackFromCheckout
 
+    const [isLoading, setIsLoading] = useState(false)
+    const [error, setError] = useState('')
+
+    const [checkoutInProgress, setCheckoutInProgress] = useState(false)
     const [checkoutError, setCheckoutError] = useState('')
 
     const handleCheckout = async () => {
+        setCheckoutInProgress(true)
         try {
             const response = await Api().put('/api/v1/ecommerce/checkout', {
                 selectedTickets: cartState,
             })
             console.log('checkout response', response)
-            setCheckoutError('')
-            navigate('/account/profile/cart/checkout', {
-                state: { reservedTickets: response.data },
-            })
+
+            if (!response.data || !(response.data.length > 0)) {
+                setCheckoutInProgress(false)
+                setCheckoutError('Something went wrong. Try again later.')
+                return
+            }
+
+            navigate(
+                '/account/profile/cart/checkout',
+                {
+                    state: { reservedTickets: response.data },
+                },
+                { viewTransition: true }
+            )
         } catch (err) {
             console.log(err)
-            setCheckoutError(err.response.data.error)
+            setCheckoutInProgress(false)
+            setCheckoutError(
+                err.response?.data?.error || 'Something went wrong. Try again.'
+            )
         }
     }
 
     useEffect(() => {
-        const eventsIdsArray = Object.keys(cartState)
-        if (eventsIdsArray.length === 0) {
-            setCartEvents([])
-            setCartImages(null)
-            return
-        }
-        const eventsIdsString = eventsIdsArray.join(',')
-
         async function getEventsFromCart() {
+            setIsLoading(true)
+            setCheckoutError('')
             try {
+                if (!cartState) {
+                    setIsLoading(false)
+                    setError(
+                        'The page is currently unavailable. Try again later.'
+                    )
+                    return
+                }
+                const eventsIdsArray = Object.keys(cartState)
+                if (eventsIdsArray.length === 0) {
+                    setIsLoading(false)
+                    setCartEvents([])
+                    setCartImages(null)
+                    return
+                }
+
+                for (let event in cartState) {
+                    if (!(cartState[event] > 0)) {
+                        removeFromCart(event)
+                        return
+                    }
+                }
+
+                const eventsIdsString = eventsIdsArray.join(',')
                 const response = await Api().get(
                     `/api/v1/events/cart?ids=${eventsIdsString}`
                 )
                 console.log('cart events response', response)
 
+                if (!response.data?.events || !response.data?.images) {
+                    setIsLoading(false)
+                    setError('Internal server error. Try again later.')
+                    return
+                }
+
+                setIsLoading(false)
                 setCartEvents(response.data.events)
                 setCartImages(response.data.images)
 
@@ -73,15 +115,43 @@ export default function Cart() {
                 }
             } catch (err) {
                 console.log(err)
+                setIsLoading(false)
+                setError(
+                    err.response?.data ||
+                        'The page is currently unavailable. Try again later.'
+                )
             }
         }
         getEventsFromCart()
     }, [cartState, removeFromCart])
 
+    if (isLoading) {
+        return (
+            <div className="modal-users-events-background">
+                <div className="modal-users-events">
+                    <div
+                        className="modal-users-events-wrapper"
+                        style={{ width: 200, margin: '20px auto' }}
+                    >
+                        <h3 style={{ textAlign: 'center' }}>Loading</h3>
+                        <div
+                            style={{ margin: '50px auto' }}
+                            className="loader"
+                        ></div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    if (error) {
+        return <section>{error}</section>
+    }
+
     return (
         <div>
             <h1>Shopping Cart</h1>
-            {Object.keys(cartState).length > 0 && (
+            {cartEvents.length > 0 && (
                 <div>
                     {cartEvents.map((event) => {
                         return (
@@ -120,27 +190,43 @@ export default function Cart() {
                     })}
                 </div>
             )}
-            {Object.keys(cartState).length === 0 && <p>No items in cart</p>}
+            {cartEvents.length === 0 && <p>No items in cart</p>}
             <div>
-                {Object.keys(cartState).length > 0 && (
+                {cartEvents.length > 0 && (
                     <button
                         onClick={() =>
-                            !isBackFromCheckout ? navigate(-1) : navigate('/')
+                            !isBackFromCheckout
+                                ? navigate(-1, { viewTransition: true })
+                                : navigate('/', { viewTransition: true })
                         }
                     >
                         Back
                     </button>
                 )}
+
                 <button
                     onClick={handleCheckout}
-                    disabled={Object.keys(cartState).length === 0}
+                    disabled={cartEvents.length === 0}
                 >
                     Check Out
                 </button>
             </div>
-            {checkoutError && Object.keys(cartState).length > 0 && (
-                <p>{checkoutError}</p>
+            {checkoutError && cartEvents.length > 0 && <p>{checkoutError}</p>}
+            {checkoutInProgress && (
+                <div className="modal-users-events-background">
+                    <div className="modal-users-events">
+                        <div className="modal-users-events-wrapper">
+                            <h4>Checking Tickets Availability</h4>
+                            <div className="loader"></div>
+                        </div>
+                    </div>
+                </div>
             )}
+            <p>
+                Events that have already occurred or have been cancelled are
+                automatically removed from your cart since tickets for these
+                events cannot be purchased.
+            </p>
         </div>
     )
 }
