@@ -132,6 +132,7 @@ export default function UserDetails() {
 
                             <label htmlFor="avatar">Upload Avatar</label>
                             <input
+                                autoComplete="off"
                                 type="file"
                                 id="avatar"
                                 onChange={changeAvatar}
@@ -142,6 +143,7 @@ export default function UserDetails() {
                             <div>
                                 <label>Full Name</label>
                                 <input
+                                    autoComplete="off"
                                     type="text"
                                     value={fullname}
                                     onChange={(e) =>
@@ -154,6 +156,7 @@ export default function UserDetails() {
                             <div>
                                 <label>Email</label>
                                 <input
+                                    autoComplete="off"
                                     type="email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
@@ -181,6 +184,7 @@ export default function UserDetails() {
                             <div>
                                 <label>Password</label>
                                 <input
+                                    autoComplete="off"
                                     type="password"
                                     value={password}
                                     onChange={(e) =>
@@ -192,6 +196,7 @@ export default function UserDetails() {
                             <div>
                                 <label>Re-type Password</label>
                                 <input
+                                    autoComplete="off"
                                     type="password"
                                     value={confirmPassword}
                                     onChange={(e) =>

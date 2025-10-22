@@ -43,6 +43,7 @@ export default function Login() {
                 <div className="login-email">
                     <label>Email</label>
                     <input
+                        autoComplete="off"
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
@@ -53,6 +54,7 @@ export default function Login() {
                 <div className="login-password">
                     <label>Password</label>
                     <input
+                        autoComplete="off"
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}

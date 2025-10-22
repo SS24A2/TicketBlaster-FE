@@ -38,6 +38,7 @@ export default function ForgotPassword() {
                 <div className="forgot-password-email">
                     <label>Email</label>
                     <input
+                        autoComplete="off"
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
