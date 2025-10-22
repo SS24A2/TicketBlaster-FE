@@ -4,8 +4,7 @@ import { useLocation } from 'react-router-dom'
 import noImageIcon from '../assets/Image-not-found.png'
 import EventCard from '../components/EventCard'
 import Api from '../Api'
-import nextIcon from '../assets/icon-next.svg'
-import previousIcon from '../assets/icon-previous.svg'
+import TicketsModal from '../components/TicketsModal'
 
 function PrintButton({ printTicket, style }) {
     return (
@@ -24,14 +23,11 @@ export default function CartFinal() {
     const archivedCart = location?.state?.archivedCart
 
     const [isTicketsModalOpen, setIsTicketsModalOpen] = useState(false)
-    const [ticketIndex, setTicketIndex] = useState(0)
     const [allTickets, setAllTickets] = useState([])
     const [ticketsforSelectedEvent, setTicketsforSelectedEvent] = useState([])
 
     const [cartEvents, setCartEvents] = useState([])
     const [cartImages, setCartImages] = useState(null)
-
-    const [modalBackgroundBlink, setModalBackgroundBlink] = useState(false)
 
     const [loadingEvents, setLoadingEvents] = useState(false)
     const [loadingTickets, setLoadingTickets] = useState(false)
@@ -82,12 +78,9 @@ export default function CartFinal() {
         async function getTickets() {
             setLoadingTickets(true)
             try {
-                if (
-                    !purchasedTickets?.length ||
-                    purchasedTickets.length === 0
-                ) {
+                if (!(purchasedTickets?.length > 0)) {
                     setLoadingTickets(false)
-                    setTicketsError('all')
+                    setTicketsError(true)
                     return
                 }
                 const ticketsIds = purchasedTickets.join(',')
@@ -95,9 +88,9 @@ export default function CartFinal() {
                     `/api/v1/ecommerce/tickets/print?ids=${ticketsIds}`
                 )
                 console.log(response)
-                if (!response.data?.length || response.data?.length === 0) {
+                if (!(response.data?.length === purchasedTickets.length)) {
                     setLoadingTickets(false)
-                    setTicketsError('all')
+                    setTicketsError(true)
                     return
                 }
                 setLoadingTickets(false)
@@ -105,7 +98,7 @@ export default function CartFinal() {
             } catch (err) {
                 console.log(err)
                 setLoadingTickets(false)
-                setTicketsError('all')
+                setTicketsError(true)
             }
         }
         getTickets()
@@ -131,18 +124,10 @@ export default function CartFinal() {
                                 ButtonComponent={
                                     <PrintButton
                                         printTicket={() => {
-                                            if (ticketsError === 'all') return
-                                            if (
-                                                allTickets.filter(
-                                                    (t) =>
-                                                        t.eventId === event._id
-                                                ).length === 0
-                                            ) {
-                                                setTicketsError(event._id)
-                                                return
-                                            }
+                                            if (ticketsError) return
+
                                             setIsTicketsModalOpen(true)
-                                            setTicketsError(null)
+
                                             setTicketsforSelectedEvent([
                                                 ...allTickets.filter(
                                                     (t) =>
@@ -151,22 +136,13 @@ export default function CartFinal() {
                                             ])
                                         }}
                                         style={{
-                                            opacity:
-                                                ticketsError === 'all'
-                                                    ? '0.5'
-                                                    : '1',
+                                            opacity: ticketsError ? '0.5' : '1',
                                         }}
                                     />
                                 }
                                 hideDetails={true}
                             />
-                            {ticketsError === event._id && (
-                                <p>
-                                    Sorry, your tickets are currently
-                                    unavailable. Check Tickets History page or
-                                    your email to print the tickets.
-                                </p>
-                            )}
+
                             <div>
                                 <span>
                                     ${archivedCart[event._id] * event.price}.00
@@ -181,10 +157,10 @@ export default function CartFinal() {
                     ))}
                 </div>
             )}
-            {ticketsError === 'all' && !loadingEvents && !eventsError && (
+            {ticketsError && !loadingEvents && !eventsError && (
                 <p>
-                    Sorry, your tickets are currently unavailable. Check Tickets
-                    History page or your email to print the tickets.
+                    Your tickets cannot be printed at this time. Try again
+                    later.
                 </p>
             )}
             {eventsError && (
@@ -210,69 +186,10 @@ export default function CartFinal() {
                 </div>
             )}
             {isTicketsModalOpen && (
-                <div
-                    className={`modal-tickets-background  ${
-                        modalBackgroundBlink ? 'blinking-effect' : ''
-                    }`}
-                    onClick={() => {
-                        setModalBackgroundBlink(true)
-                        setTimeout(() => {
-                            setModalBackgroundBlink(false)
-                        }, 500)
-                    }}
-                >
-                    <div className="modal-tickets">
-                        <div
-                            onClick={(e) => {
-                                e.stopPropagation()
-                                setIsTicketsModalOpen(false)
-                                setTicketIndex(0)
-                            }}
-                            dangerouslySetInnerHTML={{
-                                __html: ticketsforSelectedEvent[ticketIndex]
-                                    .ticket,
-                            }}
-                        ></div>
-                        {ticketsforSelectedEvent.length > 1 &&
-                            ticketIndex <
-                                ticketsforSelectedEvent.length - 1 && (
-                                <span
-                                    onClick={(e) => {
-                                        e.stopPropagation()
-                                        setTicketIndex(
-                                            (ticketIndex + 1) %
-                                                ticketsforSelectedEvent.length
-                                        )
-                                    }}
-                                    className="next-ticket"
-                                >
-                                    <img src={nextIcon} alt="next" />
-                                </span>
-                            )}
-                        {ticketsforSelectedEvent.length > 1 &&
-                            ticketIndex > 0 && (
-                                <span
-                                    onClick={(e) => {
-                                        e.stopPropagation()
-                                        setTicketIndex(
-                                            (ticketIndex +
-                                                ticketsforSelectedEvent.length -
-                                                1) %
-                                                ticketsforSelectedEvent.length
-                                        )
-                                    }}
-                                    className="previous-ticket"
-                                >
-                                    <img src={previousIcon} alt="previous" />
-                                </span>
-                            )}
-                        {ticketsforSelectedEvent.length > 1 && (
-                            <h5 className="ticket-num">
-                                Ticket number: {ticketIndex + 1}
-                            </h5>
-                        )}
-                    </div>
-                </div>
+                <TicketsModal
+                    ticketsforSelectedEvent={ticketsforSelectedEvent}
+                    setIsTicketsModalOpen={setIsTicketsModalOpen}
+                />
             )}
         </div>
     )
