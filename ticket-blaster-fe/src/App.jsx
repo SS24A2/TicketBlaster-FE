@@ -1,6 +1,7 @@
 import './App.css'
 import { createBrowserRouter, RouterProvider, Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import { decodeToken, isExpired } from 'react-jwt'
 
 import Root from './Root'
 import ProtectedRoute from './components/ProtectedRoute'
@@ -24,8 +25,9 @@ import UsersAdmin from './pages/UsersAdmin'
 
 import AuthContext from './context/AuthContext'
 import EcommerceContext from './context/EcommerceContext'
-import { decodeToken, isExpired } from 'react-jwt'
 import Search from './pages/Search'
+import VerificationInfoPage from './pages/VerificationInfoPage'
+import VerificationOutcomePage from './pages/VerificationOutcomePage'
 
 // TBC!
 const router = createBrowserRouter([
@@ -59,6 +61,14 @@ const router = createBrowserRouter([
                     {
                         path: 'register',
                         element: <Register />,
+                    },
+                    {
+                        path: 'verify',
+                        element: <VerificationInfoPage />,
+                    },
+                    {
+                        path: 'verify/:id/:token',
+                        element: <VerificationOutcomePage />,
                     },
                     {
                         path: 'password/forgot',

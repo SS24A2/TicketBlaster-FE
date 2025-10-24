@@ -29,6 +29,7 @@ export default function NewEvent({ type }) {
         location: '',
         details: '',
         price: '',
+        numOfTickets: '',
         relatedEvents: [],
         selectedRelatedEvent: '',
         uploadedImg: null,
@@ -151,6 +152,7 @@ export default function NewEvent({ type }) {
                     location: formState.location,
                     details: formState.details,
                     price: formState.price,
+                    numOfTickets: formState.numOfTickets,
                     relatedEvents: relatedEventsIDs,
                 })
                 console.log('res1', res)
@@ -218,6 +220,7 @@ export default function NewEvent({ type }) {
                     <span>
                         <label>Event Name</label>
                         <input
+                            autoComplete="off"
                             type="text"
                             name="name"
                             required
@@ -233,6 +236,7 @@ export default function NewEvent({ type }) {
                     <span>
                         <label>Category</label>
                         <select
+                            autoComplete="off"
                             name="category"
                             required
                             value={formState.category}
@@ -250,6 +254,7 @@ export default function NewEvent({ type }) {
                     <span>
                         <label>Date</label>
                         <input
+                            autoComplete="off"
                             type="date"
                             name="date"
                             required
@@ -265,6 +270,7 @@ export default function NewEvent({ type }) {
                     <span>
                         <label>Location</label>
                         <input
+                            autoComplete="off"
                             type="text"
                             name="location"
                             required
@@ -282,6 +288,7 @@ export default function NewEvent({ type }) {
                     <div>
                         <label htmlFor="event-photo">Upload Event Art</label>
                         <input
+                            autoComplete="off"
                             type="file"
                             id="event-photo"
                             onChange={changeImage}
@@ -306,6 +313,7 @@ export default function NewEvent({ type }) {
                         <span>
                             <label>Event Details</label>
                             <textarea
+                                autoComplete="off"
                                 name="details"
                                 required
                                 value={formState.details}
@@ -320,6 +328,7 @@ export default function NewEvent({ type }) {
                         <span>
                             <label>Ticket Price (USD)</label>
                             <input
+                                autoComplete="off"
                                 type="number"
                                 name="price"
                                 required
@@ -332,6 +341,24 @@ export default function NewEvent({ type }) {
                                 }
                             />
                         </span>
+                        {type === 'create' && (
+                            <span>
+                                <label>Number of tickets</label>
+                                <input
+                                    autoComplete="off"
+                                    type="number"
+                                    name="number-tickets"
+                                    required
+                                    value={formState.numOfTickets}
+                                    onChange={(e) =>
+                                        setFormState({
+                                            ...formState,
+                                            numOfTickets: e.target.value,
+                                        })
+                                    }
+                                />
+                            </span>
+                        )}
                     </div>
                 </div>
                 {userError && (
@@ -349,6 +376,7 @@ export default function NewEvent({ type }) {
                 <div className="form-third-group">
                     <h5>Related Events</h5>
                     <select
+                        autoComplete="off"
                         ref={selectRef}
                         size={selectSize}
                         name="related-events"
