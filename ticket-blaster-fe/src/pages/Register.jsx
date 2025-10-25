@@ -23,9 +23,28 @@ export default function Register() {
             })
 
             console.log('res', res)
-            navigate('/account/login', { viewTransition: true })
+
+            const id = res.data?.id
+            if (!id) {
+                setError('Account creation failed! Try again later.')
+                return
+            }
+            localStorage.setItem('unverifiedAccount', id)
+
+            navigate(
+                '/account/verify',
+                { state: { isVerificationMailSent: true } },
+                { viewTransition: true }
+            )
         } catch (err) {
             console.log('err', err)
+            if (err.status === 403) {
+                navigate(
+                    '/account/verify',
+                    { state: { isVerificationMailSent: false } },
+                    { viewTransition: true }
+                )
+            }
             let errorMessage = errorHandling(err)
             setError(`${errorMessage} Try again`)
         }
