@@ -48,11 +48,19 @@ export default function NewEvent({ type }) {
     const [selectSize, setSelectSize] = useState(0)
     const selectRef = useRef(null)
 
+    const [loadingMoreRelatedEvents, setLoadingMoreRelatedEvents] =
+        useState(false)
+
     async function getMoreEvents() {
+        setLoadingMoreRelatedEvents(true)
         try {
-            if (!nextPage) return
+            if (!nextPage) {
+                setLoadingMoreRelatedEvents(false)
+                return
+            }
+
             const response = await Api().get(
-                `/api/v1/events?page=${nextPage}&pageSize=${pageSize}`
+                `/api/v1/events?category=${formState.category}&page=${nextPage}&pageSize=${pageSize}`
             )
             console.log('more ev', response)
             if (response.data.events.length === pageSize) {
@@ -60,10 +68,13 @@ export default function NewEvent({ type }) {
             } else {
                 setNextPage(null)
             }
-            if (response.data.events.length > 0)
+            if (response.data.events.length > 0) {
                 setAllEvents([...allEvents, ...response.data.events])
+            }
+            setLoadingMoreRelatedEvents(false)
         } catch (err) {
             console.log(err)
+            setLoadingMoreRelatedEvents(false)
         }
     }
 
@@ -104,7 +115,7 @@ export default function NewEvent({ type }) {
         async function getInitialEvents() {
             try {
                 const response = await Api().get(
-                    `/api/v1/events?page=1&pageSize=${pageSize}`
+                    `/api/v1/events?category=${formState.category}&page=1&pageSize=${pageSize}`
                 )
                 console.log('initial list ev', response)
                 if (response.data.events) {
@@ -120,7 +131,7 @@ export default function NewEvent({ type }) {
             }
         }
         getInitialEvents()
-    }, [])
+    }, [formState.category])
 
     useEffect(() => {
         async function getEventToUpdate() {
@@ -407,6 +418,21 @@ export default function NewEvent({ type }) {
                                 )
                             }
                         })}
+                        {loadingMoreRelatedEvents ? (
+                            <option
+                                style={{
+                                    fontWeight: '900',
+                                    letterSpacing: '3px',
+                                    color: 'black',
+                                    marginLeft: 10,
+                                }}
+                                disabled
+                            >
+                                .....
+                            </option>
+                        ) : (
+                            <option></option>
+                        )}
                     </select>
                     <button
                         onClick={() => {
