@@ -16,7 +16,8 @@ function RemoveButton({ remove }) {
 
 export default function Cart() {
     const navigate = useNavigate()
-    const { cartState, removeFromCart } = useContext(EcommerceContext)
+    const { cartState, removeFromCart, changeNumTickets } =
+        useContext(EcommerceContext)
 
     const [cartEvents, setCartEvents] = useState([])
     const [cartImages, setCartImages] = useState(null)
@@ -30,11 +31,32 @@ export default function Cart() {
     const [checkoutInProgress, setCheckoutInProgress] = useState(false)
     const [checkoutError, setCheckoutError] = useState('')
 
+    const [newCartState, setNewCartState] = useState(cartState)
+
+    useEffect(() => {
+        //save new num of tickets to context on page leave, before that it is stored locally
+        return () => {
+            if (window.location.pathname !== '/account/profile/cart') {
+                let cartStateUpdated = {}
+                //events are taken from cartState and the number of tickets is taken from newCartState (cartState stores the events ids and newCartState stores the num of tickets)
+                for (let event of Object.keys(cartState)) {
+                    cartStateUpdated[event] = newCartState[event]
+                }
+                changeNumTickets(cartStateUpdated)
+            }
+        }
+    }, [cartState, newCartState, changeNumTickets])
+
     const handleCheckout = async () => {
+        let cartStateUpdated = {}
+        //events are taken from cartState and the number of tickets is taken from newCartState (cartState stores the events ids and newCartState stores the num of tickets)
+        for (let event of Object.keys(cartState)) {
+            cartStateUpdated[event] = newCartState[event]
+        }
         setCheckoutInProgress(true)
         try {
             const response = await Api().put('/api/v1/ecommerce/checkout', {
-                selectedTickets: cartState,
+                selectedTickets: cartStateUpdated,
             })
             console.log('checkout response', response)
 
@@ -177,12 +199,58 @@ export default function Cart() {
                                 />
                                 <div>
                                     <span>
-                                        ${cartState[event._id] * event.price}.00
-                                        USD
-                                    </span>
-                                    <span>
-                                        {cartState[event._id]} x ${event.price}
+                                        ${newCartState[event._id] * event.price}
                                         .00 USD
+                                    </span>
+                                    <span
+                                        style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            margin: 20,
+                                        }}
+                                    >
+                                        <span
+                                            style={{
+                                                marginRight: 10,
+                                                display: 'flex',
+                                                flexDirection: 'column',
+                                            }}
+                                        >
+                                            <i
+                                                onClick={() => {
+                                                    setNewCartState({
+                                                        ...newCartState,
+                                                        [event._id]:
+                                                            newCartState[
+                                                                event._id
+                                                            ] + 1,
+                                                    })
+                                                }}
+                                                className="arrow-up"
+                                            ></i>
+                                            <i
+                                                onClick={() => {
+                                                    if (
+                                                        newCartState[
+                                                            event._id
+                                                        ] > 1
+                                                    )
+                                                        setNewCartState({
+                                                            ...newCartState,
+                                                            [event._id]:
+                                                                newCartState[
+                                                                    event._id
+                                                                ] - 1,
+                                                        })
+                                                }}
+                                                className="arrow-down"
+                                            ></i>
+                                        </span>
+                                        <span>{newCartState[event._id]}</span>
+                                        <span>
+                                            x ${event.price}
+                                            .00 USD
+                                        </span>
                                     </span>
                                 </div>
                             </div>

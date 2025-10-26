@@ -188,6 +188,10 @@ export default function App() {
         setCartState({})
     }
 
+    const changeNumTickets = (newCartState) => {
+        setCartState({ ...newCartState })
+    }
+
     return (
         <AuthContext.Provider
             value={{
@@ -197,7 +201,13 @@ export default function App() {
             }}
         >
             <EcommerceContext.Provider
-                value={{ cartState, addToCart, removeFromCart, emptyCart }}
+                value={{
+                    cartState,
+                    addToCart,
+                    removeFromCart,
+                    emptyCart,
+                    changeNumTickets,
+                }}
             >
                 <RouterProvider router={router} />
             </EcommerceContext.Provider>

@@ -126,23 +126,49 @@ export default function Event() {
                             <span>Tickets</span>
                             <span>${eventById.price}.00 USD</span>
                         </div>
-                        <div className="tickets-cart">
+                        <div
+                            className="tickets-cart"
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: 20,
+                            }}
+                        >
                             <span
-                                onClick={() => {
-                                    if (numOfTickets > 1)
-                                        setNumOfTickets(numOfTickets - 1)
+                                style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    margin: 20,
                                 }}
                             >
-                                -
+                                <span
+                                    style={{
+                                        marginRight: 10,
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                    }}
+                                >
+                                    <i
+                                        onClick={() =>
+                                            setNumOfTickets(numOfTickets + 1)
+                                        }
+                                        className="arrow-up"
+                                    ></i>
+                                    <i
+                                        onClick={() => {
+                                            if (numOfTickets > 1)
+                                                setNumOfTickets(
+                                                    numOfTickets - 1
+                                                )
+                                        }}
+                                        className="arrow-down"
+                                    ></i>
+                                </span>
+                                <span style={{ margin: 20 }}>
+                                    {numOfTickets}
+                                </span>
                             </span>
-                            <span style={{ margin: 20 }}>{numOfTickets}</span>
-                            <span
-                                onClick={() =>
-                                    setNumOfTickets(numOfTickets + 1)
-                                }
-                            >
-                                +
-                            </span>
+
                             <button onClick={handleAddToCart}>
                                 Add to cart
                             </button>
