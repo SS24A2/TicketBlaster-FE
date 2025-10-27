@@ -218,7 +218,7 @@ export default function TicketsHistory() {
                 </p>
             )}
             {cartEvents.length > 0 && (
-                <div>
+                <div className="all-events">
                     {cartEvents.map((event) => (
                         <div
                             key={event._id}
@@ -257,6 +257,10 @@ export default function TicketsHistory() {
                                                         t.eventId === event._id
                                                 ),
                                             ])
+                                            setTimeout(
+                                                () => window.print(),
+                                                100
+                                            )
                                         }}
                                         style={{
                                             opacity: ticketsError ? '0.5' : '1',

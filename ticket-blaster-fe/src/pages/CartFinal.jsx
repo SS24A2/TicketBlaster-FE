@@ -105,10 +105,10 @@ export default function CartFinal() {
     }, [purchasedTickets])
 
     return (
-        <div>
+        <div className="cart-final-page">
             {cartEvents.length > 0 && <h1>Thank you for your purchase!</h1>}
             {cartEvents.length > 0 && (
-                <div>
+                <div className="all-events">
                     {cartEvents.map((event) => (
                         <div key={event._id}>
                             <EventCard
@@ -127,7 +127,10 @@ export default function CartFinal() {
                                             if (ticketsError) return
 
                                             setIsTicketsModalOpen(true)
-
+                                            setTimeout(
+                                                () => window.print(),
+                                                100
+                                            )
                                             setTicketsforSelectedEvent([
                                                 ...allTickets.filter(
                                                     (t) =>
