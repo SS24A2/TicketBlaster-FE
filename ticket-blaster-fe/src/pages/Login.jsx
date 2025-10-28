@@ -1,21 +1,62 @@
 import { useState, useContext } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate, Link, useLocation } from 'react-router-dom'
 
 import Api from '../Api'
 import AuthContext from '../context/AuthContext'
 import errorHandling from './errorHandling'
+import {
+    InvalidMark,
+    ValidMark,
+    ResetPasswordSuccess,
+} from '../components/validationMarks'
 
 export default function Login() {
     const [error, setError] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [formDataErrors, setFormDataErrors] = useState({
+        email: '',
+        password: '',
+    })
+    const [validationStyle, setValidationStyle] = useState({
+        email: false,
+        password: false,
+    })
 
     const navigate = useNavigate()
+    const location = useLocation()
+    const passwordReset = location?.state?.passwordReset
 
     const { handleLogin } = useContext(AuthContext)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+
+        let validationResult = true
+        for (let i in formDataErrors) {
+            if (formDataErrors[i]) validationResult = false
+        }
+
+        if (!validationResult && email && password) {
+            setError(
+                'Login failed. Ensure your email and password are correctly filled.'
+            )
+            return
+        }
+
+        if (!email || !password) {
+            setError('Login failed. Please fill out all required fields.')
+            setFormDataErrors({
+                email: !email
+                    ? 'Please fill out this field.'
+                    : formDataErrors.email,
+                password: !password
+                    ? 'Please fill out this field.'
+                    : formDataErrors.password,
+            })
+            return
+        }
+
         try {
             const res = await Api().post('/api/v1/auth/login', {
                 email,
@@ -29,37 +70,145 @@ export default function Login() {
                 setError(res.data.error || 'Login error!')
             }
         } catch (err) {
-            //NIV; Network; Incorrect email or passsword;
+            //NIV; Incorrect email or passsword;
             console.log('err', err)
             let errorMessage = errorHandling(err)
             setError(`${errorMessage} Try again`)
+            setValidationStyle({ email: false, password: false })
         }
     }
 
     return (
         <section className="login-section">
             <h1>Log In</h1>
-            <form className="form-container" onSubmit={handleSubmit}>
+            {passwordReset && (
+                <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: 20,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginBottom: 60,
+                        marginTop: -50,
+                    }}
+                >
+                    <ResetPasswordSuccess />
+                    <h2 style={{ margin: 0 }}>Password changed!</h2>
+                    <h3 style={{ margin: 0 }}>
+                        Your password has been changed successfully. Please log
+                        in using your new password.
+                    </h3>
+                </div>
+            )}
+            <form noValidate className="form-container" onSubmit={handleSubmit}>
                 <div className="login-email">
-                    <label>Email</label>
-                    <input
-                        autoComplete="off"
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                    />
+                    <label htmlFor="email">Email</label>
+                    <div>
+                        <input
+                            style={{
+                                borderWidth: 2,
+                                borderColor: formDataErrors.email
+                                    ? 'red'
+                                    : validationStyle.email
+                                    ? 'green'
+                                    : 'black',
+                            }}
+                            autoComplete="off"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            id="email"
+                            type="email"
+                            required
+                            minLength={5}
+                            onInput={(e) => {
+                                setValidationStyle({
+                                    ...validationStyle,
+                                    email: true,
+                                })
+                                setError('')
+                                if (
+                                    e.target.validity.typeMismatch ||
+                                    e.target.validity.valueMissing ||
+                                    e.target.validity.tooShort
+                                ) {
+                                    setFormDataErrors({
+                                        ...formDataErrors,
+                                        email: e.target.validationMessage,
+                                    })
+                                } else {
+                                    setFormDataErrors({
+                                        ...formDataErrors,
+                                        email: '',
+                                    })
+                                }
+                            }}
+                        />
+                        {formDataErrors.email ? (
+                            <InvalidMark />
+                        ) : validationStyle.email ? (
+                            <ValidMark />
+                        ) : null}
+                    </div>
+                    <span style={{ color: 'red', fontSize: 14 }}>
+                        {formDataErrors.email}
+                    </span>
                 </div>
 
                 <div className="login-password">
-                    <label>Password</label>
-                    <input
-                        autoComplete="off"
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
+                    <label htmlFor="password">Password</label>
+                    <div>
+                        <input
+                            style={{
+                                borderWidth: 2,
+                                borderColor: formDataErrors.password
+                                    ? 'red'
+                                    : validationStyle.password
+                                    ? 'green'
+                                    : 'black',
+                            }}
+                            autoComplete="off"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            id="password"
+                            type="password"
+                            required
+                            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,12}$"
+                            onInput={(e) => {
+                                setValidationStyle({
+                                    ...validationStyle,
+                                    password: true,
+                                })
+                                setError('')
+                                if (e.target.validity.patternMismatch) {
+                                    setFormDataErrors({
+                                        ...formDataErrors,
+                                        password:
+                                            'Please match the requested format: 8-12 characters, at least one uppercase letter, one lowercase letter and one number.',
+                                    })
+                                } else if (e.target.validity.valueMissing) {
+                                    setFormDataErrors({
+                                        ...formDataErrors,
+                                        password: e.target.validationMessage,
+                                    })
+                                } else {
+                                    setFormDataErrors({
+                                        ...formDataErrors,
+                                        password: '',
+                                    })
+                                }
+                            }}
+                        />
+                        {formDataErrors.password ? (
+                            <InvalidMark />
+                        ) : validationStyle.password ? (
+                            <ValidMark />
+                        ) : null}
+                    </div>
+
+                    <span style={{ color: 'red', fontSize: 14 }}>
+                        {formDataErrors.password}
+                    </span>
                 </div>
 
                 <div>
@@ -73,7 +222,7 @@ export default function Login() {
                     </button>
                 </div>
 
-                <button type="button" className="white-button">
+                <button type="submit" className="white-button">
                     <Link to="/account/register" viewTransition>
                         Don’t have an account?
                     </Link>

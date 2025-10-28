@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, Link, useParams } from 'react-router-dom'
+import { InvalidMark, ValidMark } from '../components/validationMarks'
 
 import Api from '../Api'
 
@@ -16,8 +17,45 @@ export default function ResetPassword() {
     const [isLinkCheckLoading, setIsLinkCheckLoading] = useState(false)
     const [linkCheckError, setLinkCheckError] = useState(null)
 
+    const [formDataErrors, setFormDataErrors] = useState({
+        password: '',
+        confirmPassword: '',
+    })
+    const [validationStyle, setValidationStyle] = useState({
+        password: false,
+        confirmPassword: false,
+    })
+
     const handleSubmit = async (e) => {
         e.preventDefault()
+
+        let validationResult = true
+        for (let i in formDataErrors) {
+            if (formDataErrors[i]) validationResult = false
+        }
+
+        if (!validationResult && password && confirmPassword) {
+            setResetPasswordError(
+                'Password reset failed. Ensure your password entries are identical and are correctly filled.'
+            )
+            return
+        }
+
+        if (!password || !confirmPassword) {
+            setResetPasswordError(
+                'Password reset failed. Please fill out all required fields.'
+            )
+            setFormDataErrors({
+                password: !password
+                    ? 'Please fill out this field.'
+                    : formDataErrors.password,
+                confirmPassword: !confirmPassword
+                    ? 'Please fill out this field.'
+                    : formDataErrors.confirmPassword,
+            })
+            return
+        }
+
         setIsResetPasswordLoading(true)
         try {
             const res = await Api().put(
@@ -27,7 +65,11 @@ export default function ResetPassword() {
             console.log(res)
             if (res.data === 'Password reset successful!') {
                 setIsResetPasswordLoading(false)
-                navigate('/account/login', { viewTransition: true })
+                navigate(
+                    '/account/login',
+                    { state: { passwordReset: true } },
+                    { viewTransition: true }
+                )
             }
         } catch (err) {
             console.log('err', err)
@@ -56,6 +98,7 @@ export default function ResetPassword() {
                 err.response?.data?.error || 'Internal Server Error!'
             )
             setIsResetPasswordLoading(false)
+            setValidationStyle({ password: false, confirmPassword: false })
         }
     }
 
@@ -105,27 +148,139 @@ export default function ResetPassword() {
     return (
         <section className="reset-password-section">
             <h1>Reset Password</h1>
-            <form className="form-container" onSubmit={handleSubmit}>
+            <form noValidate className="form-container" onSubmit={handleSubmit}>
                 <div className="reset-password">
-                    <label>Password</label>
-                    <input
-                        autoComplete="off"
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
+                    <label htmlFor="password">Password</label>
+                    <div>
+                        <input
+                            style={{
+                                borderWidth: 2,
+                                borderColor: formDataErrors.password
+                                    ? 'red'
+                                    : validationStyle.password
+                                    ? 'green'
+                                    : 'black',
+                            }}
+                            autoComplete="off"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            id="password"
+                            type="password"
+                            required
+                            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,12}$"
+                            onInput={(e) => {
+                                setValidationStyle({
+                                    ...validationStyle,
+                                    password: true,
+                                })
+                                setResetPasswordError('')
+                                if (e.target.validity.patternMismatch) {
+                                    setFormDataErrors({
+                                        ...formDataErrors,
+                                        password:
+                                            'Please match the requested format: 8-12 characters, at least one uppercase letter, one lowercase letter and one number.',
+                                    })
+                                } else if (e.target.validity.valueMissing) {
+                                    setFormDataErrors({
+                                        ...formDataErrors,
+                                        password: e.target.validationMessage,
+                                    })
+                                } else if (
+                                    confirmPassword &&
+                                    e.target.value !== confirmPassword
+                                ) {
+                                    setFormDataErrors({
+                                        ...formDataErrors,
+                                        confirmPassword:
+                                            'Passwords do not match!',
+                                        password: '',
+                                    })
+                                } else if (!confirmPassword) {
+                                    setFormDataErrors({
+                                        ...formDataErrors,
+                                        confirmPassword:
+                                            'Please fill out this field.',
+                                        password: '',
+                                    })
+                                } else {
+                                    setFormDataErrors({
+                                        ...formDataErrors,
+                                        password: '',
+                                        confirmPassword: '',
+                                    })
+                                }
+                            }}
+                        />
+                        {formDataErrors.password ? (
+                            <InvalidMark />
+                        ) : validationStyle.password ? (
+                            <ValidMark />
+                        ) : null}
+                    </div>
+
+                    <span style={{ color: 'red', fontSize: 14 }}>
+                        {formDataErrors.password}
+                    </span>
                 </div>
                 <div className="reset-password">
-                    <label>Re-type Password</label>
-                    <input
-                        autoComplete="off"
-                        type="password"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        required
-                    />
+                    <label htmlFor="confirmPassword">Re-type password</label>
+                    <div>
+                        <input
+                            style={{
+                                borderWidth: 2,
+                                borderColor: formDataErrors.confirmPassword
+                                    ? 'red'
+                                    : validationStyle.confirmPassword
+                                    ? 'green'
+                                    : 'black',
+                            }}
+                            autoComplete="off"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            id="confirmPassword"
+                            type="password"
+                            required
+                            onInput={(e) => {
+                                setValidationStyle({
+                                    ...validationStyle,
+                                    confirmPassword: true,
+                                })
+                                setResetPasswordError('')
+                                if (e.target.validity.valueMissing) {
+                                    setFormDataErrors({
+                                        ...formDataErrors,
+                                        confirmPassword:
+                                            e.target.validationMessage,
+                                    })
+                                } else if (
+                                    password &&
+                                    e.target.value !== password
+                                ) {
+                                    setFormDataErrors({
+                                        ...formDataErrors,
+                                        confirmPassword:
+                                            'Passwords do not match!',
+                                    })
+                                } else {
+                                    setFormDataErrors({
+                                        ...formDataErrors,
+                                        confirmPassword: '',
+                                    })
+                                }
+                            }}
+                        />
+                        {formDataErrors.confirmPassword ? (
+                            <InvalidMark />
+                        ) : validationStyle.confirmPassword ? (
+                            <ValidMark />
+                        ) : null}
+                    </div>
+
+                    <span style={{ color: 'red', fontSize: 14 }}>
+                        {formDataErrors.confirmPassword}
+                    </span>
                 </div>
+
                 <button type="submit" className="pink-button">
                     Reset Password
                 </button>
