@@ -157,7 +157,7 @@ export default function ResetPassword() {
                                 borderWidth: 2,
                                 borderColor: formDataErrors.password
                                     ? 'red'
-                                    : validationStyle.password
+                                    : validationStyle.password && password
                                     ? 'green'
                                     : 'black',
                             }}
@@ -169,10 +169,6 @@ export default function ResetPassword() {
                             required
                             pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,12}$"
                             onInput={(e) => {
-                                setValidationStyle({
-                                    ...validationStyle,
-                                    password: true,
-                                })
                                 setResetPasswordError('')
                                 if (e.target.validity.patternMismatch) {
                                     setFormDataErrors({
@@ -210,17 +206,25 @@ export default function ResetPassword() {
                                     })
                                 }
                             }}
+                            onBlur={() =>
+                                setValidationStyle({
+                                    ...validationStyle,
+                                    password: true,
+                                })
+                            }
                         />
-                        {formDataErrors.password ? (
+                        {formDataErrors.password && validationStyle.password ? (
                             <InvalidMark />
-                        ) : validationStyle.password ? (
+                        ) : validationStyle.password && password ? (
                             <ValidMark />
                         ) : null}
                     </div>
 
-                    <span style={{ color: 'red', fontSize: 14 }}>
-                        {formDataErrors.password}
-                    </span>
+                    {validationStyle.password && (
+                        <span style={{ color: 'red', fontSize: 14 }}>
+                            {formDataErrors.password}
+                        </span>
+                    )}
                 </div>
                 <div className="reset-password">
                     <label htmlFor="confirmPassword">Re-type password</label>
@@ -230,7 +234,8 @@ export default function ResetPassword() {
                                 borderWidth: 2,
                                 borderColor: formDataErrors.confirmPassword
                                     ? 'red'
-                                    : validationStyle.confirmPassword
+                                    : validationStyle.confirmPassword &&
+                                      confirmPassword
                                     ? 'green'
                                     : 'black',
                             }}
@@ -241,10 +246,6 @@ export default function ResetPassword() {
                             type="password"
                             required
                             onInput={(e) => {
-                                setValidationStyle({
-                                    ...validationStyle,
-                                    confirmPassword: true,
-                                })
                                 setResetPasswordError('')
                                 if (e.target.validity.valueMissing) {
                                     setFormDataErrors({
@@ -268,17 +269,27 @@ export default function ResetPassword() {
                                     })
                                 }
                             }}
+                            onBlur={() =>
+                                setValidationStyle({
+                                    ...validationStyle,
+                                    confirmPassword: true,
+                                })
+                            }
                         />
-                        {formDataErrors.confirmPassword ? (
+                        {formDataErrors.confirmPassword &&
+                        validationStyle.confirmPassword ? (
                             <InvalidMark />
-                        ) : validationStyle.confirmPassword ? (
+                        ) : validationStyle.confirmPassword &&
+                          confirmPassword ? (
                             <ValidMark />
                         ) : null}
                     </div>
 
-                    <span style={{ color: 'red', fontSize: 14 }}>
-                        {formDataErrors.confirmPassword}
-                    </span>
+                    {validationStyle.confirmPassword && (
+                        <span style={{ color: 'red', fontSize: 14 }}>
+                            {formDataErrors.confirmPassword}
+                        </span>
+                    )}
                 </div>
 
                 <button type="submit" className="pink-button">

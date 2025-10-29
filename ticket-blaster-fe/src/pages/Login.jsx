@@ -110,7 +110,7 @@ export default function Login() {
                                 borderWidth: 2,
                                 borderColor: formDataErrors.email
                                     ? 'red'
-                                    : validationStyle.email
+                                    : validationStyle.email && email
                                     ? 'green'
                                     : 'black',
                             }}
@@ -122,11 +122,8 @@ export default function Login() {
                             required
                             minLength={5}
                             onInput={(e) => {
-                                setValidationStyle({
-                                    ...validationStyle,
-                                    email: true,
-                                })
                                 setError('')
+
                                 if (
                                     e.target.validity.typeMismatch ||
                                     e.target.validity.valueMissing ||
@@ -143,16 +140,24 @@ export default function Login() {
                                     })
                                 }
                             }}
+                            onBlur={() =>
+                                setValidationStyle({
+                                    ...validationStyle,
+                                    email: true,
+                                })
+                            }
                         />
-                        {formDataErrors.email ? (
+                        {formDataErrors.email && validationStyle.email ? (
                             <InvalidMark />
-                        ) : validationStyle.email ? (
+                        ) : validationStyle.email && email ? (
                             <ValidMark />
                         ) : null}
                     </div>
-                    <span style={{ color: 'red', fontSize: 14 }}>
-                        {formDataErrors.email}
-                    </span>
+                    {validationStyle.email && (
+                        <span style={{ color: 'red', fontSize: 14 }}>
+                            {formDataErrors.email}
+                        </span>
+                    )}
                 </div>
 
                 <div className="login-password">
@@ -163,7 +168,7 @@ export default function Login() {
                                 borderWidth: 2,
                                 borderColor: formDataErrors.password
                                     ? 'red'
-                                    : validationStyle.password
+                                    : validationStyle.password && password
                                     ? 'green'
                                     : 'black',
                             }}
@@ -175,10 +180,6 @@ export default function Login() {
                             required
                             pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,12}$"
                             onInput={(e) => {
-                                setValidationStyle({
-                                    ...validationStyle,
-                                    password: true,
-                                })
                                 setError('')
                                 if (e.target.validity.patternMismatch) {
                                     setFormDataErrors({
@@ -198,17 +199,25 @@ export default function Login() {
                                     })
                                 }
                             }}
+                            onBlur={() => {
+                                setValidationStyle({
+                                    ...validationStyle,
+                                    password: true,
+                                })
+                            }}
                         />
-                        {formDataErrors.password ? (
+                        {formDataErrors.password && validationStyle.password ? (
                             <InvalidMark />
-                        ) : validationStyle.password ? (
+                        ) : validationStyle.password && password ? (
                             <ValidMark />
                         ) : null}
                     </div>
 
-                    <span style={{ color: 'red', fontSize: 14 }}>
-                        {formDataErrors.password}
-                    </span>
+                    {validationStyle.password && (
+                        <span style={{ color: 'red', fontSize: 14 }}>
+                            {formDataErrors.password}
+                        </span>
+                    )}
                 </div>
 
                 <div>

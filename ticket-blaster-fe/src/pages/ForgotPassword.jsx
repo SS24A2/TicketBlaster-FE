@@ -67,7 +67,7 @@ export default function ForgotPassword() {
         <section className="forgot-password-section">
             <h1>Forgot Password</h1>
             <form noValidate className="form-container" onSubmit={handleSubmit}>
-                <div className="forgot-password-email">
+                <div className="forgot-password-email" style={{ height: 100 }}>
                     <label htmlFor="email">Email</label>
                     <div>
                         <input
@@ -75,7 +75,7 @@ export default function ForgotPassword() {
                                 borderWidth: 2,
                                 borderColor: formDataErrors.email
                                     ? 'red'
-                                    : validationStyle.email
+                                    : validationStyle.email && email
                                     ? 'green'
                                     : 'black',
                             }}
@@ -87,10 +87,6 @@ export default function ForgotPassword() {
                             required
                             minLength={5}
                             onInput={(e) => {
-                                setValidationStyle({
-                                    ...validationStyle,
-                                    email: true,
-                                })
                                 setError('')
                                 if (
                                     e.target.validity.typeMismatch ||
@@ -108,16 +104,24 @@ export default function ForgotPassword() {
                                     })
                                 }
                             }}
+                            onBlur={() =>
+                                setValidationStyle({
+                                    ...validationStyle,
+                                    email: true,
+                                })
+                            }
                         />
-                        {formDataErrors.email ? (
+                        {formDataErrors.email && validationStyle.email ? (
                             <InvalidMark />
-                        ) : validationStyle.email ? (
+                        ) : validationStyle.email && email ? (
                             <ValidMark />
                         ) : null}
                     </div>
-                    <span style={{ color: 'red', fontSize: 14 }}>
-                        {formDataErrors.email}
-                    </span>
+                    {validationStyle.email && (
+                        <span style={{ color: 'red', fontSize: 14 }}>
+                            {formDataErrors.email}
+                        </span>
+                    )}
                 </div>
 
                 <button type="submit" className="pink-button">
