@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom'
 import EventCard from '../components/EventCard'
 import Api from '../Api'
 
-import convertDate from '../convertDate'
 import noImageIcon from '../assets/Image-not-found.png'
 import ButtonGetTickets from '../components/ButtonGetTickets'
+import convertDate from '../helper/convertDate'
 
 export default function Homepage() {
     const [mainEvent, setMainEvent] = useState(null)

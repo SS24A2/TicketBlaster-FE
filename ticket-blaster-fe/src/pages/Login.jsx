@@ -3,7 +3,8 @@ import { useNavigate, Link, useLocation } from 'react-router-dom'
 
 import Api from '../Api'
 import AuthContext from '../context/AuthContext'
-import errorHandling from './errorHandling'
+import errorHandling from '../helper/errorHandling'
+
 import {
     InvalidMark,
     ValidMark,

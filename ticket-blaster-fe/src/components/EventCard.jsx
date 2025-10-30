@@ -1,4 +1,4 @@
-import convertDate from '../convertDate'
+import convertDate from '../helper/convertDate'
 
 export default function EventCard({
     event,

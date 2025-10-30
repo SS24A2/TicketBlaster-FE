@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import Api from '../Api'
-import errorHandling from './errorHandling'
+import errorHandling from '../helper/errorHandling'
 import { InvalidMark, ValidMark } from '../components/validationMarks'
 
 export default function ForgotPassword() {

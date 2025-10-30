@@ -2,8 +2,8 @@ import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 
 import Api from '../Api'
-import errorHandling from './errorHandling'
 import { InvalidMark, ValidMark } from '../components/validationMarks'
+import errorHandling from '../helper/errorHandling'
 
 export default function Register() {
     const [error, setError] = useState('')

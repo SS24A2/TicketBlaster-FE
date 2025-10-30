@@ -1,13 +1,13 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import { useState, useEffect, useContext } from 'react'
 
-import convertDate from '../convertDate'
 import Api from '../Api'
 import AuthContext from '../context/AuthContext'
 import EcommerceContext from '../context/EcommerceContext'
 import EventCard from '../components/EventCard'
 import noImageIcon from '../assets/Image-not-found.png'
 import ButtonGetTickets from '../components/ButtonGetTickets'
+import convertDate from '../helper/convertDate'
 
 export default function Event() {
     const navigate = useNavigate()
