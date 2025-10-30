@@ -26,6 +26,7 @@ export default function Login() {
     const navigate = useNavigate()
     const location = useLocation()
     const passwordReset = location?.state?.passwordReset
+    const emailChanged = location?.state?.emailChanged
 
     const { handleLogin } = useContext(AuthContext)
 
@@ -98,6 +99,26 @@ export default function Login() {
                     <h3 style={{ margin: 0 }}>
                         Your password has been changed successfully. Please log
                         in using your new password.
+                    </h3>
+                </div>
+            )}
+            {emailChanged && (
+                <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: 20,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginBottom: 60,
+                        marginTop: -50,
+                    }}
+                >
+                    <ResetPasswordSuccess />
+                    <h2 style={{ margin: 0 }}>Email changed!</h2>
+                    <h3 style={{ margin: 0 }}>
+                        Your email has been changed successfully. Please log in
+                        using your new email.
                     </h3>
                 </div>
             )}
