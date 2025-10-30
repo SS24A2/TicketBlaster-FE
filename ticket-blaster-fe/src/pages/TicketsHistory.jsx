@@ -7,6 +7,7 @@ import Loader from '../components/Loader'
 import noImageIcon from '../assets/Image-not-found.png'
 import TicketsModal from '../components/TicketsModal'
 import SearchSecondary from '../components/SearchSecondary'
+import inputNormalization from '../helper/inputNormalization'
 
 function PrintButton({ printTicket, style }) {
     return (
@@ -34,7 +35,6 @@ export default function TicketsHistory() {
     const [ticketsError, setTicketsError] = useState(null)
 
     const [searchInput, setSearchInput] = useState('')
-    const [searchInputError, setSearchInputError] = useState(null)
     const [isSearchLoading, setIsSearchLoading] = useState(false)
 
     // controller
@@ -130,8 +130,9 @@ export default function TicketsHistory() {
 
             try {
                 // signal
+                const inputValue = inputNormalization(searchInput)
                 const response = await Api().get(
-                    `/api/v1/ecommerce/tickets/history?search=${searchInput}`,
+                    `/api/v1/ecommerce/tickets/history?search=${inputValue}`,
                     { signal: controller.current.signal }
                 )
                 console.log('tickets/history Search', response)
@@ -164,15 +165,9 @@ export default function TicketsHistory() {
                     return
                 }
 
-                if (err.status === 400) {
-                    setSearchInputError(err.response.data.error)
-                    setIsSearchLoading(false)
-                    controller.current = null
-                } else {
-                    setEventsError(err.response.data.error)
-                    setIsSearchLoading(false)
-                    controller.current = null
-                }
+                setEventsError(err.response.data.error)
+                setIsSearchLoading(false)
+                controller.current = null
             }
         }
 
@@ -203,8 +198,6 @@ export default function TicketsHistory() {
                     <SearchSecondary
                         searchInput={searchInput}
                         setSearchInput={setSearchInput}
-                        searchInputError={searchInputError}
-                        setSearchInputError={setSearchInputError}
                         isSearchLoading={isSearchLoading}
                     />
                 </div>

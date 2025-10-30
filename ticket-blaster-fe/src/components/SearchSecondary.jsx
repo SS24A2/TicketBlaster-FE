@@ -3,8 +3,6 @@ import { useEffect, useState } from 'react'
 export default function SearchSecondary({
     searchInput,
     setSearchInput,
-    searchInputError,
-    setSearchInputError,
     isSearchLoading,
 }) {
     const [searchLoadingMessage, setSearchLoadingMessage] = useState('')
@@ -22,9 +20,6 @@ export default function SearchSecondary({
 
     return (
         <div>
-            {searchInputError && (
-                <p style={{ width: 200, fontSize: 14 }}>{searchInputError}</p>
-            )}
             <input
                 autoComplete="off"
                 type="text"
@@ -32,34 +27,14 @@ export default function SearchSecondary({
                 name="search"
                 value={searchInput}
                 onChange={(e) => {
-                    if (e.target.value === ' ') return
-
-                    setSearchInputError(null)
-
-                    const regex = /^[a-zA-Z0-9 ]*$/g
-                    if (!regex.test(e.target.value)) {
-                        setSearchInputError(
-                            `${e.target.value.at(-1)} is invalid character!`
-                        )
-                        return
-                    }
-
-                    if (
-                        e.target.value.at(-1) === ' ' &&
-                        e.target.value.at(-2) === ' '
-                    ) {
-                        setSearchInput(e.target.value.slice(0, -1))
-                    } else {
+                    if (e.target.value.length <= 40) {
                         setSearchInput(e.target.value)
                     }
                 }}
-                onBlur={() => setSearchInputError(null)}
             />
-            <p style={{ fontSize: 12, maxWidth: 200, fontStyle: 'italic' }}>
-                Please enter a search term without any special characters. You
-                can use letters, numbers and empty spaces.
-            </p>
-
+            {searchInput.length === 40 && (
+                <span>You have reached maximum number od characters (40).</span>
+            )}
             {searchLoadingMessage && searchInput && (
                 <p>Loading search results, please wait</p>
             )}
