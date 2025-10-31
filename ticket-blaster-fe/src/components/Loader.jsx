@@ -1,18 +1,29 @@
-export default function Loader() {
+import '../styles/loader.css'
+
+export default function Loader({ children }) {
     return (
-        <div className="modal-users-events-background">
-            <div className="modal-users-events">
-                <div
-                    className="modal-users-events-wrapper"
-                    style={{ width: 200, margin: '20px auto' }}
-                >
-                    <h3 style={{ textAlign: 'center' }}>Loading ...</h3>
-                    <div
-                        style={{ margin: '50px auto' }}
-                        className="loader"
-                    ></div>
-                </div>
-            </div>
+        <div
+            style={{
+                position: 'fixed',
+                width: '100vw',
+                height: '100vh',
+                top: 0,
+                background: '#0d0d0d30',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 30,
+                justifyContent: 'center',
+                alignItems: 'center',
+            }}
+        >
+            <h2
+                style={{
+                    color: 'deeppink',
+                }}
+            >
+                {children}
+            </h2>
+            <div className="loader"></div>
         </div>
     )
 }

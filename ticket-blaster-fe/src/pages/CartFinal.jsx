@@ -5,6 +5,7 @@ import noImageIcon from '../assets/Image-not-found.png'
 import EventCard from '../components/EventCard'
 import Api from '../Api'
 import TicketsModal from '../components/TicketsModal'
+import Loader from '../components/Loader'
 
 function PrintButton({ printTicket, style }) {
     return (
@@ -173,20 +174,7 @@ export default function CartFinal() {
                 </div>
             )}
             {(loadingEvents || loadingTickets) && !eventsError && (
-                <div className="modal-users-events-background">
-                    <div className="modal-users-events">
-                        <div
-                            className="modal-users-events-wrapper"
-                            style={{ width: 200, margin: '20px auto' }}
-                        >
-                            <h3 style={{ textAlign: 'center' }}>Loading ...</h3>
-                            <div
-                                style={{ margin: '50px auto' }}
-                                className="loader"
-                            ></div>
-                        </div>
-                    </div>
-                </div>
+                <Loader>Loading page ... Please wait.</Loader>
             )}
             {isTicketsModalOpen && (
                 <TicketsModal
