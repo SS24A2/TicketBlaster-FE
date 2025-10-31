@@ -144,7 +144,7 @@ export default function Cart() {
                 console.log(err)
                 setIsLoading(false)
                 setError(
-                    err.response?.data ||
+                    err.response?.data?.error ||
                         'The page is currently unavailable. Try again later.'
                 )
             }
