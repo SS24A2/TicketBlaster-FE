@@ -1,5 +1,6 @@
 import { useState, useContext } from 'react'
 import { useNavigate, Link, useLocation } from 'react-router-dom'
+import '../styles/auth-user.css'
 
 import Api from '../Api'
 import AuthContext from '../context/AuthContext'

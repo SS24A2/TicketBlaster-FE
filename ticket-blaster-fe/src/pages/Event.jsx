@@ -8,6 +8,7 @@ import EventCard from '../components/EventCard'
 import noImageIcon from '../assets/Image-not-found.png'
 import ButtonGetTickets from '../components/ButtonGetTickets'
 import convertDate from '../helper/convertDate'
+import '../styles/event.css'
 
 export default function Event() {
     const navigate = useNavigate()

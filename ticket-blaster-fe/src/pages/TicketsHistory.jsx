@@ -8,6 +8,7 @@ import noImageIcon from '../assets/Image-not-found.png'
 import TicketsModal from '../components/TicketsModal'
 import SearchSecondary from '../components/SearchSecondary'
 import inputNormalization from '../helper/inputNormalization'
+import '../styles/profile.css'
 
 function PrintButton({ printTicket, style }) {
     return (

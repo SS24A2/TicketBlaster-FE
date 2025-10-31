@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import EventCard from '../components/EventCard'
+import '../styles/events.css'
 
 import Api from '../Api'
 import noImageIcon from '../assets/Image-not-found.png'

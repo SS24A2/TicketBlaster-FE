@@ -1,0 +1,128 @@
+.homepage {
+    max-width: 1200px;
+    margin: auto;
+    padding-bottom: 91px;
+    padding-top: 50px;
+}
+
+/*1*/
+.main-event {
+    position: relative;
+    margin-bottom: 50px;
+}
+
+/*11*/
+.main-event img {
+    width: 100%;
+    height: 464px;
+    border-radius: 30px;
+    position: relative;
+    z-index: 0;
+    object-fit: cover;
+    object-position: top;
+}
+
+/*12*/
+.main-event-inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    z-index: 3;
+}
+
+/*121*/
+.main-event-text {
+    padding-left: 50px;
+    padding-bottom: 50px;
+}
+
+.main-event h1 {
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 48px;
+    letter-spacing: -2.2px;
+    color: #FFFFFF;
+    margin: 0;
+}
+
+.main-event-text p {
+    font-size: 28px;
+    line-height: 34px;
+    letter-spacing: -1.54px;
+    color: #FFFFFF;
+}
+
+/*122*/
+.main-event button {
+    width: 168px;
+    height: 43px;
+    background: #FFFFFF;
+    border-radius: 20px;
+    text-align: center;
+    font-weight: 900;
+    font-size: 19px;
+    line-height: 23px;
+    letter-spacing: -1.04px;
+    color: #000000;
+    margin-bottom: 50px;
+    margin-right: 50px;
+    border: none;
+}
+
+.main-event button a {
+    color: #000000;
+    text-decoration: none;
+}
+
+/*2*/
+.homepage-events {
+    display: flex;
+    justify-content: space-between;
+}
+
+/*21*/
+.homepage-concerts h3,
+.homepage-comedies h3 {
+    font-weight: 700;
+    font-size: 33px;
+    line-height: 40px;
+    letter-spacing: -1.81px;
+    color: #000000;
+    margin: 0;
+    margin-bottom: 29px;
+}
+
+/*22*/
+.homepage-concerts>div,
+.homepage-comedies>div {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+/*23*/
+.homepage-concerts>button,
+.homepage-comedies>button {
+    width: 573px;
+    height: 43px;
+    background: #FFFFFF;
+    border: 1px solid #000000;
+    border-radius: 20px;
+    text-align: center;
+    font-weight: 900;
+    font-size: 19px;
+    line-height: 23px;
+    letter-spacing: -1.04px;
+    margin-top: 91px;
+}
+
+.homepage-concerts>button a,
+.homepage-comedies>button a {
+    color: #000000;
+    text-decoration: none;
+}

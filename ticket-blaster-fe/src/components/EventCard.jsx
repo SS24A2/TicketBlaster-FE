@@ -1,4 +1,5 @@
 import convertDate from '../helper/convertDate'
+import '../styles/event-cart.css'
 
 export default function EventCard({
     event,
