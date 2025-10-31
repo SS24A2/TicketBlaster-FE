@@ -5,6 +5,7 @@ import EcommerceContext from '../context/EcommerceContext'
 import EventCard from '../components/EventCard'
 import noImageIcon from '../assets/Image-not-found.png'
 import Api from '../Api'
+import Loader from '../components/Loader'
 
 function RemoveButton({ remove }) {
     return (
@@ -285,14 +286,7 @@ export default function Cart() {
             </div>
             {checkoutError && cartEvents.length > 0 && <p>{checkoutError}</p>}
             {checkoutInProgress && (
-                <div className="modal-users-events-background">
-                    <div className="modal-users-events">
-                        <div className="modal-users-events-wrapper">
-                            <h4>Checking Tickets Availability</h4>
-                            <div className="loader"></div>
-                        </div>
-                    </div>
-                </div>
+                <Loader>Checking Tickets Availability ... Please wait.</Loader>
             )}
             <p>
                 Events that have already occurred or have been cancelled are
