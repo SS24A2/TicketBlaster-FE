@@ -58,6 +58,7 @@ export default function Cart() {
             const response = await Api().put('/api/v1/ecommerce/checkout', {
                 selectedTickets: cartStateUpdated,
             })
+            const reservationTime = Date.now()
             console.log('checkout response', response)
 
             if (!response.data || !(response.data.length > 0)) {
@@ -69,7 +70,10 @@ export default function Cart() {
             navigate(
                 '/account/profile/cart/checkout',
                 {
-                    state: { reservedTickets: response.data },
+                    state: {
+                        reservedTickets: response.data,
+                        reservationTime: reservationTime,
+                    },
                 },
                 { viewTransition: true }
             )
