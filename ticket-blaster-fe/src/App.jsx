@@ -29,6 +29,9 @@ import Search from './pages/Search'
 import VerificationInfoPage from './pages/VerificationInfoPage'
 import VerificationOutcomePage from './pages/VerificationOutcomePage'
 
+import NotFound from './pages/NotFound'
+import Unauthorized from './pages/Unauthorized'
+
 // TBC!
 const router = createBrowserRouter([
     {
@@ -41,7 +44,6 @@ const router = createBrowserRouter([
                 children: [
                     { index: true, element: <Homepage /> },
                     { path: 'concerts', element: <Events type="concerts" /> },
-                    { path: 'event/:id', element: <Event /> },
                     {
                         path: 'comedies',
                         element: <Events type="comedies" />,
@@ -53,7 +55,6 @@ const router = createBrowserRouter([
                     },
                 ],
             },
-
             {
                 path: '/account',
                 children: [
@@ -121,14 +122,11 @@ const router = createBrowserRouter([
             },
             {
                 path: '/unauthorized',
-                element: (
-                    <div>
-                        Permission denied
-                        <Link to="/" viewTransition>
-                            Go back
-                        </Link>
-                    </div>
-                ),
+                element: <Unauthorized />,
+            },
+            {
+                path: '*',
+                element: <NotFound />,
             },
         ],
     },
@@ -138,7 +136,6 @@ export default function App() {
     //AuthContext
     const token = localStorage.getItem('token') || null
     const userInitial = token && !isExpired(token) ? decodeToken(token) : null
-    console.log('TOKEN CHECKED')
     const [currentUser, setCurrentUser] = useState(userInitial)
 
     const handleLogout = () => {
@@ -151,10 +148,6 @@ export default function App() {
         const user = decodeToken(token)
         setCurrentUser(user)
     }
-
-    useEffect(() => {
-        console.log('App component initial render')
-    }, [])
 
     //EcommerceContext
     const cartStateInitial = JSON.parse(localStorage.getItem('cart')) || {} // cart={key:value} key=eventId value=num of tickets
