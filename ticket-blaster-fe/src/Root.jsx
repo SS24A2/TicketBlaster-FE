@@ -1,8 +1,9 @@
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 import { useContext, useState } from 'react'
 import EcommerceContext from './context/EcommerceContext'
+import inputNormalization from './helper/inputNormalization'
 
-import './styles/homepage.css'
+import './styles/root.css'
 
 import cartImage from './assets/pink-shopping-cart.svg'
 import userImage from './assets/pink-person.svg'
@@ -18,7 +19,7 @@ export default function Root() {
 
     const navigate = useNavigate()
     return (
-        <div>
+        <div className="root">
             <header>
                 <nav className="navigation">
                     <Link to="/" viewTransition>
@@ -35,17 +36,22 @@ export default function Root() {
                         </Link>
                     </span>
                     <input
+                        autoComplete="off"
                         type="text"
                         placeholder="Search"
                         name="search"
                         value={searchInput}
-                        onChange={(e) => setSearchInput(e.target.value)}
+                        onChange={(e) => {
+                            if (e.target.value.length <= 40) {
+                                setSearchInput(e.target.value)
+                            }
+                        }}
                         onKeyDown={(e) => {
+                            const inputValue = inputNormalization(searchInput)
                             if (e.key === 'Enter' && searchInput) {
-                                navigate(
-                                    `/events/search/${searchInput.trim()}`,
-                                    { viewTransition: true }
-                                )
+                                navigate(`/events/search/${inputValue}`, {
+                                    viewTransition: true,
+                                })
                                 setSearchInput('')
                             }
                         }}
@@ -107,9 +113,19 @@ export default function Root() {
             </main>
             <footer>
                 <div className="footer-wrapper">
-                    <img src={logoImage} alt="logo" className="logo-img" />
-                    <span>Musical Concerts</span>
-                    <span>Stand-up Comedy</span>
+                    <Link to="/" viewTransition>
+                        <img src={logoImage} alt="logo" className="logo-img" />
+                    </Link>
+                    <span>
+                        <Link to="/concerts" viewTransition>
+                            Musical Concerts
+                        </Link>
+                    </span>
+                    <span>
+                        <Link to="/comedies" viewTransition>
+                            Stand-up Comedy
+                        </Link>
+                    </span>
                     <span>Copyright TicketBlaster 2023</span>
                 </div>
             </footer>
