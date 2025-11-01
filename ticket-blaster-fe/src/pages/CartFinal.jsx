@@ -149,12 +149,15 @@ export default function CartFinal() {
 
                             <div>
                                 <span>
-                                    ${archivedCart[event._id] * event.price}.00
+                                    $
+                                    {(
+                                        archivedCart[event._id] * event.price
+                                    ).toFixed(2)}{' '}
                                     USD
                                 </span>
                                 <span>
-                                    {archivedCart[event._id]} x ${event.price}
-                                    .00 USD
+                                    {archivedCart[event._id]} x ${event.price}{' '}
+                                    USD
                                 </span>
                             </div>
                         </div>

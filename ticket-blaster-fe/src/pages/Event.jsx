@@ -125,7 +125,7 @@ export default function Event() {
                     <div className="event-tickets">
                         <div className="tickets-price">
                             <span>Tickets</span>
-                            <span>${eventById.price}.00 USD</span>
+                            <span>${eventById.price} USD</span>
                         </div>
                         <div
                             className="tickets-cart"

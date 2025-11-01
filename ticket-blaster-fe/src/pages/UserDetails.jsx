@@ -94,7 +94,7 @@ export default function UserDetails() {
             setErrorOnSubmit(
                 'Failed to change user details. Ensure all the data are correctly filled.'
             )
-            console.log('cece')
+
             setSubmitMessage('')
             return
         }

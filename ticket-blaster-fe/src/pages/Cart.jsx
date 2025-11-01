@@ -204,8 +204,12 @@ export default function Cart() {
                                 />
                                 <div>
                                     <span>
-                                        ${newCartState[event._id] * event.price}
-                                        .00 USD
+                                        $
+                                        {(
+                                            newCartState[event._id] *
+                                            event.price
+                                        ).toFixed(2)}{' '}
+                                        USD
                                     </span>
                                     <span
                                         style={{
@@ -252,10 +256,7 @@ export default function Cart() {
                                             ></i>
                                         </span>
                                         <span>{newCartState[event._id]}</span>
-                                        <span>
-                                            x ${event.price}
-                                            .00 USD
-                                        </span>
+                                        <span>x ${event.price} USD</span>
                                     </span>
                                 </div>
                             </div>

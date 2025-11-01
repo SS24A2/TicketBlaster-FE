@@ -243,11 +243,14 @@ export default function CartCheckOut() {
                             />
                             <div>
                                 <span>
-                                    ${cartState[event._id] * event.price}.00 USD
+                                    $
+                                    {(
+                                        cartState[event._id] * event.price
+                                    ).toFixed(2)}{' '}
+                                    USD
                                 </span>
                                 <span>
-                                    {cartState[event._id]} x ${event.price}
-                                    .00 USD
+                                    {cartState[event._id]} x ${event.price} USD
                                 </span>
                             </div>
                         </div>
@@ -258,14 +261,16 @@ export default function CartCheckOut() {
                     <span>Total:</span>
                     <span>
                         $
-                        {cartEvents.reduce(
-                            (accumulator, currentValue) =>
-                                accumulator +
-                                cartState[currentValue._id] *
-                                    currentValue.price,
-                            0
-                        )}
-                        .00 USD
+                        {cartEvents
+                            .reduce(
+                                (accumulator, currentValue) =>
+                                    accumulator +
+                                    cartState[currentValue._id] *
+                                        currentValue.price,
+                                0
+                            )
+                            .toFixed(2)}{' '}
+                        USD
                     </span>
                 </div>
             </div>
