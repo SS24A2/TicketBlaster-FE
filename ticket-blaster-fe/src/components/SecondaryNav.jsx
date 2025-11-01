@@ -13,7 +13,7 @@ export default function SecondaryNav({ pageSelected }) {
 
     return (
         <nav className="secondary-navigation">
-            {currentUser.role === 'admin' && (
+            {currentUser?.role === 'admin' && (
                 <>
                     <span className={textStyle(pageSelected, 'events')}>
                         <Link to="/account/profile/events" viewTransition>
