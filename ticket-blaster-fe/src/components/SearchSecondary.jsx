@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import '../styles/secondary-nav.css'
 
 export default function SearchSecondary({
     searchInput,
@@ -19,7 +20,7 @@ export default function SearchSecondary({
     }, [isSearchLoading])
 
     return (
-        <div>
+        <div className="secondary-nav">
             <input
                 autoComplete="off"
                 type="text"
