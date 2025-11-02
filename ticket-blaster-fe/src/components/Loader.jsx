@@ -14,6 +14,7 @@ export default function Loader({ children }) {
                 gap: 30,
                 justifyContent: 'center',
                 alignItems: 'center',
+                left: 0,
             }}
         >
             <h2

@@ -1,6 +1,7 @@
 export function ValidMark() {
     return (
         <span
+            className="valid-mark"
             style={{
                 color: 'green',
                 fontSize: 20,
@@ -15,6 +16,7 @@ export function ValidMark() {
 export function InvalidMark() {
     return (
         <span
+            className="invalid-mark"
             style={{
                 color: 'red',
                 fontSize: 20,
