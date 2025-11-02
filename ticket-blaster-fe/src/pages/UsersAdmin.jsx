@@ -7,6 +7,7 @@ import generalAvatar from '../assets/general-avatar.png'
 import ModalUsersEvents from '../components/ModalUsersEvents'
 
 import AuthContext from '../context/AuthContext'
+import '../styles/profile.css'
 
 export default function UsersAdmin() {
     const [usersList, setUsersList] = useState([])

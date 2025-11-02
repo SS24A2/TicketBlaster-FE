@@ -9,6 +9,7 @@ import noImageIcon from '../assets/Image-not-found.png'
 import ButtonGetTickets from '../components/ButtonGetTickets'
 import convertDate from '../helper/convertDate'
 import '../styles/event.css'
+import '../styles/arrows.css'
 
 export default function Event() {
     const navigate = useNavigate()
@@ -125,21 +126,22 @@ export default function Event() {
                     <div className="event-tickets">
                         <div className="tickets-price">
                             <span>Tickets</span>
-                            <span>${eventById.price} USD</span>
+                            <span>${eventById.price.toFixed(2)} USD</span>
                         </div>
                         <div
                             className="tickets-cart"
                             style={{
                                 display: 'flex',
                                 alignItems: 'center',
-                                gap: 20,
+                                gap: 15,
                             }}
                         >
                             <span
                                 style={{
                                     display: 'flex',
                                     alignItems: 'center',
-                                    margin: 20,
+                                    height: 31,
+                                    width: 83,
                                 }}
                             >
                                 <span
@@ -165,7 +167,10 @@ export default function Event() {
                                         className="arrow-down"
                                     ></i>
                                 </span>
-                                <span style={{ margin: 20 }}>
+                                <span
+                                    className="event-tickets-num"
+                                    style={{ margin: 20 }}
+                                >
                                     {numOfTickets}
                                 </span>
                             </span>

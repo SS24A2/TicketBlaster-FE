@@ -60,7 +60,7 @@ export default function VerificationInfoPage() {
 
     if (isVerificationCompleted && isVerificationMailSent) {
         return (
-            <div>
+            <div className="verification-info-page">
                 <h2>The email address has been verified, you can login now.</h2>
                 <button>
                     <Link to="/account/login" viewTransition>
@@ -73,14 +73,17 @@ export default function VerificationInfoPage() {
 
     if (isVerificationMailSent) {
         return (
-            <div>
+            <div className="verification-info-page">
                 <h2>Verify your account</h2>
                 <p>
                     A verification email has been sent to your email address.
                     Please check your mailbox to verify the account before you
                     log in.
                 </p>
-                <button onClick={resendVerificationMail}>
+                <button
+                    className="resend-verif"
+                    onClick={resendVerificationMail}
+                >
                     Resend verification email
                 </button>
                 {resendStatusMessage && <p>{resendStatusMessage}</p>}
@@ -88,8 +91,8 @@ export default function VerificationInfoPage() {
         )
     } else {
         return (
-            <div>
-                <h2>
+            <div className="verification-info-page">
+                <h2 style={{ fontSize: 22, fontWeight: 500 }}>
                     Unfortunately, we are unable to send your verification email
                     at this time. Please try again later, or visit our support
                     page if the problem persists.

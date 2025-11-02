@@ -79,7 +79,9 @@ export default function VerificationOutcomePage() {
                 setLoadingVerificationResult(false)
                 setIsMailVerificationSuccessful(false)
                 setVerificationFailMessage(
-                    'The verification link is either invalid or has expired.'
+                    err.status === 401
+                        ? 'The verification link is either invalid or has expired.'
+                        : ''
                 )
                 controller.current = null
             }
@@ -107,16 +109,16 @@ export default function VerificationOutcomePage() {
 
     if (loadingVerificationResult) {
         return (
-            <div>
-                <h3>Verification is in progress, please wait.</h3>
-                <div className="loader"></div>
+            <div className="verification-outcome-page">
+                <h2>Verification is in progress, please wait.</h2>
+                <div className="loader" style={{ margin: 'auto' }}></div>
             </div>
         )
     }
 
     if (isVerificationCompleted) {
         return (
-            <div>
+            <div className="verification-outcome-page">
                 <h2>
                     The email address has already been verified, you can login
                     now.
@@ -132,8 +134,8 @@ export default function VerificationOutcomePage() {
 
     if (verificationFailMessage === 'Internal server error') {
         return (
-            <div>
-                <h1>500</h1>
+            <div className="verification-outcome-page">
+                <h2>500</h2>
                 <h2>Internal Server Error!</h2>
             </div>
         )
@@ -144,7 +146,7 @@ export default function VerificationOutcomePage() {
         'Account not found! Please create a new account.'
     ) {
         return (
-            <div>
+            <div className="verification-outcome-page">
                 <h2>Verification Failed!</h2>
                 {verificationFailMessage && <h5>{verificationFailMessage}</h5>}
                 <button>
@@ -158,9 +160,9 @@ export default function VerificationOutcomePage() {
 
     if (isMailVerificationSuccessful) {
         return (
-            <div>
+            <div className="verification-outcome-page">
                 <h2>Verified!</h2>
-                <h4>Your account has been successfully verified.</h4>
+                <h5>Your account has been successfully verified.</h5>
                 <button>
                     <Link to="/account/login" viewTransition>
                         Log in
@@ -170,7 +172,7 @@ export default function VerificationOutcomePage() {
         )
     } else {
         return (
-            <div>
+            <div className="verification-outcome-page">
                 <h2>Verification Failed!</h2>
                 {verificationFailMessage && <h5>{verificationFailMessage}</h5>}
                 <p>Please request a new verification email.</p>
