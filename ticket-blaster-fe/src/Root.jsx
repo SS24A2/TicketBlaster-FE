@@ -48,7 +48,7 @@ export default function Root() {
                         }}
                         onKeyDown={(e) => {
                             const inputValue = inputNormalization(searchInput)
-                            if (e.key === 'Enter' && searchInput) {
+                            if (e.key === 'Enter' && inputValue) {
                                 navigate(`/events/search/${inputValue}`, {
                                     viewTransition: true,
                                 })

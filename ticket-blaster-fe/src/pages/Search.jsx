@@ -7,15 +7,18 @@ import Api from '../Api'
 import EventCard from '../components/EventCard'
 import noImageIcon from '../assets/Image-not-found.png'
 import ButtonGetTickets from '../components/ButtonGetTickets'
+import Loader from '../components/Loader'
 
 export default function Search() {
     const [eventsResults, setEventsResults] = useState([])
     const [imagesResults, setImagesResults] = useState(null)
+    const [loadingEvents, setLoadingEvents] = useState(false)
 
     const { searchTerm } = useParams()
 
     useEffect(() => {
         async function fetchSearchResults() {
+            setLoadingEvents(true)
             try {
                 const response = await Api().get(
                     `/api/v1/events?search=${searchTerm}&page=1&pageSize=20`
@@ -23,12 +26,27 @@ export default function Search() {
                 console.log('res', response)
                 setEventsResults(response.data.events)
                 setImagesResults(response.data.images)
+                setLoadingEvents(false)
             } catch (err) {
                 console.log(err)
+                setLoadingEvents(false)
             }
         }
         fetchSearchResults()
     }, [searchTerm])
+
+    if (loadingEvents) return <Loader>Searching ...</Loader>
+
+    if (searchTerm && eventsResults.length === 0 && !loadingEvents) {
+        return (
+            <div>
+                <h1>Search Results for: {searchTerm}</h1>
+                <h2>
+                    No results for what you're looking for. Try another search.
+                </h2>
+            </div>
+        )
+    }
 
     return (
         <section className="search-results">
