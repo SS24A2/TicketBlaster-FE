@@ -41,7 +41,6 @@ export default function UsersAdmin() {
             })
             console.log(res)
             if (id === currentUser.id) {
-                //ako admin ja smeni svojata uloga vo user, treba da bide odlogiran i pak da se logira kako obicen user
                 handleLogout()
                 navigate('/account/login', { viewTransition: true })
             } else {
@@ -57,7 +56,6 @@ export default function UsersAdmin() {
             const res = await Api().put(`/api/v1/users/status/${id}`)
             console.log(res)
             if (id === currentUser.id) {
-                //ako admin go izbrishe svojot profil, treba da bide odlogiran i vraten na homepage kako user bez account
                 handleLogout()
                 navigate('/', { viewTransition: true })
             } else {

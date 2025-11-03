@@ -69,11 +69,9 @@ export default function Login() {
                 handleLogin(res.data.token)
                 navigate('/account/profile', { viewTransition: true })
             } else {
-                //in case a token is not send in the response ?
                 setError(res.data.error || 'Login error!')
             }
         } catch (err) {
-            //NIV; Incorrect email or passsword;
             console.log('err', err)
             let errorMessage = errorHandling(err)
             setError(`${errorMessage} Try again`)

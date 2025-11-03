@@ -32,7 +32,6 @@ import VerificationOutcomePage from './pages/VerificationOutcomePage'
 import NotFound from './pages/NotFound'
 import Unauthorized from './pages/Unauthorized'
 
-// TBC!
 const router = createBrowserRouter([
     {
         path: '/',
