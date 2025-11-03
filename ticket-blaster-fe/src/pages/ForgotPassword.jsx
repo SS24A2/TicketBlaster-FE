@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import Api from '../Api'
 import errorHandling from '../helper/errorHandling'
 import { InvalidMark, ValidMark } from '../components/validationMarks'
+import Loader from '../components/Loader'
 
 export default function ForgotPassword() {
     const [error, setError] = useState(null)
@@ -117,10 +118,12 @@ export default function ForgotPassword() {
                             <ValidMark />
                         ) : null}
                     </div>
-                    {validationStyle.email && (
-                        <span style={{ color: 'red', fontSize: 14 }}>
+                    {validationStyle.email ? (
+                        <span className="validation-message">
                             {formDataErrors.email}
                         </span>
+                    ) : (
+                        <span className="validation-message-empty"></span>
                     )}
                 </div>
 
@@ -136,22 +139,7 @@ export default function ForgotPassword() {
             </form>
             {message && <div>{message}</div>}
             {error && <div style={{ color: 'red' }}>{error}</div>}
-            {isLoading && (
-                <div className="modal-users-events-background">
-                    <div className="modal-users-events">
-                        <div
-                            className="modal-users-events-wrapper"
-                            style={{ width: 200, margin: '20px auto' }}
-                        >
-                            <h3 style={{ textAlign: 'center' }}>Loading ...</h3>
-                            <div
-                                style={{ margin: '50px auto' }}
-                                className="loader"
-                            ></div>
-                        </div>
-                    </div>
-                </div>
-            )}
+            {isLoading && <Loader></Loader>}
         </section>
     )
 }

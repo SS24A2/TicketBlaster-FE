@@ -282,7 +282,7 @@ export default function TicketsHistory() {
                 cartEvents.length === 0 && (
                     <div>No tickets found. Try another search.</div>
                 )}
-            {isSearchLoading && !searchInput && <h1>Loading ...</h1>}
+            {isSearchLoading && !searchInput && <Loader />}
         </div>
     )
 }

@@ -32,12 +32,32 @@ export default function SearchSecondary({
                         setSearchInput(e.target.value)
                     }
                 }}
+                style={{ paddingRight: 20 }}
             />
             {searchInput.length === 40 && (
-                <span>You have reached maximum number od characters (40).</span>
+                <p
+                    style={{
+                        margin: 0,
+                        position: 'absolute',
+                        fontSize: 12,
+                        paddingLeft: 10,
+                    }}
+                >
+                    You have reached maximum number od characters (40).
+                </p>
             )}
             {searchLoadingMessage && searchInput && (
-                <p>Loading search results, please wait</p>
+                <p
+                    style={{
+                        margin: 0,
+                        position: 'absolute',
+                        fontSize: 16,
+                        bottom: '60%',
+                        paddingLeft: 10,
+                    }}
+                >
+                    Loading search results, please wait
+                </p>
             )}
         </div>
     )

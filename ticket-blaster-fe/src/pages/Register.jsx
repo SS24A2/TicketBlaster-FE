@@ -131,6 +131,7 @@ export default function Register() {
                                     : validationStyle.fullname && fullname
                                     ? 'green'
                                     : 'black',
+                                paddingRight: 25,
                             }}
                             autoComplete="off"
                             value={fullname}
@@ -173,16 +174,18 @@ export default function Register() {
                             <ValidMark />
                         ) : null}
                         {fullname.length === 40 && (
-                            <span>
+                            <span style={{ marginLeft: 10, fontSize: 14 }}>
                                 You have reached maximum number od characters
                                 (40).
                             </span>
                         )}
                     </div>
-                    {validationStyle.fullname && (
-                        <span style={{ color: 'red', fontSize: 14 }}>
+                    {validationStyle.fullname ? (
+                        <span className="validation-message">
                             {formDataErrors.fullname}
                         </span>
+                    ) : (
+                        <span className="validation-message-empty"></span>
                     )}
                 </div>
 
@@ -236,10 +239,12 @@ export default function Register() {
                             <ValidMark />
                         ) : null}
                     </div>
-                    {validationStyle.email && (
-                        <span style={{ color: 'red', fontSize: 14 }}>
+                    {validationStyle.email ? (
+                        <span className="validation-message">
                             {formDataErrors.email}
                         </span>
+                    ) : (
+                        <span className="validation-message-empty"></span>
                     )}
                 </div>
 
@@ -322,10 +327,12 @@ export default function Register() {
                         ) : null}
                     </div>
 
-                    {validationStyle.password && (
-                        <span style={{ color: 'red', fontSize: 14 }}>
+                    {validationStyle.password ? (
+                        <span className="validation-message">
                             {formDataErrors.password}
                         </span>
+                    ) : (
+                        <span className="validation-message-empty"></span>
                     )}
                 </div>
                 <div className="register-password">
@@ -390,11 +397,12 @@ export default function Register() {
                             <ValidMark />
                         ) : null}
                     </div>
-
-                    {validationStyle.confirmPassword && password && (
-                        <span style={{ color: 'red', fontSize: 14 }}>
+                    {validationStyle.confirmPassword ? (
+                        <span className="validation-message">
                             {formDataErrors.confirmPassword}
                         </span>
+                    ) : (
+                        <span className="validation-message-empty"></span>
                     )}
                 </div>
 

@@ -3,6 +3,7 @@ import { useNavigate, Link, useParams } from 'react-router-dom'
 import { InvalidMark, ValidMark } from '../components/validationMarks'
 
 import Api from '../Api'
+import Loader from '../components/Loader'
 
 export default function ResetPassword() {
     const navigate = useNavigate()
@@ -138,7 +139,7 @@ export default function ResetPassword() {
     }, [id, token])
 
     if (isLinkCheckLoading) {
-        return <h2>The reset password link is being verified, please wait.</h2>
+        return <Loader></Loader>
     }
 
     if (linkCheckError) {
@@ -220,10 +221,12 @@ export default function ResetPassword() {
                         ) : null}
                     </div>
 
-                    {validationStyle.password && (
-                        <span style={{ color: 'red', fontSize: 14 }}>
+                    {validationStyle.password ? (
+                        <span className="validation-message">
                             {formDataErrors.password}
                         </span>
+                    ) : (
+                        <span className="validation-message-empty"></span>
                     )}
                 </div>
                 <div className="reset-password">
@@ -285,10 +288,12 @@ export default function ResetPassword() {
                         ) : null}
                     </div>
 
-                    {validationStyle.confirmPassword && (
-                        <span style={{ color: 'red', fontSize: 14 }}>
+                    {validationStyle.confirmPassword ? (
+                        <span className="validation-message">
                             {formDataErrors.confirmPassword}
                         </span>
+                    ) : (
+                        <span className="validation-message-empty"></span>
                     )}
                 </div>
 
@@ -303,9 +308,7 @@ export default function ResetPassword() {
                 </button>
             </form>
 
-            {isResetPasswordLoading && (
-                <p>Reset password in progress, please wait.</p>
-            )}
+            {isResetPasswordLoading && <Loader></Loader>}
             {resetPasswordError && (
                 <p style={{ color: 'red' }}>{resetPasswordError}</p>
             )}

@@ -177,7 +177,7 @@ export default function CartFinal() {
                 </div>
             )}
             {(loadingEvents || loadingTickets) && !eventsError && (
-                <Loader>Loading page ... Please wait.</Loader>
+                <Loader></Loader>
             )}
             {isTicketsModalOpen && (
                 <TicketsModal

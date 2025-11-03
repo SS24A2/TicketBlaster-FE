@@ -7,6 +7,7 @@ import '../styles/homepage.css'
 import noImageIcon from '../assets/Image-not-found.png'
 import ButtonGetTickets from '../components/ButtonGetTickets'
 import convertDate from '../helper/convertDate'
+import Loader from '../components/Loader'
 
 export default function Homepage() {
     const [mainEvent, setMainEvent] = useState(null)
@@ -53,7 +54,7 @@ export default function Homepage() {
         fetchHomepageEvents()
     }, [])
 
-    if (!mainEvent) return <div>LOADING HOMEPAGE</div> //TBC
+    if (!mainEvent) return <Loader></Loader>
 
     return (
         <section className="homepage">

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Api from '../Api'
 import { Link, useParams } from 'react-router-dom'
+import Loader from '../components/Loader'
 
 export default function VerificationOutcomePage() {
     const [loadingVerificationResult, setLoadingVerificationResult] =
@@ -108,12 +109,7 @@ export default function VerificationOutcomePage() {
     }
 
     if (loadingVerificationResult) {
-        return (
-            <div className="verification-outcome-page">
-                <h2>Verification is in progress, please wait.</h2>
-                <div className="loader" style={{ margin: 'auto' }}></div>
-            </div>
-        )
+        return <Loader></Loader>
     }
 
     if (isVerificationCompleted) {

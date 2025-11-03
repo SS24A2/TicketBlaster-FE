@@ -35,11 +35,11 @@ export default function Search() {
         fetchSearchResults()
     }, [searchTerm])
 
-    if (loadingEvents) return <Loader>Searching ...</Loader>
+    if (loadingEvents) return <Loader></Loader>
 
     if (searchTerm && eventsResults.length === 0 && !loadingEvents) {
         return (
-            <div>
+            <div className="search-results">
                 <h1>Search Results for: {searchTerm}</h1>
                 <h2>
                     No results for what you're looking for. Try another search.

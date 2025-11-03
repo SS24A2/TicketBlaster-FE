@@ -10,6 +10,7 @@ import ButtonGetTickets from '../components/ButtonGetTickets'
 import convertDate from '../helper/convertDate'
 import '../styles/event.css'
 import '../styles/arrows.css'
+import Loader from '../components/Loader'
 
 export default function Event() {
     const navigate = useNavigate()
@@ -97,7 +98,7 @@ export default function Event() {
     }, [id])
 
     if (!eventById) {
-        return <div>LOADING EVENT PAGE</div>
+        return <Loader></Loader>
     }
 
     return (
@@ -178,8 +179,14 @@ export default function Event() {
                             <button onClick={handleAddToCart}>
                                 Add to cart
                             </button>
-                            {cartError && <p>{cartError}</p>}
                         </div>
+                        {cartError ? (
+                            <p style={{ height: 40, width: 400 }}>
+                                {cartError}
+                            </p>
+                        ) : (
+                            <p style={{ height: 40, width: 400 }}></p>
+                        )}
                     </div>
                 </div>
             </div>

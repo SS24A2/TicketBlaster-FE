@@ -5,6 +5,7 @@ import Api from '../Api'
 
 import generalAvatar from '../assets/general-avatar.png'
 import ModalUsersEvents from '../components/ModalUsersEvents'
+import Loader from '../components/Loader'
 
 import AuthContext from '../context/AuthContext'
 import '../styles/profile.css'
@@ -12,8 +13,6 @@ import '../styles/profile.css'
 export default function UsersAdmin() {
     const [usersList, setUsersList] = useState([])
     const [images, setImages] = useState(null)
-
-    //IU and auth for changed user ??
 
     const [modal, setModal] = useState(null)
 
@@ -88,7 +87,7 @@ export default function UsersAdmin() {
                 <SecondaryNav pageSelected={'users'} />
             </div>
             <div>
-                {usersList.length === 0 && <div>Loading ... TBC</div>}
+                {usersList.length === 0 && <Loader></Loader>}
                 {usersList.length > 0 &&
                     usersList.map((user) => (
                         <div

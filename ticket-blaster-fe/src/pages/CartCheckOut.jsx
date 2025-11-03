@@ -215,16 +215,14 @@ export default function CartCheckOut() {
         getEventsFromCart()
     }, [cartState])
 
-    if (eventsLoading) return <Loader>Loading page ... Please wait.</Loader>
+    if (eventsLoading) return <Loader></Loader>
     if (eventsError) return <h2>{eventsError}</h2>
 
     return (
         <div>
             <h1>Checkout</h1>
             {paymentError && <h2>{paymentError}</h2>}
-            {paymentLoading && (
-                <Loader>Processing payment ... Please wait.</Loader>
-            )}
+            {paymentLoading && <Loader></Loader>}
             <div>
                 <div>
                     {cartEvents.map((event) => (

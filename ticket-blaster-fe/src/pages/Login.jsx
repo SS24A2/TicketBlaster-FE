@@ -176,10 +176,12 @@ export default function Login() {
                             <ValidMark />
                         ) : null}
                     </div>
-                    {validationStyle.email && (
-                        <span style={{ color: 'red', fontSize: 14 }}>
+                    {validationStyle.email ? (
+                        <span className="validation-message">
                             {formDataErrors.email}
                         </span>
+                    ) : (
+                        <span className="validation-message-empty"></span>
                     )}
                 </div>
 
@@ -236,10 +238,12 @@ export default function Login() {
                         ) : null}
                     </div>
 
-                    {validationStyle.password && (
-                        <span style={{ color: 'red', fontSize: 14 }}>
+                    {validationStyle.password ? (
+                        <span className="validation-message">
                             {formDataErrors.password}
                         </span>
+                    ) : (
+                        <span className="validation-message-empty"></span>
                     )}
                 </div>
 

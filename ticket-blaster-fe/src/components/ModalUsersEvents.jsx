@@ -22,6 +22,48 @@ function setModalParameters(currentModalType) {
 }
 
 export default function ModalUsersEvents({ modal, cancelModal, confirmModal }) {
+    if (modal.type === 'deleteSuccess') {
+        return (
+            <div className="modal-users-events-background">
+                <div className="modal-users-events">
+                    <div className="modal-users-events-wrapper delete-success">
+                        <h4>The selected event was succesfully deleted.</h4>
+                        <div className="modal-users-events-buttons">
+                            <button onClick={cancelModal}>Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+    if (modal.type === 'deleteFail') {
+        return (
+            <div className="modal-users-events-background">
+                <div className="modal-users-events">
+                    <div className="modal-users-events-wrapper delete-fail">
+                        <h4>Failed to delete the selected event!</h4>
+                        {modal.message && <h3>{modal.message}</h3>}
+                        <div className="modal-users-events-buttons">
+                            <button onClick={cancelModal}>Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    if (modal.type === 'deleteInProgress') {
+        return (
+            <div className="modal-users-events-background">
+                <div className="modal-users-events">
+                    <div className="modal-users-events-wrapper delete-loading">
+                        <div className="loader"></div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
     return (
         <div className="modal-users-events-background">
             <div className="modal-users-events">

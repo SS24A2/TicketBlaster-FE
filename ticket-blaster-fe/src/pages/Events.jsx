@@ -5,6 +5,7 @@ import '../styles/events.css'
 import Api from '../Api'
 import noImageIcon from '../assets/Image-not-found.png'
 import ButtonGetTickets from '../components/ButtonGetTickets'
+import Loader from '../components/Loader'
 
 export default function Events({ type }) {
     const [events, setEvents] = useState([])
@@ -63,7 +64,7 @@ export default function Events({ type }) {
     }, [type])
 
     if (events.length === 0) {
-        return <div>LOADING EVENTS</div>
+        return <Loader></Loader>
     }
 
     return (
