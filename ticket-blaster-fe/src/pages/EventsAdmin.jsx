@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 
 import Api from '../Api'
 
@@ -7,6 +7,10 @@ import SecondaryNav from '../components/SecondaryNav'
 import EventCard from '../components/EventCard'
 import noImageIcon from '../assets/Image-not-found.png'
 import ModalUsersEvents from '../components/ModalUsersEvents'
+import SearchSecondary from '../components/SearchSecondary'
+import Loader from '../components/Loader'
+import inputNormalization from '../helper/inputNormalization'
+import '../styles/events-admin.css'
 
 const pageSize = 10
 
@@ -33,18 +37,44 @@ export default function EventsAdmin() {
     const [eventsImages, setEventsImages] = useState(null)
     const [nextPage, setNextPage] = useState(null)
 
-    const [searchInput, setSearchInput] = useState('')
+    const [loadingEvents, setLoadingEvents] = useState(false)
+    const [eventsError, setEventsError] = useState(null)
 
     const [modal, setModal] = useState(null)
 
-    const [deleteMessage, setDeleteMessage] = useState(null)
+    const [searchInput, setSearchInput] = useState('')
+
+    // controller
+    let controller = useRef(null)
 
     const getFirstPage = useCallback(async () => {
+        // Cancel the previous request if it exists
+        if (controller.current !== null) {
+            controller.current.abort()
+            setLoadingEvents(false)
+
+            //reset to null
+            controller.current = null
+        }
+
+        // Create a new controller for the new request
+        controller.current = new AbortController()
+        setLoadingEvents(true)
+
         try {
+            const inputValue = inputNormalization(searchInput)
             const response = await Api().get(
-                `/api/v1/events?search=${searchInput}&page=1&pageSize=${pageSize}`
+                `/api/v1/events?search=${inputValue}&page=1&pageSize=${pageSize}`,
+                { signal: controller.current.signal }
             )
             console.log('first page ev', response)
+
+            if (!response.data?.events || !response.data?.images) {
+                setEventsError('Internal Server Error')
+                setLoadingEvents(false)
+                controller.current = null
+                return
+            }
 
             if (response.data.events?.length === pageSize) {
                 setNextPage(2)
@@ -52,50 +82,55 @@ export default function EventsAdmin() {
                 setNextPage(null)
             }
             if (response.data.events?.length > 0) {
+                setLoadingEvents(false)
                 setAllEvents([...response.data.events])
                 setEventsImages({ ...response.data.images })
+                controller.current = null
             } else {
+                setLoadingEvents(false)
                 setAllEvents([])
                 setEventsImages(null)
+                controller.current = null
             }
         } catch (err) {
             console.log(err)
+            // catch canceled error
+            if (err.name === 'CanceledError') {
+                console.log(
+                    `Previous request was canceled. Previous request url:${err.config.url}`
+                )
+                return
+            }
+            setEventsError(err.response?.data?.error || 'Internal Server Error')
+            setLoadingEvents(false)
+            controller.current = null
         }
     }, [searchInput])
 
     async function deleteEvent(id) {
+        setModal({
+            type: 'deleteInProgress',
+        })
         try {
             const res = await Api().delete(`/api/v1/events/${id}`)
             console.log(res)
 
             if (res.data?.deletedCount === 1) {
-                setDeleteMessage({
-                    text: 'Event deleted.',
-                    eventId: id,
-                    isEventDeleted: true,
+                setModal({
+                    type: 'deleteSuccess',
                 })
-                setTimeout(() => {
-                    getFirstPage()
-                    window.scrollTo(0, 0)
-                }, 3000)
+            } else {
+                setModal({
+                    type: 'deleteFail',
+                    message: 'Try again later.',
+                })
             }
         } catch (err) {
             console.log(err)
-            if (err.message === 'Network Error') {
-                setDeleteMessage({
-                    text: 'The event cannot be deleted. Check your internet connection and try again.',
-                    eventId: id,
-                    isEventDeleted: false,
-                })
-            } else {
-                setDeleteMessage({
-                    text: `${err.response?.data}. The event cannot be deleted.`,
-                    eventId: id,
-                    isEventDeleted: false,
-                })
-            }
-        } finally {
-            setModal(null)
+            setModal({
+                type: 'deleteFail',
+                message: err.response?.data?.error || 'Try again later.',
+            })
         }
     }
 
@@ -103,34 +138,21 @@ export default function EventsAdmin() {
         setModal(null)
     }
 
+    function cancelResultModal() {
+        setModal(null)
+        setNextPage(null)
+        getFirstPage()
+        window.scrollTo(0, 0)
+    }
+
     function confirmModal(modal) {
         deleteEvent(modal.id)
     }
 
     useEffect(() => {
-        async function getInitialEvents() {
-            try {
-                const response = await Api().get(
-                    `/api/v1/events?search=&page=1&pageSize=${pageSize}` //search is empty string at initial render
-                )
-                console.log('initial list ev', response)
-                if (response.data.events?.length === pageSize) {
-                    setNextPage(2)
-                }
-                if (response.data.events?.length > 0) {
-                    setAllEvents([...response.data.events])
-                    setEventsImages({ ...response.data.images })
-                }
-            } catch (err) {
-                console.log(err)
-            }
-        }
-
-        getInitialEvents()
-    }, [])
-
-    useEffect(() => {
         async function getMoreEvents() {
+            if (loadingEvents) return
+
             const scrollPosition = window.scrollY + window.innerHeight
             const isScrollNearEnd =
                 scrollPosition >= (document.body.scrollHeight * 3) / 4
@@ -139,8 +161,10 @@ export default function EventsAdmin() {
             if (!nextPage) return
 
             try {
+                setLoadingEvents(true)
+                const inputValue = inputNormalization(searchInput)
                 const response = await Api().get(
-                    `/api/v1/events?search=${searchInput}&page=${nextPage}&pageSize=${pageSize}`
+                    `/api/v1/events?search=${inputValue}&page=${nextPage}&pageSize=${pageSize}`
                 )
                 console.log('more ev', response)
                 if (response.data.events?.length === pageSize) {
@@ -149,6 +173,7 @@ export default function EventsAdmin() {
                     setNextPage(null)
                 }
                 if (response.data.events?.length > 0) {
+                    setLoadingEvents(false)
                     setAllEvents((currentEvents) => [
                         ...currentEvents,
                         ...response.data.events,
@@ -160,6 +185,7 @@ export default function EventsAdmin() {
                 }
             } catch (err) {
                 console.log(err)
+                setLoadingEvents(false)
             }
         }
         window.addEventListener('scrollend', getMoreEvents)
@@ -167,22 +193,25 @@ export default function EventsAdmin() {
         return () => {
             window.removeEventListener('scrollend', getMoreEvents)
         }
-    }, [nextPage, searchInput])
+    }, [nextPage, searchInput, loadingEvents])
 
     useEffect(() => {
-        const timeoutId = setTimeout(() => {
+        if (!searchInput) {
             getFirstPage()
-        }, 200)
+            return
+        }
+
+        const timeoutId = setTimeout(getFirstPage, 200)
 
         return () => {
             clearTimeout(timeoutId)
         }
-    }, [getFirstPage])
+    }, [getFirstPage, searchInput])
 
     return (
         <div className="profile-page">
             <div className="title-nav">
-                <div className="title-nav">
+                <div className="title-nav-inner">
                     <h2>Events</h2>
                     <button className="pink-button">
                         <Link to="/account/profile/events/new" viewTransition>
@@ -190,19 +219,21 @@ export default function EventsAdmin() {
                         </Link>
                     </button>
                 </div>
-                <input
-                    type="text"
-                    placeholder="Search"
-                    name="search"
-                    value={searchInput}
-                    onChange={(e) => {
-                        setSearchInput(e.target.value)
+                <div
+                    style={{
+                        display: eventsError ? 'none' : 'block',
                     }}
-                />
+                >
+                    <SearchSecondary
+                        searchInput={searchInput}
+                        setSearchInput={setSearchInput}
+                        isSearchLoading={loadingEvents}
+                    />
+                </div>
 
                 <SecondaryNav pageSelected={'events'} />
             </div>
-            {searchInput && allEvents.length === 0 && (
+            {searchInput && allEvents.length === 0 && !loadingEvents && (
                 <div>
                     No results for what you're looking for. Try another search.
                 </div>
@@ -220,6 +251,7 @@ export default function EventsAdmin() {
                                       }/${eventsImages[e._id]}`
                                     : noImageIcon
                             }
+                            hideDetails={true}
                             ButtonComponent={
                                 <Button
                                     openModal={() =>
@@ -237,28 +269,34 @@ export default function EventsAdmin() {
                                 />
                             }
                         />
-                        {deleteMessage && deleteMessage.eventId === e._id && (
-                            <>
-                                <span className="delete-event-message">
-                                    {deleteMessage.text}
-                                </span>
-                                {deleteMessage.isEventDeleted && (
-                                    <span className="delete-event-loading">
-                                        Loading events ...
-                                    </span>
-                                )}
-                            </>
-                        )}
                     </div>
                 ))}
+                {loadingEvents && allEvents.length > 0 && nextPage && (
+                    <h2
+                        style={{
+                            color: '#FF48AB',
+                            fontSize: 30,
+                            letterSpacing: 2,
+                            paddingLeft: 20,
+                        }}
+                    >
+                        .....
+                    </h2>
+                )}
                 {modal && (
                     <ModalUsersEvents
                         modal={modal}
-                        cancelModal={cancelModal}
+                        cancelModal={
+                            modal.type === 'deleteEvent'
+                                ? cancelModal
+                                : cancelResultModal
+                        }
                         confirmModal={confirmModal}
                     />
                 )}
+                {eventsError && <div>{eventsError}</div>}
             </div>
+            {loadingEvents && nextPage === null && !searchInput && <Loader />}
         </div>
     )
 }

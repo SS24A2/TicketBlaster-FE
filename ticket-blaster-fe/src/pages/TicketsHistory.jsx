@@ -9,6 +9,7 @@ import TicketsModal from '../components/TicketsModal'
 import SearchSecondary from '../components/SearchSecondary'
 import inputNormalization from '../helper/inputNormalization'
 import '../styles/profile.css'
+import '../styles/tickets-history.css'
 
 function PrintButton({ printTicket, style }) {
     return (
@@ -185,7 +186,7 @@ export default function TicketsHistory() {
     }, [searchInput])
 
     return (
-        <div className="profile-page">
+        <div className="profile-page tickets-history">
             <div className="title-nav">
                 <h2>Tickets History</h2>
                 <div

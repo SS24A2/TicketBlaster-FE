@@ -6,6 +6,7 @@ import EventCard from '../components/EventCard'
 import noImageIcon from '../assets/Image-not-found.png'
 import Api from '../Api'
 import Loader from '../components/Loader'
+import '../styles/shopping-cart.css'
 
 function RemoveButton({ remove }) {
     return (
@@ -157,17 +158,28 @@ export default function Cart() {
     }
 
     if (error) {
-        return <section>{error}</section>
+        return (
+            <section
+                className="shopping-cart"
+                style={{
+                    fontSize: 30,
+                    fontWeight: 700,
+                    margin: '50px auto',
+                }}
+            >
+                {error}
+            </section>
+        )
     }
 
     return (
-        <div>
+        <div className="shopping-cart">
             <h1>Shopping Cart</h1>
             {cartEvents.length > 0 && (
-                <div>
+                <div className="cart-tickets">
                     {cartEvents.map((event) => {
                         return (
-                            <div key={event._id}>
+                            <div className="event-card-wrapper" key={event._id}>
                                 <EventCard
                                     event={event}
                                     imageSrc={
@@ -187,7 +199,7 @@ export default function Cart() {
                                     }
                                     hideDetails={true}
                                 />
-                                <div>
+                                <div className="total-price">
                                     <span>
                                         $
                                         {(
@@ -200,7 +212,6 @@ export default function Cart() {
                                         style={{
                                             display: 'flex',
                                             alignItems: 'center',
-                                            margin: 20,
                                         }}
                                     >
                                         <span
@@ -240,8 +251,17 @@ export default function Cart() {
                                                 className="arrow-down"
                                             ></i>
                                         </span>
-                                        <span>{newCartState[event._id]}</span>
-                                        <span>x ${event.price} USD</span>
+                                        <span
+                                            style={{
+                                                width: 20,
+                                                marginRight: 5,
+                                            }}
+                                        >
+                                            {newCartState[event._id]}
+                                        </span>
+                                        <span>
+                                            x ${event.price.toFixed(2)} USD
+                                        </span>
                                     </span>
                                 </div>
                             </div>
@@ -249,36 +269,48 @@ export default function Cart() {
                     })}
                 </div>
             )}
-            {cartEvents.length === 0 && <p>No items in cart</p>}
-            <div>
-                {cartEvents.length > 0 && (
-                    <button
-                        onClick={() =>
-                            !isBackFromCheckout
-                                ? navigate(-1, { viewTransition: true })
-                                : navigate('/', { viewTransition: true })
-                        }
-                    >
-                        Back
-                    </button>
-                )}
+            {cartEvents.length === 0 && (
+                <p className="empty-card-text">No items in cart</p>
+            )}
+            <div className="card-buttons">
+                <button
+                    style={{
+                        visibility:
+                            cartEvents.length > 0 ? 'visible' : 'hidden',
+                    }}
+                    className="pink-button"
+                    onClick={() =>
+                        !isBackFromCheckout
+                            ? navigate(-1, { viewTransition: true })
+                            : navigate('/', { viewTransition: true })
+                    }
+                >
+                    Back
+                </button>
 
                 <button
+                    className="pink-button"
                     onClick={handleCheckout}
                     disabled={cartEvents.length === 0}
+                    style={{ opacity: cartEvents.length === 0 ? 0.4 : 1 }}
                 >
                     Check Out
                 </button>
             </div>
-            {checkoutError && cartEvents.length > 0 && <p>{checkoutError}</p>}
-            {checkoutInProgress && (
-                <Loader>Checking Tickets Availability ... Please wait.</Loader>
+            {checkoutError && cartEvents.length > 0 && (
+                <p
+                    style={{
+                        fontSize: 20,
+                        fontWeight: 700,
+                        color: 'red',
+                        position: 'absolute',
+                        bottom: '20%',
+                    }}
+                >
+                    {checkoutError}
+                </p>
             )}
-            <p>
-                Events that have already occurred or have been cancelled are
-                automatically removed from your cart since tickets for these
-                events cannot be purchased.
-            </p>
+            {checkoutInProgress && <Loader></Loader>}
         </div>
     )
 }

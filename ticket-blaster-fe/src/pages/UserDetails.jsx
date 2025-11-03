@@ -7,6 +7,7 @@ import noImageIcon from '../assets/Image-not-found.png'
 import Api from '../Api'
 import AuthContext from '../context/AuthContext'
 import { InvalidMark, ValidMark } from '../components/validationMarks'
+import Loader from '../components/Loader'
 
 let formData = null
 
@@ -28,7 +29,8 @@ export default function UserDetails() {
 
     const [submitMessage, setSubmitMessage] = useState('')
     const [loadingUserData, setLoadingUserData] = useState(false)
-    const [errorOnSubmit, setErrorOnSubmit] = useState('')
+    const [errorOnSubmitFormOne, setErrorOnSubmitFormOne] = useState('')
+    const [errorOnSubmitFormTwo, setErrorOnSubmitFormTwo] = useState('')
 
     const [formDataErrors, setFormDataErrors] = useState({
         fullname: '',
@@ -78,7 +80,7 @@ export default function UserDetails() {
         }
 
         if (formDataErrors.uploadedImg) {
-            setErrorOnSubmit(
+            setErrorOnSubmitFormOne(
                 'Failed to change user details due to image upload issue. Please upload an image type PNG, JPEG or JPG with size up to 10mb or clear the error to go back to your current avatar.'
             )
             setSubmitMessage('')
@@ -91,7 +93,7 @@ export default function UserDetails() {
             fullname &&
             !formDataErrors.uploadedImg
         ) {
-            setErrorOnSubmit(
+            setErrorOnSubmitFormOne(
                 'Failed to change user details. Ensure all the data are correctly filled.'
             )
 
@@ -100,7 +102,7 @@ export default function UserDetails() {
         }
 
         if (!email || !fullname) {
-            setErrorOnSubmit(
+            setErrorOnSubmitFormOne(
                 'Failed to change user details. Please fill out all required fields.'
             )
             setSubmitMessage('')
@@ -114,9 +116,8 @@ export default function UserDetails() {
                     fullname === user.fullname &&
                     email === user.email
                 ) {
-                    console.log('no image changes')
                     setSubmitMessage('No changes were made.')
-                    setErrorOnSubmit('')
+                    setErrorOnSubmitFormOne('')
                     return
                 }
                 const res2 = await Api().post(
@@ -127,7 +128,7 @@ export default function UserDetails() {
                 console.log('res2', res2)
                 setIsUploadedImgChanged(false)
                 if (fullname === user.fullname && email === user.email) {
-                    setErrorOnSubmit('')
+                    setErrorOnSubmitFormOne('')
                     setSubmitMessage('Avatar successfully changed.')
                     return
                 }
@@ -138,7 +139,7 @@ export default function UserDetails() {
                     fullname,
                 })
                 console.log('res1', res)
-                setErrorOnSubmit('')
+                setErrorOnSubmitFormOne('')
                 setSubmitMessage(
                     uploadedImg && isUploadedImgChanged
                         ? 'Fullname and avatar successfully changed.'
@@ -183,11 +184,11 @@ export default function UserDetails() {
                 !uploadedImg
             ) {
                 setSubmitMessage('No changes were made.')
-                setErrorOnSubmit('')
+                setErrorOnSubmitFormOne('')
             }
         } catch (err) {
             console.log(err)
-            setErrorOnSubmit(
+            setErrorOnSubmitFormOne(
                 err.response?.data?.error ||
                     'Something went wrong, please try again.'
             )
@@ -209,8 +210,26 @@ export default function UserDetails() {
             validationResult = false
         }
 
+        if (!password || !confirmPassword) {
+            setErrorOnSubmitFormTwo(
+                'Failed to change your password. Please fill out all required fields.'
+            )
+            setFormDataErrors({
+                ...formDataErrors,
+                password: 'Please fill out this field!',
+                confirmPassword: 'Please fill out this field!',
+            })
+            setValidationStyle({
+                ...validationStyle,
+                password: true,
+                confirmPassword: true,
+            })
+            setSubmitMessage('')
+            return
+        }
+
         if (!validationResult) {
-            setErrorOnSubmit(
+            setErrorOnSubmitFormTwo(
                 'Failed to change your password. Ensure your password entries are identical and are correctly filled.'
             )
             setSubmitMessage('')
@@ -231,7 +250,7 @@ export default function UserDetails() {
             )
         } catch (err) {
             console.log(err)
-            setErrorOnSubmit(
+            setErrorOnSubmitFormTwo(
                 err.response?.data?.error ||
                     'Something went wrong, please try again.'
             )
@@ -250,7 +269,7 @@ export default function UserDetails() {
             ...validationStyle,
             uploadedImg: true,
         })
-        setErrorOnSubmit('')
+        setErrorOnSubmitFormOne('')
         setSubmitMessage('')
 
         if (e.target.files.length === 0) {
@@ -303,7 +322,7 @@ export default function UserDetails() {
     }
     //only shown on initial render not on subsequent getUser calls
     if (!fullname && loadingUserData) {
-        return <div>Loading user data...</div>
+        return <Loader></Loader>
     }
 
     return (
@@ -312,11 +331,37 @@ export default function UserDetails() {
                 <h2>User Details</h2>
                 <SecondaryNav pageSelected={'details'} />
             </div>
-            {errorOnSubmit && <h3>{errorOnSubmit}</h3>}
-            {submitMessage && <h3>{submitMessage}</h3>}
+
+            {errorOnSubmitFormOne &&
+                !formDataErrors.fullname &&
+                !formDataErrors.email &&
+                !formDataErrors.uploadedImg && (
+                    <h3
+                        style={{ top: '80%', right: '23%' }}
+                        className="user-details-submit-error"
+                    >
+                        {errorOnSubmitFormOne}
+                    </h3>
+                )}
+            {errorOnSubmitFormTwo &&
+                !formDataErrors.password &&
+                !formDataErrors.confirmPassword && (
+                    <h3
+                        style={{ top: '80%', right: '23%' }}
+                        className="user-details-submit-error"
+                    >
+                        {errorOnSubmitFormTwo}
+                    </h3>
+                )}
+            {submitMessage && (
+                <h3 className="user-details-submit-message">{submitMessage}</h3>
+            )}
             <div>
                 <form noValidate onSubmit={handleDetailsChange}>
-                    <div className="profile-first-form">
+                    <div
+                        className="profile-first-form"
+                        style={{ position: 'relative' }}
+                    >
                         <div className="upload-avatar-wrapper">
                             <img
                                 src={
@@ -334,9 +379,13 @@ export default function UserDetails() {
                                 alt="user-avatar"
                                 className="user-avatar"
                             />
-
                             <label htmlFor="avatar">Upload Avatar</label>
-
+                            <span
+                                className="validation-message"
+                                style={{ height: 60, textAlign: 'center' }}
+                            >
+                                {formDataErrors.uploadedImg}
+                            </span>
                             {formDataErrors.uploadedImg && (
                                 <button
                                     onClick={() => {
@@ -345,32 +394,33 @@ export default function UserDetails() {
                                             uploadedImg: '',
                                         })
                                         setSubmitMessage('')
-                                        setErrorOnSubmit('')
+                                        setErrorOnSubmitFormOne('')
                                     }}
                                 >
                                     Clear error
                                 </button>
                             )}
-                            <div>
-                                <input
-                                    type="file"
-                                    id="avatar"
-                                    onChange={changeAvatar}
-                                    className="file-input-user"
-                                    accept="image/jpeg, image/jpg, image/png"
-                                />
-                                {formDataErrors.uploadedImg ? (
-                                    <InvalidMark />
-                                ) : null}
-                            </div>
-                            <span style={{ color: 'red', fontSize: 14 }}>
-                                {formDataErrors.uploadedImg}
-                            </span>
+
+                            <input
+                                type="file"
+                                id="avatar"
+                                onChange={changeAvatar}
+                                className="file-input-user"
+                                accept="image/jpeg, image/jpg, image/png"
+                            />
                         </div>
                         <div className="user-details">
-                            <div className="details-name">
+                            <div
+                                className="details-name"
+                                style={{ display: 'block', height: 100 }}
+                            >
                                 <label htmlFor="fullname">Full Name</label>
-                                <div>
+                                <div
+                                    style={{
+                                        display: 'block',
+                                        position: 'relative',
+                                    }}
+                                >
                                     <input
                                         style={{
                                             borderWidth: 2,
@@ -380,6 +430,9 @@ export default function UserDetails() {
                                                   fullname
                                                 ? 'green'
                                                 : 'black',
+                                            marginBottom: 10,
+                                            marginTop: 12,
+                                            paddingRight: 25,
                                         }}
                                         autoComplete="off"
                                         value={fullname}
@@ -392,7 +445,7 @@ export default function UserDetails() {
                                         pattern="^[A-Z]{1}[a-z]{1,}(?: [A-Z]{1}[a-z]{1,}){1,3}$"
                                         maxLength={40}
                                         onInput={(e) => {
-                                            setErrorOnSubmit('')
+                                            setErrorOnSubmitFormOne('')
                                             setSubmitMessage('')
                                             if (
                                                 e.target.validity.valueMissing
@@ -433,24 +486,38 @@ export default function UserDetails() {
                                         <ValidMark />
                                     ) : null}
                                     {fullname.length === 40 && (
-                                        <span>
+                                        <span
+                                            style={{
+                                                marginLeft: 10,
+                                                fontSize: 14,
+                                            }}
+                                        >
                                             You have reached maximum number od
                                             characters (40).
                                         </span>
                                     )}
                                 </div>
-                                {validationStyle.fullname && (
-                                    <span
-                                        style={{ color: 'red', fontSize: 14 }}
-                                    >
+
+                                {validationStyle.fullname ? (
+                                    <span className="validation-message">
                                         {formDataErrors.fullname}
                                     </span>
+                                ) : (
+                                    <span className="validation-message-empty"></span>
                                 )}
                             </div>
 
-                            <div className="details-email">
+                            <div
+                                className="details-email"
+                                style={{ display: 'block' }}
+                            >
                                 <label htmlFor="email">Email</label>
-                                <div>
+                                <div
+                                    style={{
+                                        display: 'block',
+                                        position: 'relative',
+                                    }}
+                                >
                                     <input
                                         style={{
                                             borderWidth: 2,
@@ -459,6 +526,8 @@ export default function UserDetails() {
                                                 : validationStyle.email && email
                                                 ? 'green'
                                                 : 'black',
+                                            marginBottom: 10,
+                                            marginTop: 12,
                                         }}
                                         autoComplete="off"
                                         value={email}
@@ -470,7 +539,7 @@ export default function UserDetails() {
                                         required
                                         minLength={5}
                                         onInput={(e) => {
-                                            setErrorOnSubmit('')
+                                            setErrorOnSubmitFormOne('')
                                             setSubmitMessage('')
                                             if (
                                                 e.target.validity
@@ -505,15 +574,26 @@ export default function UserDetails() {
                                         <ValidMark />
                                     ) : null}
                                 </div>
-                                {validationStyle.email && (
-                                    <span
-                                        style={{ color: 'red', fontSize: 14 }}
-                                    >
+                                {validationStyle.email ? (
+                                    <span className="validation-message">
                                         {formDataErrors.email}
                                     </span>
+                                ) : (
+                                    <span className="validation-message-empty"></span>
                                 )}
                             </div>
                         </div>
+                        {errorOnSubmitFormOne &&
+                            (formDataErrors.fullname ||
+                                formDataErrors.email ||
+                                formDataErrors.uploadedImg) && (
+                                <h3
+                                    style={{ top: '-62px' }}
+                                    className="user-details-submit-error"
+                                >
+                                    {errorOnSubmitFormOne}
+                                </h3>
+                            )}
                     </div>
 
                     <button type="submit">Submit</button>
@@ -529,11 +609,21 @@ export default function UserDetails() {
                     </button>
                 </div>
                 {isPasswordFormShown && (
-                    <form noValidate onSubmit={handlePasswordChange}>
-                        <div className="password-inputs">
-                            <div className="register-password">
+                    <form
+                        noValidate
+                        onSubmit={handlePasswordChange}
+                        style={{ position: 'relative' }}
+                    >
+                        <div
+                            className="password-inputs"
+                            style={{ height: 130 }}
+                        >
+                            <div
+                                className="register-password"
+                                style={{ display: 'block', maxWidth: 270 }}
+                            >
                                 <label htmlFor="password">Password</label>
-                                <div>
+                                <div className="password-user-input">
                                     <input
                                         style={{
                                             borderWidth: 2,
@@ -543,6 +633,7 @@ export default function UserDetails() {
                                                   password
                                                 ? 'green'
                                                 : 'black',
+                                            flexDirection: 'row !important',
                                         }}
                                         autoComplete="off"
                                         value={password}
@@ -554,7 +645,7 @@ export default function UserDetails() {
                                         required
                                         pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,12}$"
                                         onInput={(e) => {
-                                            setErrorOnSubmit('')
+                                            setErrorOnSubmitFormTwo('')
                                             setSubmitMessage('')
                                             if (
                                                 e.target.validity
@@ -620,22 +711,38 @@ export default function UserDetails() {
                                         <InvalidMark />
                                     ) : validationStyle.password && password ? (
                                         <ValidMark />
-                                    ) : null}
+                                    ) : (
+                                        <span
+                                            style={{
+                                                width: 15,
+                                                paddingLeft: 1,
+                                            }}
+                                        ></span>
+                                    )}
                                 </div>
 
-                                {validationStyle.password && (
+                                {validationStyle.password ? (
                                     <span
-                                        style={{ color: 'red', fontSize: 14 }}
+                                        style={{ maxWidth: 250, height: 55 }}
+                                        className="validation-message"
                                     >
                                         {formDataErrors.password}
                                     </span>
+                                ) : (
+                                    <span
+                                        style={{ maxWidth: 250, height: 55 }}
+                                        className="validation-message-empty"
+                                    ></span>
                                 )}
                             </div>
-                            <div className="register-password">
+                            <div
+                                className="register-password"
+                                style={{ display: 'block', maxWidth: 270 }}
+                            >
                                 <label htmlFor="confirmPassword">
                                     Re-type password
                                 </label>
-                                <div>
+                                <div className="password-user-input">
                                     <input
                                         style={{
                                             borderWidth: 2,
@@ -657,7 +764,7 @@ export default function UserDetails() {
                                         type="password"
                                         required
                                         onInput={(e) => {
-                                            setErrorOnSubmit('')
+                                            setErrorOnSubmitFormTwo('')
                                             setSubmitMessage('')
                                             if (
                                                 e.target.validity.valueMissing
@@ -702,24 +809,43 @@ export default function UserDetails() {
                                       confirmPassword &&
                                       password ? (
                                         <ValidMark />
-                                    ) : null}
-                                </div>
-
-                                {validationStyle.confirmPassword &&
-                                    password && (
+                                    ) : (
                                         <span
                                             style={{
-                                                color: 'red',
-                                                fontSize: 14,
+                                                width: 15,
+                                                paddingLeft: 1,
                                             }}
-                                        >
-                                            {formDataErrors.confirmPassword}
-                                        </span>
+                                        ></span>
                                     )}
+                                </div>
+
+                                {validationStyle.confirmPassword ? (
+                                    <span
+                                        style={{ maxWidth: 250 }}
+                                        className="validation-message"
+                                    >
+                                        {formDataErrors.confirmPassword}
+                                    </span>
+                                ) : (
+                                    <span
+                                        style={{ maxWidth: 250 }}
+                                        className="validation-message-empty"
+                                    ></span>
+                                )}
                             </div>
                         </div>
 
                         <button type="submit">Submit</button>
+                        {errorOnSubmitFormTwo &&
+                            (formDataErrors.password ||
+                                formDataErrors.confirmPassword) && (
+                                <h3
+                                    style={{ top: '110%' }}
+                                    className="user-details-submit-error"
+                                >
+                                    {errorOnSubmitFormTwo}
+                                </h3>
+                            )}
                     </form>
                 )}
             </div>

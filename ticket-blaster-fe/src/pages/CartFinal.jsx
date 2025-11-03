@@ -6,6 +6,7 @@ import EventCard from '../components/EventCard'
 import Api from '../Api'
 import TicketsModal from '../components/TicketsModal'
 import Loader from '../components/Loader'
+import '../styles/cart-final.css'
 
 function PrintButton({ printTicket, style }) {
     return (
@@ -111,7 +112,7 @@ export default function CartFinal() {
             {cartEvents.length > 0 && (
                 <div className="all-events">
                     {cartEvents.map((event) => (
-                        <div key={event._id}>
+                        <div className="event-cart-wrapper" key={event._id}>
                             <EventCard
                                 event={event}
                                 imageSrc={
@@ -147,7 +148,7 @@ export default function CartFinal() {
                                 hideDetails={true}
                             />
 
-                            <div>
+                            <div className="tickets-price">
                                 <span>
                                     $
                                     {(
@@ -156,8 +157,8 @@ export default function CartFinal() {
                                     USD
                                 </span>
                                 <span>
-                                    {archivedCart[event._id]} x ${event.price}{' '}
-                                    USD
+                                    {archivedCart[event._id]} x $
+                                    {event.price.toFixed(2)} USD
                                 </span>
                             </div>
                         </div>
@@ -171,7 +172,10 @@ export default function CartFinal() {
                 </p>
             )}
             {eventsError && (
-                <div>
+                <div
+                    className="cart-final-page"
+                    style={{ fontSize: 24, fontWeight: 700 }}
+                >
                     The page is currently unavailable. Open the Tickets History
                     page or your email to find the purchased tickets.
                 </div>

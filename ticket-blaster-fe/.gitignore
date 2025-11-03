@@ -25,15 +25,5 @@ dist-ssr
 
 config.env
 .env
-
-notes.txt
-context.txt
-
-examples
-EventsDraft.jsx
-NewEventDraft.jsx
-EventsAdminDraft.jsx
-info.txt
-
-styles
-LoaderOld.jsx
+ 
+Draft
