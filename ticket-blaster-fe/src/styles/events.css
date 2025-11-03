@@ -1,0 +1,40 @@
+.events-page {
+    max-width: 1200px;
+    margin: auto;
+    padding-top: 50px;
+    padding-bottom: 91px;
+}
+
+/*1*/
+.events-page h1 {
+    font-weight: 700;
+    font-size: 44px;
+    line-height: 52px;
+    letter-spacing: -2.42px;
+    color: #000000;
+    margin: 0;
+    margin-bottom: 38px;
+}
+
+/*2*/
+.events-page .all-events {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 48px 54px;
+}
+
+/*3*/
+.events-page>button {
+    width: 1200px;
+    height: 43px;
+    background: #FFFFFF;
+    border: 1px solid #000000;
+    border-radius: 20px;
+    text-align: center;
+    font-weight: 900;
+    font-size: 19px;
+    line-height: 23px;
+    letter-spacing: -1.04px;
+    color: #000000;
+    margin-top: 91px;
+}

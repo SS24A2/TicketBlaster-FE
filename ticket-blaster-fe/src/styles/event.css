@@ -1,0 +1,132 @@
+.event-page {
+    max-width: 1200px;
+    margin: auto;
+    padding-top: 50px;
+    padding-bottom: 165px;
+}
+
+/**/
+.event-main-details {
+    display: flex;
+    align-items: end;
+    margin-bottom: 30px;
+}
+
+.event-main-details h1 {
+    font-weight: 700;
+    font-size: 44px;
+    line-height: 52px;
+    letter-spacing: -2.42px;
+    color: #000000;
+    margin: 0;
+    margin-right: 19px;
+}
+
+.event-main-details span {
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 27px;
+    letter-spacing: -1.21px;
+    color: #393939;
+    margin-right: 13px;
+}
+
+/**/
+.event-details {
+    display: flex;
+    gap: 31px;
+}
+
+.event-details img {
+    width: 576px;
+    height: 340px;
+    border-radius: 20px;
+}
+
+.event-about-tickets {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.event-about {
+    max-width: 593px;
+    margin-bottom: 33px;
+}
+
+.event-about h4 {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+    letter-spacing: -1.32px;
+    color: #000000;
+    margin: 0;
+    margin-bottom: 21px;
+}
+
+.event-about p {
+    font-size: 14px;
+    line-height: 17px;
+    letter-spacing: -0.77px;
+    color: #393939;
+    margin-bottom: 0;
+}
+
+.tickets-price {
+    margin-bottom: 18px;
+}
+
+.tickets-price span {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+    letter-spacing: -1.32px;
+}
+
+.tickets-price span:first-child {
+    color: #000000;
+    margin-right: 15px;
+}
+
+.tickets-price span:nth-child(2) {
+    color: #FF48AB;
+}
+
+.event-page .event-tickets-num {
+    color: #393939;
+    font-size: 14px;
+    line-height: 17px;
+    letter-spacing: -0.77px;
+    font-weight: 700;
+}
+
+.tickets-cart button {
+    width: 128px;
+    height: 33px;
+    background: #000000;
+    border-radius: 20px;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 14px;
+    line-height: 17px;
+    letter-spacing: -0.77px;
+}
+
+/**/
+.related-events {
+    margin-top: 49px;
+}
+
+.related-events>h4 {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+    letter-spacing: -1.32px;
+    color: #000000;
+}
+
+.related-events>div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 54px;
+}

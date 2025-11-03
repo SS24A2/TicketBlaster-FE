@@ -1,0 +1,186 @@
+.checkout-page {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 50px;
+}
+
+.checkout-page h1 {
+    margin: 0;
+    font: normal normal bold 44px/52px Lato;
+    letter-spacing: -2.42px;
+    color: #000000;
+    margin-bottom: 53px;
+}
+
+.checkout-inner-tickets {
+    width: 428px
+}
+
+.checkout-inner-form {
+    width: 360px;
+}
+
+.checkout-page-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    gap: 136px
+}
+
+.checkout-inner-tickets-all {
+    display: flex;
+    flex-direction: column;
+    gap: 20px
+}
+
+.checkout-inner-tickets-all .event-card {
+    height: 81px;
+    gap: 15px;
+    width: 428px !important
+}
+
+.checkout-inner-tickets-all .event-card-wrapper {
+    position: relative;
+    padding-bottom: 24.5px;
+    border-bottom: 1px solid #D8D8D8;
+}
+
+.checkout-inner-tickets-all .event-image,
+.checkout-inner-tickets-all .event-image img {
+    height: 81px;
+    width: 136px;
+}
+
+.checkout-inner-tickets-all .event-card span {
+    max-width: 150px;
+    font-size: 12px;
+}
+
+.checkout-inner-tickets-all .event-card h4 {
+    font-size: 20px;
+}
+
+.checkout-inner-tickets-all .event-card h5 {
+    font-size: 16px;
+}
+
+.checkout-inner-tickets-all .event-card-wrapper .tickets-price {
+    position: absolute;
+    right: 0px;
+    bottom: 37.5px;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+.event-card-wrapper .tickets-price span:first-child {
+    text-align: right;
+    font: normal normal bold 22px/29px Lato;
+    letter-spacing: -1.32px;
+    color: #000000;
+    margin: 0;
+}
+
+.event-card-wrapper .tickets-price span:nth-child(2) {
+    text-align: right;
+    font: normal normal bold 16px/22px Lato;
+    letter-spacing: -0.99px;
+    color: #FF48AB;
+}
+
+.checkout-inner-tickets .total-price {
+    margin-top: 18px;
+    display: flex;
+    justify-content: space-between;
+    font: normal normal bold 24px/29px Lato;
+    letter-spacing: -1.32px;
+    color: #000000;
+}
+
+.checkout-inner-form {
+    padding-bottom: 400px;
+    position: relative;
+}
+
+.checkout-inner-form input {
+    width: 357px;
+    height: 42px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border: 1px solid #000000;
+    border-radius: 21px;
+    margin-top: 12px;
+    padding-left: 20px;
+    padding-right: 20px;
+    box-sizing: border-box;
+}
+
+.checkout-inner-form label {
+    font: normal normal bold 18px/22px Lato;
+    letter-spacing: -0.99px;
+    color: #393939;
+}
+
+.checkout-inner-form .input-wrapper {
+    position: relative;
+}
+
+.checkout-inner-form .input-wrapper .invalid-mark,
+.checkout-inner-form .input-wrapper .valid-mark {
+    position: absolute;
+    right: 13px;
+    top: 18px;
+}
+
+.checkout-inner-form .validation-message,
+.checkout-inner-form .validation-message-empty {
+    height: 40px;
+    font-size: 12px;
+    display: inline-block;
+    padding-left: 20px;
+    padding-top: 15px;
+}
+
+.checkout-name,
+.checkout-cardNum,
+.checkout-cardExpiry,
+.checkout-pin {
+    height: 133px;
+}
+
+.checkout-page .checkout-buttons {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 50px;
+    left: -600px;
+    width: 1200px;
+}
+
+.checkout-page .checkout-buttons button {
+    width: 229px;
+    height: 42px;
+    background: #000000 0% 0% no-repeat padding-box;
+    text-align: center;
+    font: normal normal bold 16px/19px Lato;
+    letter-spacing: -0.88px;
+    color: #FFFFFF;
+    border-radius: 20px;
+}
+
+.checkout-page .checkout-buttons button:nth-child(2) {
+    background: #FF48AB 0% 0% no-repeat padding-box;
+    border: none;
+}
+
+.payment-error {
+    position: absolute;
+    bottom: 200px;
+    white-space: nowrap;
+    margin: 0;
+    padding: 20px;
+    background-color: #d53c3c;
+    color: white;
+    border-radius: 10px;
+    font-size: 24px;
+    left: 50%;
+}

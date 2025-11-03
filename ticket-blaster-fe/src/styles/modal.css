@@ -1,0 +1,64 @@
+.modal-users-events {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 739px;
+    height: 278px;
+    background: #FFFFFF;
+    box-shadow: 0px 20px 40px #00000029;
+    border-radius: 30px;
+}
+
+.modal-users-events-wrapper {
+    padding: 27px 40px 39px 45px;
+}
+
+.modal-users-events h4 {
+    font-weight: 700;
+    font-size: 35px;
+    line-height: 42px;
+    letter-spacing: -1.93px;
+    color: #000000;
+    margin: 0;
+    margin-bottom: 28px;
+}
+
+.modal-users-events p {
+    font-size: 16px;
+    line-height: 19px;
+    letter-spacing: -0.88px;
+    color: #000000;
+    margin: 0;
+    margin-bottom: 81px;
+}
+
+.modal-users-events-buttons button:first-child {
+    width: 128px;
+    height: 42px;
+    background: #FFFFFF;
+    border: 2px solid #000000;
+    border-radius: 20px;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    letter-spacing: -0.88px;
+    color: #000000;
+}
+
+.modal-users-events-confirm-button {
+    width: 184px !important;
+    height: 42px;
+    background: #000000;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 16px;
+    line-height: 19px;
+    letter-spacing: -0.88px;
+    color: #FFFFFF;
+}
+
+.modal-users-events-buttons {
+    display: flex;
+    justify-content: end;
+}

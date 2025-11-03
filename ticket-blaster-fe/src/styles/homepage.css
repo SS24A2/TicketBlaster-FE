@@ -77,6 +77,10 @@
 .main-event button a {
     color: #000000;
     text-decoration: none;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    line-height: 2;
 }
 
 /*2*/
@@ -125,4 +129,8 @@
 .homepage-comedies>button a {
     color: #000000;
     text-decoration: none;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    line-height: 2;
 }

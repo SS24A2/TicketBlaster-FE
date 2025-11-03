@@ -1,0 +1,362 @@
+.new-event-page {
+    max-width: 1200px;
+    margin: auto;
+    padding-top: 50px;
+    padding-bottom: 102px;
+}
+
+/*1*/
+.new-event-page .title-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-bottom: 39px;
+}
+
+/*11*/
+.new-event-page h2 {
+    margin: 0;
+    font-weight: 700;
+    font-size: 44px;
+    line-height: 52px;
+    letter-spacing: -2.42px;
+    color: #000000;
+}
+
+/*2 - Form*/
+
+/*21*/
+.form-first-group {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 21px;
+    height: 126px;
+}
+
+/*211*/
+.form-first-group>span {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 23%;
+}
+
+/*2111*/
+.form-first-group label {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 22px;
+    letter-spacing: -0.99px;
+    color: #393939;
+}
+
+/*2112*/
+.form-first-group input,
+.form-first-group select {
+    height: 42px;
+    background: #FFFFFF;
+    border: 1px solid #000000;
+    border-radius: 21px;
+    font-size: 14px;
+    line-height: 17px;
+    letter-spacing: -0.77px;
+    color: #000000;
+    padding-left: 22px;
+}
+
+/*2113*/
+.invalid-mark,
+.valid-mark {
+    position: relative;
+    right: 20px;
+}
+
+.new-event-page .event-details .invalid-mark,
+.new-event-page .event-details .valid-mark {
+    left: 97%;
+    position: absolute;
+}
+
+.new-event-page .event-details {
+    height: 205px;
+}
+
+.event-photo .invalid-mark,
+.event-photo .valid-mark {
+    left: 90%;
+    position: absolute;
+}
+
+.event-category select {
+    width: 180px;
+    padding-left: 16px;
+}
+
+.event-date input {
+    width: 160px;
+}
+
+.event-date .invalid-mark,
+.event-date .valid-mark,
+.event-category .invalid-mark,
+.event-category .valid-mark {
+    right: 40px;
+}
+
+.event-name input,
+.event-location input {
+    width: 200px;
+}
+
+/*22*/
+.form-second-group {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+}
+
+.event-price,
+.tickets-num {
+    height: 108px;
+}
+
+/*221*/
+.form-second-group>div {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+/*2211*/
+.form-second-group>div:first-child label {
+    width: 357px;
+    height: 42px;
+    background: #000000;
+    border-radius: 20px;
+    font-size: 16px;
+    line-height: 19px;
+    letter-spacing: -0.88px;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/*2212*/
+.form-second-group>div:first-child img {
+    width: 357px;
+    height: 211px;
+    border-radius: 18px;
+    object-fit: cover;
+}
+
+/*222*/
+.form-second-group>div:nth-child(2)>span {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.form-second-group>div:nth-child(2) label {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 22px;
+    letter-spacing: -0.99px;
+    color: #393939;
+}
+
+
+.form-second-group>div:nth-child(2) textarea {
+    width: 750px;
+    height: 141px;
+    background: #FFFFFF;
+    border: 1px solid #000000;
+    border-radius: 21px;
+    padding: 14px 18px 18px 19px;
+    font-size: 14px;
+    line-height: 17px;
+    letter-spacing: -0.77px;
+    color: #393939;
+    box-sizing: border-box;
+    resize: none;
+}
+
+.form-second-group>div:nth-child(2) input {
+    width: 357px;
+    height: 42px;
+    background: #FFFFFF;
+    border: 1px solid #000000;
+    border-radius: 21px;
+    padding: 0 21px;
+    font-size: 14px;
+    line-height: 17px;
+    letter-spacing: -0.77px;
+    color: #000000;
+}
+
+/*23*/
+.form-third-group {
+    position: relative;
+    margin-bottom: 44px;
+    height: 76px;
+    width: 635px;
+}
+
+.form-third-group label {
+    margin: 0;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 22px;
+    letter-spacing: -0.99px;
+    color: #393939;
+    margin-bottom: 12px;
+}
+
+.form-third-group select {
+    width: 500px;
+    min-height: 42px;
+    background: #FFFFFF;
+    border: 1px solid #000000;
+    border-top-left-radius: 21px;
+    border-bottom-left-radius: 21px;
+    border-top-right-radius: 21px;
+    padding: 12px 22px;
+    font-size: 14px;
+    line-height: 17px;
+    letter-spacing: -0.77px;
+    color: #000000;
+    margin-right: 19px;
+    position: relative;
+    bottom: 0;
+    left: 0;
+    z-index: 5;
+}
+
+.form-third-group button {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 116px;
+    height: 42px;
+    background: #000000;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 16px;
+    line-height: 19px;
+    letter-spacing: -0.88px;
+    color: #FFFFFF;
+}
+
+/*24*/
+.form-fourth-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px 40px;
+    margin-bottom: 102px;
+}
+
+.related-event-card {
+    height: 153px;
+    position: relative;
+}
+
+.related-event-card .event-card {
+    width: 348px;
+    justify-content: space-between;
+    white-space: nowrap;
+}
+
+.related-event-card h4 {
+    font-size: 22px !important;
+}
+
+.related-event-card h5 {
+    font-size: 16px !important;
+}
+
+.related-event-card .event-info {
+    width: 128px;
+}
+
+.related-event-card .event-info span {
+    font-size: 12px !important;
+    white-space: wrap;
+}
+
+.related-event-card .event-image {
+    width: 200px;
+}
+
+.related-event-card img {
+    object-fit: cover;
+    width: 200px !important;
+}
+
+.related-event-card p,
+.related-event-card .get-tickets-btn {
+    display: none;
+}
+
+.remove-btn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 128px;
+    height: 33px;
+    background: #000000;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 14px;
+    line-height: 17px;
+    letter-spacing: -0.77px;
+    color: #FFFFFF;
+}
+
+/*25*/
+.submit-event {
+    width: 116px;
+    height: 42px;
+    background: #000000;
+    border-radius: 20px;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    letter-spacing: -0.88px;
+    color: #FFFFFF;
+    position: relative;
+    left: 100%;
+    transform: translateX(-100%);
+}
+
+.submit-event:active {
+    transition: all ease-out 0.3s;
+}
+
+.submit-error,
+.submit-message {
+    position: absolute;
+    top: 0px;
+    width: 1200px;
+    background-color: #de4c4c;
+    color: #ffffff;
+    font-size: 18px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    padding: 10px 20px;
+    border-radius: 3px;
+}
+
+.submit-message {
+    background-color: #55d291;
+    font-size: 22px;
+    top: 97%;
+    bottom: 0px;
+}
+
+.submit-message .valid-mark {
+    color: white !important;
+    padding-left: 20px;
+    font-size: 26px !important;
+}

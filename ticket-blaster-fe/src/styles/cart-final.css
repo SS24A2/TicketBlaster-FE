@@ -1,0 +1,68 @@
+.cart-final-page {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 50px;
+    height: 100vh;
+}
+
+.cart-final-page h1 {
+    margin-top: 0;
+    margin-bottom: 53px;
+}
+
+.cart-final-page .all-events {
+    display: flex;
+    flex-direction: column;
+    gap: 20px
+}
+
+.cart-final-page .event-card {
+    height: 105.5px;
+    width: 1200px;
+    gap: 15px;
+    position: relative;
+    padding-bottom: 24.5px;
+    border-bottom: 1px solid #D8D8D8;
+    box-sizing: border-box;
+}
+
+.cart-final-page .event-card .event-image,
+.cart-final-page .event-card .event-image img {
+    width: 136px;
+    height: 81px;
+}
+
+.cart-final-page .event-card button {
+    position: absolute;
+    right: 0;
+    top: 25px
+}
+
+.cart-final-page .event-card span {
+    white-space: nowrap;
+}
+
+.cart-final-page .event-cart-wrapper {
+    position: relative;
+}
+
+.cart-final-page .tickets-price {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    position: absolute;
+    right: 165px;
+    top: 20px;
+    margin: 0;
+}
+
+.cart-final-page .tickets-price span {
+    margin: 0 !important;
+}
+
+.cart-final-page .tickets-price span:nth-child(2) {
+    font: normal normal bold 18px/22px Lato;
+    letter-spacing: -0.99px;
+    color: #FF48AB;
+}

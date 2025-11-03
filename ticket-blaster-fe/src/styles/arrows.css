@@ -1,0 +1,14 @@
+.arrow-up {
+    border-style: solid;
+    border-width: 0 10px 12px 10px;
+    border-color: transparent transparent #ED2488 transparent;
+    margin-bottom: 7px;
+    cursor: pointer;
+}
+
+.arrow-down {
+    border-style: solid;
+    border-width: 12px 10px 0 10px;
+    border-color: #ED2488 transparent transparent transparent;
+    cursor: pointer;
+}

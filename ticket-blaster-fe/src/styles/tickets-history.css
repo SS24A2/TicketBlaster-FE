@@ -1,0 +1,16 @@
+.tickets-history .all-events {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 48px 30px
+}
+
+.tickets-history .all-events .event-card {
+    height: 153px;
+    width: 573px;
+}
+
+.tickets-history .all-events .event-card .event-info p {
+    padding-bottom: 0 !important;
+    height: 56px !important;
+    display: inline-block !important;
+}

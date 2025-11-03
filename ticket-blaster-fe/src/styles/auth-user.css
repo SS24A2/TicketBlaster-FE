@@ -1,0 +1,250 @@
+.login-section,
+.register-section,
+.forgot-password-section,
+.reset-password-section,
+.verification-info-page,
+.verification-outcome-page {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 50px;
+    padding-bottom: 402px;
+}
+
+.login-section h1,
+.register-section h1,
+.forgot-password-section h1,
+.reset-password-section h1 {
+    letter-spacing: -2.42px;
+    color: #000000;
+    font-size: 44px;
+    font-weight: 700;
+    line-height: 52px;
+    margin: 0;
+    margin-bottom: 64px;
+}
+
+.login-section .form-container,
+.register-section .form-container,
+.forgot-password-section .form-container,
+.reset-password-section .form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.login-email,
+.login-password,
+.register-section .form-container>div,
+.forgot-password-section .form-container>div,
+.reset-password-section .form-container>div {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.login-section label,
+.register-section label,
+.forgot-password-section label,
+.reset-password-section label,
+.user-details label,
+.password-inputs label {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 22px;
+    letter-spacing: -0.99px;
+    color: #393939;
+    display: inline-block;
+}
+
+.login-section input,
+.register-section input,
+.forgot-password-section input,
+.reset-password-section input,
+.user-details input,
+.password-inputs input {
+    width: 357px;
+    height: 42px;
+    background: #FFFFFF;
+    border: 1px solid #000000;
+    border-radius: 21px;
+    display: inline-block;
+    padding: 0;
+    padding-left: 20px;
+}
+
+.login-password {
+    margin-bottom: 33px;
+}
+
+.login-forgot-password a {
+    font-size: 18px;
+    line-height: 22px;
+    font-weight: 400;
+    letter-spacing: -0.99px;
+    color: #393939;
+    display: inline-block;
+}
+
+
+.register-section {
+    padding-bottom: 227px;
+}
+
+.register-section .pink-button {
+    width: 357px;
+    margin-left: 0;
+    margin-top: 8px;
+}
+
+.forgot-password-section {
+    padding-bottom: 498px;
+}
+
+.forgot-password-section .pink-button {
+    width: 357px;
+    margin-left: 0;
+    margin-top: 35px;
+    margin-bottom: 35px;
+}
+
+.forgot-password-section .form-container>div {
+    margin-bottom: 0;
+}
+
+.reset-password-section .pink-button {
+    width: 357px;
+    margin-left: 0;
+    margin-top: 50px;
+    margin-bottom: 35px;
+}
+
+.reset-password-section .form-container>div:nth-child(2) {
+    margin-bottom: 0;
+}
+
+
+.password-change-state {
+    margin-top: 85px;
+    display: flex;
+    max-width: 520px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.password-change-state h3 {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+    letter-spacing: -1.32px;
+    color: #000000;
+    margin: 0;
+}
+
+
+.password-change-state button {
+    width: 229px;
+    margin: 0;
+}
+
+.password-inputs {
+    display: flex;
+    gap: 25px;
+    margin-top: 29px;
+    margin-bottom: 36px;
+}
+
+.password-inputs div {
+    display: flex;
+    flex-direction: column;
+    gap: 12px
+}
+
+.password-inputs input {
+    width: 228px;
+    margin: 0
+}
+
+.login-section button a,
+.forgot-password-section button a,
+.register-section button a,
+.reset-password-section a {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    line-height: 2.2;
+}
+
+.verification-info-page h2 {
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 27px;
+    margin-bottom: 50px;
+    letter-spacing: -0.88px;
+    margin-top: 20px;
+}
+
+.verification-info-page p {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 23px;
+    letter-spacing: -0.88px;
+    margin-bottom: 40px;
+}
+
+.verification-outcome-page {
+    text-align: center;
+}
+
+.verification-outcome-page h2 {
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 27px;
+    margin-bottom: 40px;
+    letter-spacing: -0.88px;
+    margin-top: 20px;
+}
+
+.verification-outcome-page h5 {
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 25px;
+    margin-bottom: 40px;
+    letter-spacing: -0.88px;
+    margin-top: 20px;
+}
+
+.verification-outcome-page p {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 20px;
+    margin-bottom: 40px;
+    letter-spacing: -0.88px;
+    margin-top: 20px;
+}
+
+.verification-outcome-page button,
+.verification-info-page button {
+    width: 250px;
+    height: 42px;
+    background: #FF48AB;
+    border-radius: 20px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 19px;
+    letter-spacing: -0.88px;
+    color: #ffffff;
+    border: none
+}
+
+.verification-outcome-page button a,
+.verification-info-page button a {
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    line-height: 2.2;
+}

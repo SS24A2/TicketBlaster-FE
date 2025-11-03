@@ -1,0 +1,75 @@
+.search-results {
+    max-width: 1200px;
+    margin: auto;
+    padding-top: 50px;
+    padding-bottom: 155px;
+    display: flex;
+    flex-direction: column;
+    gap: 38px;
+}
+
+/*1*/
+.search-results h1 {
+    font-weight: 700;
+    font-size: 44px;
+    line-height: 52px;
+    letter-spacing: -2.42px;
+    color: #000000;
+    margin-bottom: 0;
+}
+
+/*2*/
+.search-result-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+/*21*/
+.search-results .event-card {
+    width: 1200px;
+    position: relative;
+}
+
+/*212*/
+.search-results .event-info {
+    display: flex;
+    flex-direction: column;
+}
+
+/*2121*/
+.search-results .event-card h4 {
+    font-weight: 700;
+    font-size: 37px;
+    line-height: 45px;
+    font: normal normal bold 37px/45px Lato;
+    letter-spacing: -2.04px;
+    color: #000000;
+}
+
+/*2122*/
+.search-results .event-info h5 {
+    order: 2;
+}
+
+/*2123*/
+.search-result-inner>div p {
+    max-width: 683px;
+}
+
+/*2124*/
+.search-results .event-info>div {
+    order: 3
+}
+
+/*21241*/
+.search-results .event-info>div>span {
+    max-width: none;
+}
+
+/*21242*/
+.search-results .event-card button {
+    position: absolute;
+    right: 10px;
+    bottom: 0;
+}
