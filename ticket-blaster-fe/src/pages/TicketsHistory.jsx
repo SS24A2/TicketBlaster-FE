@@ -10,6 +10,7 @@ import SearchSecondary from '../components/SearchSecondary'
 import inputNormalization from '../helper/inputNormalization'
 import '../styles/profile.css'
 import '../styles/tickets-history.css'
+import '../styles/tickets.css'
 
 function PrintButton({ printTicket, style }) {
     return (
