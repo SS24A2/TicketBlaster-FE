@@ -883,7 +883,7 @@ export default function NewEvent({ type }) {
                                     }
                                     required
                                     min={1}
-                                    step={0.01}
+                                    step={1}
                                     onInput={(e) => {
                                         setErrorOnSubmit('')
                                         setSubmitMessage('')
