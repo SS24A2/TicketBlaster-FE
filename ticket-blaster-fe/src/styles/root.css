@@ -99,7 +99,7 @@ header {
 .cart-state-num {
     position: absolute;
     top: -10px;
-    left: 14px;
+    left: 85px;
     background-color: #f70085;
     border-radius: 50%;
     width: 16px;
@@ -110,6 +110,7 @@ header {
     font-size: 12px;
     font-weight: 700;
     color: #FFFFFF;
+    z-index: 5;
 }
 
 /* Main */

@@ -7,6 +7,7 @@ import Api from '../Api'
 import TicketsModal from '../components/TicketsModal'
 import Loader from '../components/Loader'
 import '../styles/cart-final.css'
+import '../styles/tickets.css'
 
 function PrintButton({ printTicket, style }) {
     return (

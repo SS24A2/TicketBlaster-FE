@@ -153,7 +153,7 @@ export default function Cart() {
         getEventsFromCart()
     }, [cartState, removeFromCart])
 
-    if (isLoading) {
+    if (isLoading && cartEvents.length === 0) {
         return <Loader></Loader>
     }
 

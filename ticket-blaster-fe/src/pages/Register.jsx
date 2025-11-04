@@ -131,7 +131,6 @@ export default function Register() {
                                     : validationStyle.fullname && fullname
                                     ? 'green'
                                     : 'black',
-                                paddingRight: 25,
                             }}
                             autoComplete="off"
                             value={fullname}

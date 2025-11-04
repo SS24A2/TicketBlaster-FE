@@ -46,6 +46,7 @@
     header,
     footer {
         visibility: hidden;
+        height: 0;
     }
 
     .profile-page {
@@ -56,8 +57,13 @@
     .cart-final-page {
         visibility: hidden;
         height: 0;
-        padding: 0;
+        padding: 0 !important;
         margin: 0;
+    }
+
+    .cart-final-page h1 {
+        height: 0px !important;
+        margin: 0 !important;
     }
 
     .title-nav {
@@ -66,7 +72,11 @@
     }
 
     .all-events {
-        height: 0;
+        height: 0px !important;
+    }
+
+    .event-cart-wrapper {
+        height: 0px !important;
     }
 
     .modal-tickets-background {
@@ -79,6 +89,8 @@
     .all-tickets {
         display: flex;
         flex-direction: column;
+        gap: 0 !important;
+        gap: 280px !important;
     }
 
     .modal-tickets {
@@ -92,6 +104,10 @@
         box-shadow: none;
         border-radius: 0px;
         height: 1100px;
+        margin: 0 !important;
+        padding: 0 !important;
+        margin-top: 250px !important;
+        transform: scale(1.4, 1.4);
     }
 
     .ticket-num,

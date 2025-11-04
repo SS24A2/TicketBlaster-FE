@@ -137,7 +137,11 @@ export default function ForgotPassword() {
                     </Link>
                 </button>
             </form>
-            {message && <div>{message}</div>}
+            {message && (
+                <div style={{ fontSize: 26, paddingLeft: 10, marginTop: 40 }}>
+                    {message}
+                </div>
+            )}
             {error && <div className="auth-error">{error}</div>}
             {isLoading && <Loader></Loader>}
         </section>
