@@ -276,7 +276,11 @@ export default function TicketsHistory() {
                     setIsTicketsModalOpen={setIsTicketsModalOpen}
                 />
             )}
-            {noPurchasedTickets && <div>You don't have purchased tickets.</div>}
+            {noPurchasedTickets && (
+                <div className="empty-card-text">
+                    You don't have purchased tickets.
+                </div>
+            )}
             {searchInput &&
                 !isSearchLoading &&
                 !eventsError &&

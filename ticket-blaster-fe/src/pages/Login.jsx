@@ -263,7 +263,7 @@ export default function Login() {
                 </button>
             </form>
 
-            {error && <div style={{ color: 'red' }}>{error}</div>}
+            {error && <div className="auth-error">{error}</div>}
         </section>
     )
 }

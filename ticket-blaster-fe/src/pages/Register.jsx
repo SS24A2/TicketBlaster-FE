@@ -416,7 +416,7 @@ export default function Register() {
                     </Link>
                 </button>
             </form>
-            {error && <div style={{ color: 'red' }}>{error}</div>}
+            {error && <div className="auth-error">{error}</div>}
         </section>
     )
 }

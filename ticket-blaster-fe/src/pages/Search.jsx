@@ -41,7 +41,7 @@ export default function Search() {
         return (
             <div className="search-results">
                 <h1>Search Results for: {searchTerm}</h1>
-                <h2>
+                <h2 className="empty-card-text">
                     No results for what you're looking for. Try another search.
                 </h2>
             </div>

@@ -50,10 +50,6 @@
     flex-direction: column;
 }
 
-.profile-page {
-    overflow-y: scroll;
-}
-
 .profile-page a {
     color: black
 }
@@ -131,4 +127,8 @@
 .valid-mark {
     position: relative;
     right: 20px;
+}
+
+img {
+    object-fit: cover;
 }

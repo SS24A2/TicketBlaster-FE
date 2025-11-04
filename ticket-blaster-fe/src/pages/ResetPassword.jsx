@@ -143,7 +143,11 @@ export default function ResetPassword() {
     }
 
     if (linkCheckError) {
-        return <h2>{linkCheckError}</h2>
+        return (
+            <h2 className="reset-password-section" style={{ fontSize: 34 }}>
+                {linkCheckError}
+            </h2>
+        )
     }
 
     return (
@@ -310,7 +314,7 @@ export default function ResetPassword() {
 
             {isResetPasswordLoading && <Loader></Loader>}
             {resetPasswordError && (
-                <p style={{ color: 'red' }}>{resetPasswordError}</p>
+                <p className="auth-error">{resetPasswordError}</p>
             )}
         </section>
     )

@@ -25,17 +25,31 @@ export default function Root() {
                     <Link to="/" viewTransition>
                         <img src={logoImage} alt="logo" className="logo-img" />
                     </Link>
-                    <span>
+                    <span
+                        style={{
+                            position: 'relative',
+                            left: currentUser ? '-50px' : '-18px',
+                        }}
+                    >
                         <Link to="/concerts" viewTransition>
                             Musical Concerts
                         </Link>
                     </span>
-                    <span>
+                    <span
+                        style={{
+                            position: 'relative',
+                            left: currentUser ? '-120px' : '-54px',
+                        }}
+                    >
                         <Link to="/comedies" viewTransition>
                             Stand-up Comedy
                         </Link>
                     </span>
                     <input
+                        style={{
+                            position: 'relative',
+                            left: currentUser ? '150px' : '85px',
+                        }}
                         autoComplete="off"
                         type="text"
                         placeholder="Search"
@@ -59,7 +73,12 @@ export default function Root() {
 
                     {!currentUser && (
                         <>
-                            <button>
+                            <button
+                                style={{
+                                    position: 'relative',
+                                    left: '42px',
+                                }}
+                            >
                                 <Link to="/account/login" viewTransition>
                                     Log in
                                 </Link>
@@ -91,6 +110,7 @@ export default function Root() {
                                     {Object.keys(cartState).length}
                                 </span>
                                 <img
+                                    style={{ position: 'relative', right: -72 }}
                                     src={cartImage}
                                     alt="cart"
                                     className="cart-img"
@@ -116,12 +136,12 @@ export default function Root() {
                     <Link to="/" viewTransition>
                         <img src={logoImage} alt="logo" className="logo-img" />
                     </Link>
-                    <span>
+                    <span style={{ position: 'relative', left: -150 }}>
                         <Link to="/concerts" viewTransition>
                             Musical Concerts
                         </Link>
                     </span>
-                    <span>
+                    <span style={{ position: 'relative', left: -350 }}>
                         <Link to="/comedies" viewTransition>
                             Stand-up Comedy
                         </Link>
