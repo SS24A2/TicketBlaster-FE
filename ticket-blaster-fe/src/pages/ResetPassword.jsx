@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useNavigate, Link, useParams } from 'react-router-dom'
+import { useNavigate, Link, useSearchParams } from 'react-router-dom'
 import { InvalidMark, ValidMark } from '../components/validationMarks'
 
 import Api from '../Api'
@@ -7,7 +7,7 @@ import Loader from '../components/Loader'
 
 export default function ResetPassword() {
     const navigate = useNavigate()
-    const { id, token } = useParams()
+    const { id, token } = useSearchParams()
 
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
@@ -37,14 +37,14 @@ export default function ResetPassword() {
 
         if (!validationResult && password && confirmPassword) {
             setResetPasswordError(
-                'Password reset failed. Ensure your password entries are identical and are correctly filled.'
+                'Password reset failed. Ensure your password entries are identical and are correctly filled.',
             )
             return
         }
 
         if (!password || !confirmPassword) {
             setResetPasswordError(
-                'Password reset failed. Please fill out all required fields.'
+                'Password reset failed. Please fill out all required fields.',
             )
             setFormDataErrors({
                 password: !password
@@ -61,7 +61,7 @@ export default function ResetPassword() {
         try {
             const res = await Api().put(
                 `/api/v1/auth/resetPassword/${id}/${token}`,
-                { password, confirmPassword }
+                { password, confirmPassword },
             )
             console.log(res)
             if (res.data === 'Password reset successful!') {
@@ -69,18 +69,18 @@ export default function ResetPassword() {
                 navigate(
                     '/account/login',
                     { state: { passwordReset: true } },
-                    { viewTransition: true }
+                    { viewTransition: true },
                 )
             }
         } catch (err) {
             console.log('err', err)
             if (
                 ['Unauthorized. Token not valid', 'User not found!'].includes(
-                    err.response?.data?.error
+                    err.response?.data?.error,
                 )
             ) {
                 setResetPasswordError(
-                    'The reset password link is either invalid or has expired. Please submit a new password reset request.'
+                    'The reset password link is either invalid or has expired. Please submit a new password reset request.',
                 )
                 setIsResetPasswordLoading(false)
                 return
@@ -89,14 +89,14 @@ export default function ResetPassword() {
                 ['Passwords do not match!'].includes(err.response?.data?.error)
             ) {
                 setResetPasswordError(
-                    'The retyped password does not match the original password. Please try again.'
+                    'The retyped password does not match the original password. Please try again.',
                 )
                 setIsResetPasswordLoading(false)
                 return
             }
 
             setResetPasswordError(
-                err.response?.data?.error || 'Internal Server Error!'
+                err.response?.data?.error || 'Internal Server Error!',
             )
             setIsResetPasswordLoading(false)
             setValidationStyle({ password: false, confirmPassword: false })
@@ -108,7 +108,7 @@ export default function ResetPassword() {
             setIsLinkCheckLoading(true)
             try {
                 const res = await Api().get(
-                    `/api/v1/auth/resetPassword/${id}/${token}`
+                    `/api/v1/auth/resetPassword/${id}/${token}`,
                 )
                 console.log(res)
                 if (res.data === 'Token is valid') {
@@ -123,14 +123,14 @@ export default function ResetPassword() {
                     ].includes(err.response?.data?.error)
                 ) {
                     setLinkCheckError(
-                        'The reset password link is either invalid or has expired. Please submit a new password reset request.'
+                        'The reset password link is either invalid or has expired. Please submit a new password reset request.',
                     )
                     setIsLinkCheckLoading(false)
                     return
                 }
                 setIsLinkCheckLoading(false)
                 setLinkCheckError(
-                    err.response?.data?.error || 'Internal Server Error'
+                    err.response?.data?.error || 'Internal Server Error',
                 )
             }
         }
@@ -163,8 +163,8 @@ export default function ResetPassword() {
                                 borderColor: formDataErrors.password
                                     ? 'red'
                                     : validationStyle.password && password
-                                    ? 'green'
-                                    : 'black',
+                                      ? 'green'
+                                      : 'black',
                             }}
                             autoComplete="off"
                             value={password}
@@ -242,9 +242,9 @@ export default function ResetPassword() {
                                 borderColor: formDataErrors.confirmPassword
                                     ? 'red'
                                     : validationStyle.confirmPassword &&
-                                      confirmPassword
-                                    ? 'green'
-                                    : 'black',
+                                        confirmPassword
+                                      ? 'green'
+                                      : 'black',
                             }}
                             autoComplete="off"
                             value={confirmPassword}

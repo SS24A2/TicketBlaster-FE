@@ -32,6 +32,8 @@ import VerificationOutcomePage from './pages/VerificationOutcomePage'
 import NotFound from './pages/NotFound'
 import Unauthorized from './pages/Unauthorized'
 
+import SearchDispatcher from './pages/SearchDispatcher'
+
 const router = createBrowserRouter([
     {
         path: '/',
@@ -41,7 +43,7 @@ const router = createBrowserRouter([
             {
                 path: '/',
                 children: [
-                    { index: true, element: <Homepage /> },
+                    { index: true, element: <SearchDispatcher /> },
                     { path: 'concerts', element: <Events type="concerts" /> },
                     {
                         path: 'comedies',
@@ -75,7 +77,8 @@ const router = createBrowserRouter([
                         element: <ForgotPassword />,
                     },
                     {
-                        path: 'password/reset/:id/:token',
+                        // path: 'password/reset/:id/:token',
+                        path: '/',
                         element: <ResetPassword />,
                     },
                 ],
