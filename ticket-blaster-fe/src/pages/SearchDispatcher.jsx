@@ -1,4 +1,6 @@
 import { useSearchParams } from 'react-router-dom'
+import Homepage from './Homepage'
+import ResetPassword from './ResetPassword'
 
 export default function SearchDispatcher() {
     const [searchParams] = useSearchParams()
